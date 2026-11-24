@@ -1,0 +1,3310 @@
+[
+  {
+    "id": "wh-01",
+    "slug": "on-gold-standard-whey-5lbs",
+    "name": "ON Gold Standard 100% Whey 5lbs",
+    "brand": "Optimum Nutrition",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.27KG)",
+    "price": 1690000,
+    "compareAtPrice": 1950000,
+    "shortDescription": "24g Whey Isolate & Concentrate chuẩn mực thế giới, 5.5g BCAA mỗi muỗng.",
+    "description": "Dòng Whey Protein bán chạy hàng đầu thế giới với thành phần chính từ Whey Protein Isolate kết hợp Concentrate giúp phục hồi và phát triển cơ nạc nhanh chóng.",
+    "servingSize": "30.4g (1 muỗng)",
+    "servingsPerContainer": 74,
+    "calories": "120 kcal",
+    "protein": "24g",
+    "carbs": "3g",
+    "fat": "1.5g",
+    "highlightKey": "PROTEIN",
+    "highlightValue": "24G",
+    "badge": "Bán chạy #1",
+    "rating": 4.9,
+    "soldCount": 1420,
+    "flavors": [
+      {
+        "id": "wh-01-fl-1",
+        "name": "Rocky Road",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-gold-standard-whey-5lbs-001.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-01-fl-2",
+        "name": "White Chocolate",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/on-gold-standard-whey-5lbs-002.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-01-fl-3",
+        "name": "Cookies & Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/on-gold-standard-whey-5lbs-003.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-01-fl-4",
+        "name": "Mocha Cappuccino",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-gold-standard-whey-5lbs-004.webp",
+        "stock": 51
+      },
+      {
+        "id": "wh-01-fl-5",
+        "name": "Banana Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/on-gold-standard-whey-5lbs-005.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "wh-02",
+    "slug": "dymatize-iso-100-hydrolyzed-5lbs",
+    "name": "Dymatize ISO 100 Hydrolyzed 5lbs",
+    "brand": "Dymatize",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.3KG)",
+    "price": 2190000,
+    "compareAtPrice": 2450000,
+    "shortDescription": "25g đạm thủy phân 100% Hydrolyzed Whey Isolate siêu tinh khiết, hấp thu tức thì.",
+    "description": "Công thức Whey Protein Isolate thủy phân hoàn toàn giúp loại bỏ tối đa lactose và tạp chất, lý tưởng ngay sau buổi tập nặng.",
+    "servingSize": "30g (1 muỗng)",
+    "servingsPerContainer": 71,
+    "calories": "110 kcal",
+    "protein": "25g",
+    "carbs": "1g",
+    "fat": "0.5g",
+    "highlightKey": "HYDROLYZED",
+    "highlightValue": "25G",
+    "badge": "Hydrolyzed Cao Cấp",
+    "rating": 4.9,
+    "soldCount": 1180,
+    "flavors": [
+      {
+        "id": "wh-02-fl-1",
+        "name": "Dunkin Mocha Latte",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/dymatize-iso-100-hydrolyzed-5lbs-006.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-02-fl-2",
+        "name": "Fruity Pebbles",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/dymatize-iso-100-hydrolyzed-5lbs-007.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-02-fl-3",
+        "name": "Birthday Cake",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/dymatize-iso-100-hydrolyzed-5lbs-008.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-02-fl-4",
+        "name": "Gourmet Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/dymatize-iso-100-hydrolyzed-5lbs-009.webp",
+        "stock": 51
+      },
+      {
+        "id": "wh-02-fl-5",
+        "name": "Fudge Brownie",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/dymatize-iso-100-hydrolyzed-5lbs-010.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "wh-03",
+    "slug": "mutant-iso-surge-5lbs",
+    "name": "Mutant Iso Surge Whey Isolate 5lbs",
+    "brand": "Mutant",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.27KG)",
+    "price": 1890000,
+    "compareAtPrice": 2150000,
+    "shortDescription": "25g Whey Isolate & Hydrolysate kết hợp bảng vị tráng miệng siêu ngon từ Canada.",
+    "description": "Mutant Iso Surge nổi tiếng với kết cấu mịn sánh, hòa tan ngay lập tức trong bình lắc và hương vị chân thực.",
+    "servingSize": "32g (1 muỗng)",
+    "servingsPerContainer": 71,
+    "calories": "120 kcal",
+    "protein": "25g",
+    "carbs": "2g",
+    "fat": "1g",
+    "highlightKey": "ISOLATE",
+    "highlightValue": "25G",
+    "badge": "Vị Ngon Đậm Đà",
+    "rating": 4.9,
+    "soldCount": 845,
+    "flavors": [
+      {
+        "id": "wh-03-fl-1",
+        "name": "Strawberry Milkshake",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/mutant-iso-surge-5lbs-011.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-03-fl-2",
+        "name": "Triple Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/mutant-iso-surge-5lbs-012.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-03-fl-3",
+        "name": "Vanilla Ice Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/mutant-iso-surge-5lbs-013.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-03-fl-4",
+        "name": "Cookies N Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/mutant-iso-surge-5lbs-014.webp",
+        "stock": 51
+      },
+      {
+        "id": "wh-03-fl-5",
+        "name": "Orange Dreamsicle",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/mutant-iso-surge-5lbs-015.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "wh-04",
+    "slug": "bsn-syntha-6-isolate-4lbs",
+    "name": "BSN Syntha-6 Protein Isolate 4lbs",
+    "brand": "BSN",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "4LBS (1.82KG)",
+    "price": 1650000,
+    "compareAtPrice": 1890000,
+    "shortDescription": "25g đạm Isolate & Milk Protein Isolate cho cảm giác béo ngậy ít calo.",
+    "description": "BSN Syntha-6 Isolate kết hợp hấp thu nhanh và chậm giúp nuôi dưỡng cơ bắp suốt nhiều giờ.",
+    "servingSize": "38g (1 muỗng)",
+    "servingsPerContainer": 48,
+    "calories": "140 kcal",
+    "protein": "25g",
+    "carbs": "7g",
+    "fat": "2g",
+    "highlightKey": "ISOLATE",
+    "highlightValue": "25G",
+    "badge": "Trải Dài Hấp Thu",
+    "rating": 4.9,
+    "soldCount": 690,
+    "flavors": [
+      {
+        "id": "wh-04-fl-1",
+        "name": "Strawberry Milkshake",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bsn-syntha-6-isolate-4lbs-016.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-04-fl-2",
+        "name": "Chocolate Milkshake",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bsn-syntha-6-isolate-4lbs-017.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-04-fl-3",
+        "name": "Chocolate Cake Batter",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/bsn-syntha-6-isolate-4lbs-018.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-04-fl-4",
+        "name": "Vanilla Ice Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/bsn-syntha-6-isolate-4lbs-019.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-05",
+    "slug": "isopure-zero-carb-3lbs",
+    "name": "Isopure Zero Carb 100% Whey Isolate 3lbs",
+    "brand": "Isopure",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "3LBS (1.36KG)",
+    "price": 1620000,
+    "compareAtPrice": 1850000,
+    "shortDescription": "25g 100% Whey Protein Isolate tinh khiết, 0g đường, bổ sung Vitamin khoáng.",
+    "description": "Lựa chọn hàng đầu cho giai đoạn siết cơ cắt nét với độ tinh khiết cao và không chứa đường thêm.",
+    "servingSize": "31g (1 muỗng)",
+    "servingsPerContainer": 44,
+    "calories": "110 kcal",
+    "protein": "25g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "ZERO CARB",
+    "highlightValue": "25G",
+    "badge": "0g Đường",
+    "rating": 4.9,
+    "soldCount": 730,
+    "flavors": [
+      {
+        "id": "wh-05-fl-1",
+        "name": "Creamy Vanilla",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/isopure-zero-carb-3lbs-020.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-05-fl-2",
+        "name": "Strawberries & Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/isopure-zero-carb-3lbs-021.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-05-fl-3",
+        "name": "Banana Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/isopure-zero-carb-3lbs-022.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-05-fl-4",
+        "name": "Vanilla Salted Caramel",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/isopure-zero-carb-3lbs-023.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-06",
+    "slug": "nutrex-isofit-5lbs",
+    "name": "Nutrex IsoFit 100% Whey Isolate 5lbs",
+    "brand": "Nutrex",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.27KG)",
+    "price": 1920000,
+    "compareAtPrice": 2190000,
+    "shortDescription": "25g Cross-Flow Microfiltered Whey Isolate kết hợp bột dầu MCT sạch.",
+    "description": "Lọc lạnh bảo toàn phân đoạn sinh học tự nhiên, dễ tiêu hóa và hỗ trợ phục hồi cơ nhanh.",
+    "servingSize": "32.3g (1 muỗng)",
+    "servingsPerContainer": 70,
+    "calories": "120 kcal",
+    "protein": "25g",
+    "carbs": "2g",
+    "fat": "1g",
+    "highlightKey": "ISOLATE",
+    "highlightValue": "25G",
+    "badge": "MCT Oil Clean",
+    "rating": 4.9,
+    "soldCount": 540,
+    "flavors": [
+      {
+        "id": "wh-06-fl-1",
+        "name": "Vanilla Bean Ice Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrex-isofit-5lbs-024.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-06-fl-2",
+        "name": "Strawberries & Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrex-isofit-5lbs-025.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-06-fl-3",
+        "name": "Cookies & Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrex-isofit-5lbs-026.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-06-fl-4",
+        "name": "Chocolate Shake",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrex-isofit-5lbs-027.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-07",
+    "slug": "nutrabio-whey-isolate-3-3lbs",
+    "name": "NutraBio 100% Whey Protein Isolate 50 Serv",
+    "brand": "NutraBio",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "3.3LBS (1.5KG)",
+    "price": 1750000,
+    "compareAtPrice": 1990000,
+    "shortDescription": "25g Whey Isolate không chất độn, công bố minh bạch 100% thành phần trên nhãn.",
+    "description": "NutraBio đạt tiêu chuẩn GMP Hoa Kỳ, không phụ gia độn, độ tinh khiết protein vượt trội.",
+    "servingSize": "30g (1 muỗng)",
+    "servingsPerContainer": 50,
+    "calories": "110 kcal",
+    "protein": "25g",
+    "carbs": "1g",
+    "fat": "0.5g",
+    "highlightKey": "PURE WPI",
+    "highlightValue": "25G",
+    "badge": "Minh Bạch 100%",
+    "rating": 4.9,
+    "soldCount": 620,
+    "flavors": [
+      {
+        "id": "wh-07-fl-1",
+        "name": "Gourmet Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrabio-whey-isolate-3-3lbs-028.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-07-fl-2",
+        "name": "Strawberry Ice Cream",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrabio-whey-isolate-3-3lbs-029.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-07-fl-3",
+        "name": "Vanilla Caramel",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrabio-whey-isolate-3-3lbs-030.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-07-fl-4",
+        "name": "Creamy Vanilla",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrabio-whey-isolate-3-3lbs-031.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-08",
+    "slug": "pvl-iso-gold-5lbs",
+    "name": "PVL Iso Gold 100% Whey Isolate 5lbs",
+    "brand": "PVL",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.27KG)",
+    "price": 1850000,
+    "compareAtPrice": 2090000,
+    "shortDescription": "27g Whey Isolate & Hydrolysate kèm lợi khuẩn Probiotic DE111 tiêu hóa êm.",
+    "description": "Chứng nhận Informed-Choice an toàn cho vận động viên, hàm lượng đạm 27g cực cao mỗi muỗng.",
+    "servingSize": "31g (1 muỗng)",
+    "servingsPerContainer": 73,
+    "calories": "120 kcal",
+    "protein": "27g",
+    "carbs": "1g",
+    "fat": "1g",
+    "highlightKey": "PROTEIN",
+    "highlightValue": "27G",
+    "badge": "Informed Choice",
+    "rating": 4.9,
+    "soldCount": 670,
+    "flavors": [
+      {
+        "id": "wh-08-fl-1",
+        "name": "Iced Mocha Cappuccino",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/pvl-iso-gold-5lbs-032.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-08-fl-2",
+        "name": "Triple Milk Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/pvl-iso-gold-5lbs-033.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-08-fl-3",
+        "name": "Strawberry Milkshake",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/pvl-iso-gold-5lbs-034.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-08-fl-4",
+        "name": "Banana Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/pvl-iso-gold-5lbs-035.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-09",
+    "slug": "ryse-loaded-protein-2lbs",
+    "name": "RYSE Loaded Protein Blend 2lbs",
+    "brand": "RYSE",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "2LBS (907G)",
+    "price": 1180000,
+    "compareAtPrice": 1350000,
+    "shortDescription": "25g Whey Isolate làm chủ đạo kèm chất xơ Prebiotic và MCTs hỗ trợ tiêu hóa.",
+    "description": "Bảng hương vị độc quyền kết hợp các thương hiệu bánh kẹo Mỹ nổi tiếng, không gây đầy bụng.",
+    "servingSize": "33g (1 muỗng)",
+    "servingsPerContainer": 27,
+    "calories": "130 kcal",
+    "protein": "25g",
+    "carbs": "3g",
+    "fat": "2g",
+    "highlightKey": "PROTEIN",
+    "highlightValue": "25G",
+    "badge": "Prebiotic Fiber",
+    "rating": 4.9,
+    "soldCount": 510,
+    "flavors": [
+      {
+        "id": "wh-09-fl-1",
+        "name": "Jet-Puffed Birthday Cake",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/ryse-loaded-protein-2lbs-036.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-09-fl-2",
+        "name": "Little Debbie Christmas Tree",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/ryse-loaded-protein-2lbs-037.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-09-fl-3",
+        "name": "Cinnamon Toast",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/ryse-loaded-protein-2lbs-038.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-09-fl-4",
+        "name": "Puffed Marshmallow",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/ryse-loaded-protein-2lbs-039.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-10",
+    "slug": "raw-bum-itholate-protein",
+    "name": "RAW Nutrition BUM Itholate 100% Isolate",
+    "brand": "RAW Nutrition",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "2.1LBS (950G)",
+    "price": 1390000,
+    "compareAtPrice": 1580000,
+    "shortDescription": "25g 100% Micro-Filtered Whey Isolate công thức của Mr. Olympia Chris Bumstead.",
+    "description": "Siêu mịn, 0g đường thừa, tối ưu hóa khả năng hấp thu đạm tinh khiết cho cơ nạc.",
+    "servingSize": "31g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "110 kcal",
+    "protein": "25g",
+    "carbs": "1g",
+    "fat": "0g",
+    "highlightKey": "ISOLATE",
+    "highlightValue": "25G",
+    "badge": "CBUM Signature",
+    "rating": 4.9,
+    "soldCount": 790,
+    "flavors": [
+      {
+        "id": "wh-10-fl-1",
+        "name": "Strawberry BUM Cake",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/raw-bum-itholate-protein-040.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-10-fl-2",
+        "name": "Birthday Cake",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/raw-bum-itholate-protein-041.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-10-fl-3",
+        "name": "Chocolate Peanut Butter",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/raw-bum-itholate-protein-042.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-10-fl-4",
+        "name": "Frosted Frenchie",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/raw-bum-itholate-protein-043.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-11",
+    "slug": "musclemeds-carnivor-isolate-4lbs",
+    "name": "MuscleMeds Carnivor Hydrolyzed Beef Isolate",
+    "brand": "MuscleMeds",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "4LBS (1.82KG)",
+    "price": 1550000,
+    "compareAtPrice": 1790000,
+    "shortDescription": "23g Hydrolyzed Beef Protein Isolate hoàn toàn không chứa sữa và lactose.",
+    "description": "Giải pháp lý tưởng cho người dị ứng lactose, bổ sung 2.5g Creatine tự nhiên hỗ trợ sức mạnh.",
+    "servingSize": "36g (1 muỗng)",
+    "servingsPerContainer": 56,
+    "calories": "120 kcal",
+    "protein": "23g",
+    "carbs": "6g",
+    "fat": "0g",
+    "highlightKey": "NO DAIRY",
+    "highlightValue": "23G",
+    "badge": "0% Lactose",
+    "rating": 4.9,
+    "soldCount": 480,
+    "flavors": [
+      {
+        "id": "wh-11-fl-1",
+        "name": "Vanilla Caramel",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/musclemeds-carnivor-isolate-4lbs-044.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-11-fl-2",
+        "name": "Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/musclemeds-carnivor-isolate-4lbs-045.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-11-fl-3",
+        "name": "Cookies and Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/musclemeds-carnivor-isolate-4lbs-046.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-11-fl-4",
+        "name": "Chocolate Peanut Butter",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/musclemeds-carnivor-isolate-4lbs-047.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-12",
+    "slug": "redcon1-mre-lite-30serv",
+    "name": "Redcon1 MRE Lite Whole Food Protein",
+    "brand": "Redcon1",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "2LBS (870G)",
+    "price": 1090000,
+    "compareAtPrice": 1290000,
+    "shortDescription": "24g đạm từ thực phẩm toàn phần (thịt bò, cá hồi, trứng, đậu Hà Lan) không chứa Whey.",
+    "description": "Thân thiện tuyệt đối với dạ dày nhạy cảm, dễ pha, cung cấp amino axit ổn định.",
+    "servingSize": "29g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "130 kcal",
+    "protein": "24g",
+    "carbs": "4g",
+    "fat": "2g",
+    "highlightKey": "WHOLE FOOD",
+    "highlightValue": "24G",
+    "badge": "Whole Food",
+    "rating": 4.9,
+    "soldCount": 430,
+    "flavors": [
+      {
+        "id": "wh-12-fl-1",
+        "name": "Fudge Brownie",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/redcon1-mre-lite-30serv-048.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-12-fl-2",
+        "name": "Oatmeal Chocolate Chip",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/redcon1-mre-lite-30serv-049.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-12-fl-3",
+        "name": "Banana Nut Bread",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/redcon1-mre-lite-30serv-050.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-12-fl-4",
+        "name": "Peanut Butter Cookie",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/redcon1-mre-lite-30serv-051.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-13",
+    "slug": "perfect-sports-diesel-5lbs",
+    "name": "Perfect Sports Diesel New Zealand Isolate",
+    "brand": "Perfect Sports",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.27KG)",
+    "price": 2050000,
+    "compareAtPrice": 2350000,
+    "shortDescription": "27g Whey Isolate từ bò ăn cỏ tự nhiên New Zealand, 100% ngọt tự nhiên.",
+    "description": "Không hormone tăng trưởng rBGH, hàm lượng Glutamine và BCAA cao vượt trội.",
+    "servingSize": "30g (1 muỗng)",
+    "servingsPerContainer": 75,
+    "calories": "110 kcal",
+    "protein": "27g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "GRASS-FED",
+    "highlightValue": "27G",
+    "badge": "Grass-Fed NZ",
+    "rating": 4.9,
+    "soldCount": 590,
+    "flavors": [
+      {
+        "id": "wh-13-fl-1",
+        "name": "Chocolate Mint",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/perfect-sports-diesel-5lbs-052.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-13-fl-2",
+        "name": "Chocolate Peanut Butter",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/perfect-sports-diesel-5lbs-053.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-13-fl-3",
+        "name": "Chocolate Waffer Crisp",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/perfect-sports-diesel-5lbs-054.webp",
+        "stock": 40
+      },
+      {
+        "id": "wh-13-fl-4",
+        "name": "Triple Rich Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/perfect-sports-diesel-5lbs-055.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "wh-14",
+    "slug": "hitech-precision-protein",
+    "name": "Hi-Tech Precision Embedded Enzyme Whey",
+    "brand": "Hi-Tech Pharma",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "2LBS (908G)",
+    "price": 1120000,
+    "compareAtPrice": 1320000,
+    "shortDescription": "25g Hydrolyzed Whey ứng dụng công nghệ Enzyme nhúng giải phóng Leucine Peptides.",
+    "description": "Tăng tổng hợp protein cơ bắp nhanh hơn whey thông thường nhờ cấu trúc peptide sinh học.",
+    "servingSize": "32g (1 muỗng)",
+    "servingsPerContainer": 28,
+    "calories": "130 kcal",
+    "protein": "25g",
+    "carbs": "3g",
+    "fat": "2g",
+    "highlightKey": "PEPTIDES",
+    "highlightValue": "25G",
+    "badge": "EET Enzyme",
+    "rating": 4.9,
+    "soldCount": 310,
+    "flavors": [
+      {
+        "id": "wh-14-fl-1",
+        "name": "S'mores",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/hitech-precision-protein-056.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-14-fl-2",
+        "name": "Vanilla Ice Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/hitech-precision-protein-057.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-14-fl-3",
+        "name": "Blueberry Muffin",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/hitech-precision-protein-058.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "wh-15",
+    "slug": "vmi-protolyte-isolate",
+    "name": "VMI Sports ProtoLyte Cold-Filtered Isolate",
+    "brand": "VMI Sports",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "5LBS (2.27KG)",
+    "price": 1820000,
+    "compareAtPrice": 2050000,
+    "shortDescription": "25g Whey Isolate lọc lạnh tích hợp phức hợp điện giải bù khoáng sau tập.",
+    "description": "Hương vị tráng miệng phong phú, không đường thừa, phục hồi nước và cơ đồng thời.",
+    "servingSize": "32g (1 muỗng)",
+    "servingsPerContainer": 71,
+    "calories": "120 kcal",
+    "protein": "25g",
+    "carbs": "2g",
+    "fat": "1g",
+    "highlightKey": "ELECTROLYTE",
+    "highlightValue": "25G",
+    "badge": "Thêm Điện Giải",
+    "rating": 4.9,
+    "soldCount": 280,
+    "flavors": [
+      {
+        "id": "wh-15-fl-1",
+        "name": "Chocolate Peanut Butter",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/vmi-protolyte-isolate-059.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-15-fl-2",
+        "name": "Vanilla Cake Batter",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/vmi-protolyte-isolate-060.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-15-fl-3",
+        "name": "Cinnamon Crunch",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/vmi-protolyte-isolate-061.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "wh-16",
+    "slug": "jocko-molk-protein-bag",
+    "name": "JOCKO Mölk Grass-Fed Protein Blend Bag",
+    "brand": "Jocko Fuel",
+    "category": "whey-hydrolyzed",
+    "shape": "pouch",
+    "weightLabel": "2.1LBS (960G)",
+    "price": 1240000,
+    "compareAtPrice": 1420000,
+    "shortDescription": "22g protein bò ăn cỏ kết hợp Probiotics và enzyme tiêu hóa tự nhiên.",
+    "description": "Đóng túi zip tiện lợi, không chất tạo ngọt nhân tạo, phù hợp dùng hàng ngày.",
+    "servingSize": "31g (1 muỗng)",
+    "servingsPerContainer": 31,
+    "calories": "130 kcal",
+    "protein": "22g",
+    "carbs": "4g",
+    "fat": "2g",
+    "highlightKey": "GRASS-FED",
+    "highlightValue": "22G",
+    "badge": "Men Tiêu Hóa",
+    "rating": 4.9,
+    "soldCount": 340,
+    "flavors": [
+      {
+        "id": "wh-16-fl-1",
+        "name": "Banana Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/jocko-molk-protein-bag-062.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-16-fl-2",
+        "name": "Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/jocko-molk-protein-bag-063.webp",
+        "stock": 29
+      },
+      {
+        "id": "wh-16-fl-3",
+        "name": "Chocolate Mint",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/jocko-molk-protein-bag-064.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "wh-17",
+    "slug": "axe-sledge-farm-fed-isolate",
+    "name": "Axe & Sledge Farm Fed Grass-Fed Isolate",
+    "brand": "Axe & Sledge",
+    "category": "whey-hydrolyzed",
+    "shape": "tub",
+    "weightLabel": "2LBS (900G)",
+    "price": 1290000,
+    "compareAtPrice": 1490000,
+    "shortDescription": "22–25g Whey Isolate 100% bò ăn cỏ bổ sung 100mg DigeSEB hỗ trợ tiêu hóa.",
+    "description": "Mỗi muỗng có độ tan hoàn hảo, không vón cục khi pha với nước lạnh.",
+    "servingSize": "29g (1 muỗng)",
+    "servingsPerContainer": 28,
+    "calories": "110 kcal",
+    "protein": "22g",
+    "carbs": "2g",
+    "fat": "1g",
+    "highlightKey": "ISOLATE",
+    "highlightValue": "22G",
+    "badge": "DigeSEB Enzyme",
+    "rating": 4.9,
+    "soldCount": 295,
+    "flavors": [
+      {
+        "id": "wh-17-fl-1",
+        "name": "Peanut Butter N'Honey",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/axe-sledge-farm-fed-isolate-065.webp",
+        "stock": 18
+      },
+      {
+        "id": "wh-17-fl-2",
+        "name": "Sweet Cream Cold Brew",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/axe-sledge-farm-fed-isolate-066.webp",
+        "stock": 29
+      }
+    ]
+  },
+  {
+    "id": "cr-01",
+    "slug": "ostrovit-creatine-monohydrate-500g",
+    "name": "OstroVit Creatine Monohydrate 500g",
+    "brand": "OstroVit",
+    "category": "creatine",
+    "shape": "tub",
+    "weightLabel": "500G (100 SERV)",
+    "price": 390000,
+    "compareAtPrice": 490000,
+    "shortDescription": "Creatine Monohydrate micronized siêu mịn nhập khẩu Ba Lan, 100 lần dùng.",
+    "description": "Bổ sung Creatine tinh khiết 200 mesh giúp tái tạo ATP, tăng sức mạnh bùng nổ và kích thích phồng cơ tự nhiên.",
+    "servingSize": "5g (1 muỗng)",
+    "servingsPerContainer": 100,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CREATINE",
+    "highlightValue": "5000MG",
+    "badge": "Siêu Tiết Kiệm",
+    "rating": 4.9,
+    "soldCount": 1850,
+    "flavors": [
+      {
+        "id": "cr-01-fl-1",
+        "name": "Unflavoured",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-creatine-monohydrate-500g-067.webp",
+        "stock": 18
+      },
+      {
+        "id": "cr-01-fl-2",
+        "name": "Mango",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/ostrovit-creatine-monohydrate-500g-068.webp",
+        "stock": 29
+      },
+      {
+        "id": "cr-01-fl-3",
+        "name": "Cherry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-creatine-monohydrate-500g-069.webp",
+        "stock": 40
+      },
+      {
+        "id": "cr-01-fl-4",
+        "name": "Green Apple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-creatine-monohydrate-500g-070.webp",
+        "stock": 51
+      },
+      {
+        "id": "cr-01-fl-5",
+        "name": "Watermelon",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-creatine-monohydrate-500g-071.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "cr-02",
+    "slug": "nutrabio-micronized-creatine",
+    "name": "NutraBio Micronized Creatine 60 Servings",
+    "brand": "NutraBio",
+    "category": "creatine",
+    "shape": "tub",
+    "weightLabel": "300G (60 SERV)",
+    "price": 540000,
+    "compareAtPrice": 650000,
+    "shortDescription": "5g Micronized Creatine Monohydrate đạt chuẩn dược điển USP, tan nhanh không cặn.",
+    "description": "Tinh khiết 99.98%, kiểm định bởi phòng lab độc lập tại Mỹ, có cả bản không vị và vị trái cây.",
+    "servingSize": "5g (1 muỗng)",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "USP PURE",
+    "highlightValue": "5000MG",
+    "badge": "Chuẩn USP Mỹ",
+    "rating": 4.9,
+    "soldCount": 740,
+    "flavors": [
+      {
+        "id": "cr-02-fl-1",
+        "name": "Unflavored",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrabio-micronized-creatine-072.webp",
+        "stock": 18
+      },
+      {
+        "id": "cr-02-fl-2",
+        "name": "Blue Razz",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrabio-micronized-creatine-073.webp",
+        "stock": 29
+      },
+      {
+        "id": "cr-02-fl-3",
+        "name": "Lemon Burst",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/nutrabio-micronized-creatine-074.webp",
+        "stock": 40
+      },
+      {
+        "id": "cr-02-fl-4",
+        "name": "Paradise Punch",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrabio-micronized-creatine-075.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "cr-03",
+    "slug": "con-cret-creatine-hcl",
+    "name": "CON-CRET Patented Creatine HCl 60 Serv",
+    "brand": "CON-CRET",
+    "category": "creatine",
+    "shape": "tub",
+    "weightLabel": "78G (60 SERV)",
+    "price": 590000,
+    "compareAtPrice": 720000,
+    "shortDescription": "Creatine Hydrochloride độ hòa tan gấp 59 lần, không cần loading, không đầy bụng.",
+    "description": "Liều nhỏ nhưng sinh khả dụng cực cao, không gây tích nước dưới da, phù hợp cả khi siết cơ.",
+    "servingSize": "1.3g (1 muỗng)",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "HCL",
+    "highlightValue": "750MG",
+    "badge": "HCl Không Tích Nước",
+    "rating": 4.9,
+    "soldCount": 620,
+    "flavors": [
+      {
+        "id": "cr-03-fl-1",
+        "name": "Unflavored",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/con-cret-creatine-hcl-076.webp",
+        "stock": 18
+      },
+      {
+        "id": "cr-03-fl-2",
+        "name": "Capsules",
+        "colorHex": "#52525B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/con-cret-creatine-hcl-077.webp",
+        "stock": 29
+      },
+      {
+        "id": "cr-03-fl-3",
+        "name": "Lemon Lime",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/con-cret-creatine-hcl-078.webp",
+        "stock": 40
+      },
+      {
+        "id": "cr-03-fl-4",
+        "name": "Pineapple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/con-cret-creatine-hcl-079.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "cr-04",
+    "slug": "nutrex-creatine-plus-flavor",
+    "name": "Nutrex Micronized Creatine Clean Series",
+    "brand": "Nutrex",
+    "category": "creatine",
+    "shape": "tub",
+    "weightLabel": "300G (60 SERV)",
+    "price": 490000,
+    "compareAtPrice": 590000,
+    "shortDescription": "5g Creatine Monohydrate tinh khiết hỗ trợ sức mạnh, sức bền và phục hồi cơ.",
+    "description": "Công thức sạch không tạp chất, nhiều hương vị trái cây giải khát dễ uống hàng ngày.",
+    "servingSize": "5g (1 muỗng)",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CREATINE",
+    "highlightValue": "5G",
+    "badge": "Tan Mịn 100%",
+    "rating": 4.9,
+    "soldCount": 510,
+    "flavors": [
+      {
+        "id": "cr-04-fl-1",
+        "name": "Pink Lemonade",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/nutrex-creatine-plus-flavor-080.webp",
+        "stock": 18
+      },
+      {
+        "id": "cr-04-fl-2",
+        "name": "Peach Mango",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/nutrex-creatine-plus-flavor-081.webp",
+        "stock": 29
+      },
+      {
+        "id": "cr-04-fl-3",
+        "name": "Unflavored",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrex-creatine-plus-flavor-082.webp",
+        "stock": 40
+      },
+      {
+        "id": "cr-04-fl-4",
+        "name": "Strawberry Watermelon",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrex-creatine-plus-flavor-083.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "cr-05",
+    "slug": "bpi-best-creatine",
+    "name": "BPI Sports BEST Creatine 6-Blend 50 Serv",
+    "brand": "BPI Sports",
+    "category": "creatine",
+    "shape": "tub",
+    "weightLabel": "300G (50 SERV)",
+    "price": 580000,
+    "compareAtPrice": 690000,
+    "shortDescription": "Phức hợp 6 dạng Creatine tiên tiến kết hợp Beta-Alanine và khoáng điện giải.",
+    "description": "Tăng hiệu suất tập tạ tối đa mà không cần pha chế cầu kỳ hay giai đoạn nạp.",
+    "servingSize": "6g (1 muỗng)",
+    "servingsPerContainer": 50,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "6-BLEND",
+    "highlightValue": "4G",
+    "badge": "6 Dạng Creatine",
+    "rating": 4.9,
+    "soldCount": 440,
+    "flavors": [
+      {
+        "id": "cr-05-fl-1",
+        "name": "Watermelon Cooler",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bpi-best-creatine-084.webp",
+        "stock": 18
+      },
+      {
+        "id": "cr-05-fl-2",
+        "name": "Snow Cone",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bpi-best-creatine-085.webp",
+        "stock": 29
+      },
+      {
+        "id": "cr-05-fl-3",
+        "name": "Fruit Punch",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bpi-best-creatine-086.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "cr-06",
+    "slug": "abe-creatine-300g",
+    "name": "ABE Micronized Creatine Powder 300g",
+    "brand": "Applied Nutrition",
+    "category": "creatine",
+    "shape": "tub",
+    "weightLabel": "300G (60 SERV)",
+    "price": 460000,
+    "compareAtPrice": 550000,
+    "shortDescription": "5g Creatine Monohydrate chuẩn Anh Quốc đạt chứng nhận Informed-Sport.",
+    "description": "Dễ dàng pha chung cùng Whey hoặc Pre-Workout giúp bứt phá mức tạ nhanh chóng.",
+    "servingSize": "5g (1 muỗng)",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CREATINE",
+    "highlightValue": "5G",
+    "badge": "UK Informed Sport",
+    "rating": 4.9,
+    "soldCount": 560,
+    "flavors": [
+      {
+        "id": "cr-06-fl-1",
+        "name": "Unflavored",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/abe-creatine-300g-087.webp",
+        "stock": 18
+      },
+      {
+        "id": "cr-06-fl-2",
+        "name": "Blue Razz",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/abe-creatine-300g-088.webp",
+        "stock": 29
+      }
+    ]
+  },
+  {
+    "id": "bc-01",
+    "slug": "barebells-protein-bar-box-12",
+    "name": "Barebells Protein Bar (Hộp 12 Thanh)",
+    "brand": "Barebells",
+    "category": "bar-cookie",
+    "shape": "bar",
+    "weightLabel": "HỘP 12 x 55G",
+    "price": 890000,
+    "compareAtPrice": 1050000,
+    "shortDescription": "20g Protein mỗi thanh socola phủ hạt giòn, không đường thêm, vị ngon như kẹo.",
+    "description": "Bánh Protein Bar bán chạy hàng đầu châu Âu, mềm dẻo bên trong và giòn tan lớp phủ bên ngoài.",
+    "servingSize": "55g (1 thanh)",
+    "servingsPerContainer": 12,
+    "calories": "200 kcal",
+    "protein": "20g",
+    "carbs": "18g",
+    "fat": "7g",
+    "highlightKey": "PROTEIN",
+    "highlightValue": "20G",
+    "badge": "20g Protein · 0g Đường",
+    "rating": 4.9,
+    "soldCount": 930,
+    "flavors": [
+      {
+        "id": "bc-01-fl-1",
+        "name": "Creamy Crisp",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/barebells-protein-bar-box-12-089.webp",
+        "stock": 18
+      },
+      {
+        "id": "bc-01-fl-2",
+        "name": "Caramel Cashew",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/barebells-protein-bar-box-12-090.webp",
+        "stock": 29
+      },
+      {
+        "id": "bc-01-fl-3",
+        "name": "Birthday Cake",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/barebells-protein-bar-box-12-091.webp",
+        "stock": 40
+      },
+      {
+        "id": "bc-01-fl-4",
+        "name": "Cookies & Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/barebells-protein-bar-box-12-092.webp",
+        "stock": 51
+      },
+      {
+        "id": "bc-01-fl-5",
+        "name": "Salty Peanut",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/barebells-protein-bar-box-12-093.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "bc-02",
+    "slug": "legendary-protein-pastry-10",
+    "name": "Legendary Foods Protein Pastry (Hộp 10 Bánh)",
+    "brand": "Legendary Foods",
+    "category": "bar-cookie",
+    "shape": "bar",
+    "weightLabel": "HỘP 10 x 62G",
+    "price": 790000,
+    "compareAtPrice": 920000,
+    "shortDescription": "20g Protein và chỉ 4g Net Carbs trong một chiếc bánh nướng nhân kem thơm lừng.",
+    "description": "Có thể hâm nóng lò vi sóng 10 giây để lớp nhân chảy mềm, thay thế hoàn hảo bữa phụ nhiều đường.",
+    "servingSize": "62g (1 bánh)",
+    "servingsPerContainer": 10,
+    "calories": "180 kcal",
+    "protein": "20g",
+    "carbs": "22g",
+    "fat": "6g",
+    "highlightKey": "PROTEIN",
+    "highlightValue": "20G",
+    "badge": "20g Đạm · Ít Tinh Bột",
+    "rating": 4.9,
+    "soldCount": 610,
+    "flavors": [
+      {
+        "id": "bc-02-fl-1",
+        "name": "Chocolate Cake",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/legendary-protein-pastry-10-094.webp",
+        "stock": 18
+      },
+      {
+        "id": "bc-02-fl-2",
+        "name": "Cookies & Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/legendary-protein-pastry-10-095.webp",
+        "stock": 29
+      },
+      {
+        "id": "bc-02-fl-3",
+        "name": "Hot Fudge",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/legendary-protein-pastry-10-096.webp",
+        "stock": 40
+      },
+      {
+        "id": "bc-02-fl-4",
+        "name": "Birthday Cake",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/legendary-protein-pastry-10-097.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "bc-03",
+    "slug": "quest-protein-cookie-4-pack",
+    "name": "Quest Protein Cookie Bar (Hộp 4 Bánh)",
+    "brand": "Quest Nutrition",
+    "category": "bar-cookie",
+    "shape": "bar",
+    "weightLabel": "HỘP 4 x 59G",
+    "price": 295000,
+    "compareAtPrice": 360000,
+    "shortDescription": "15g Protein hoàn chỉnh cùng 9g chất xơ tự nhiên trong từng chiếc bánh quy mềm.",
+    "description": "Tiện lợi mang theo đi làm, đi tập hoặc du lịch mà vẫn đảm bảo nạp đủ protein sạch.",
+    "servingSize": "59g (1 bánh)",
+    "servingsPerContainer": 4,
+    "calories": "240 kcal",
+    "protein": "15g",
+    "carbs": "22g",
+    "fat": "12g",
+    "highlightKey": "COOKIE",
+    "highlightValue": "15G",
+    "badge": "15g Protein · 9g Xơ",
+    "rating": 4.9,
+    "soldCount": 540,
+    "flavors": [
+      {
+        "id": "bc-03-fl-1",
+        "name": "Chocolate Chip",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/quest-protein-cookie-4-pack-098.webp",
+        "stock": 18
+      },
+      {
+        "id": "bc-03-fl-2",
+        "name": "Double Chocolate Chip",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/quest-protein-cookie-4-pack-099.webp",
+        "stock": 29
+      },
+      {
+        "id": "bc-03-fl-3",
+        "name": "Peanut Butter",
+        "colorHex": "#B45309",
+        "accentHex": "#171717",
+        "image": "/images/products/quest-protein-cookie-4-pack-100.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "ms-01",
+    "slug": "musclemeds-carnivor-mass-gainer",
+    "name": "MuscleMeds Carnivor Mass Big Steer Gainer",
+    "brand": "MuscleMeds",
+    "category": "mass",
+    "shape": "pouch",
+    "weightLabel": "10LBS (4.5KG)",
+    "price": 1690000,
+    "compareAtPrice": 1950000,
+    "shortDescription": "720 Calo & 50g Hydrolyzed Beef Protein + Creatine giúp tăng cân cơ nạc sạch.",
+    "description": "Tối ưu insulin giúp đẩy dưỡng chất vào cơ bắp mà không gây tích mỡ thừa hay đau bụng sữa.",
+    "servingSize": "192g (4 muỗng)",
+    "servingsPerContainer": 24,
+    "calories": "720 kcal",
+    "protein": "50g",
+    "carbs": "125g",
+    "fat": "2.5g",
+    "highlightKey": "BEEF MASS",
+    "highlightValue": "50G",
+    "badge": "Tăng Cân Không Lactose",
+    "rating": 4.9,
+    "soldCount": 680,
+    "flavors": [
+      {
+        "id": "ms-01-fl-1",
+        "name": "Strawberry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/musclemeds-carnivor-mass-gainer-101.webp",
+        "stock": 18
+      },
+      {
+        "id": "ms-01-fl-2",
+        "name": "Vanilla Caramel",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/musclemeds-carnivor-mass-gainer-102.webp",
+        "stock": 29
+      },
+      {
+        "id": "ms-01-fl-3",
+        "name": "Cookies and Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/musclemeds-carnivor-mass-gainer-103.webp",
+        "stock": 40
+      },
+      {
+        "id": "ms-01-fl-4",
+        "name": "Chocolate Fudge",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/musclemeds-carnivor-mass-gainer-104.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "ms-02",
+    "slug": "mutant-mass-whole-food-gainer",
+    "name": "Mutant Mass Whole Food Gainer 15lbs",
+    "brand": "Mutant",
+    "category": "mass",
+    "shape": "pouch",
+    "weightLabel": "15LBS (6.8KG)",
+    "price": 1850000,
+    "compareAtPrice": 2150000,
+    "shortDescription": "1100 Calories & 56g Protein đa nguồn kèm carb sạch từ yến mạch, khoai lang.",
+    "description": "Dành riêng cho người gầy khó tăng cân và vận động viên cần lượng năng lượng lớn mỗi ngày.",
+    "servingSize": "280g (4 muỗng)",
+    "servingsPerContainer": 24,
+    "calories": "1100 kcal",
+    "protein": "56g",
+    "carbs": "192g",
+    "fat": "12g",
+    "highlightKey": "CALORIES",
+    "highlightValue": "1100",
+    "badge": "1100 Calo / Liều",
+    "rating": 4.9,
+    "soldCount": 820,
+    "flavors": [
+      {
+        "id": "ms-02-fl-1",
+        "name": "Cookies N Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/mutant-mass-whole-food-gainer-105.webp",
+        "stock": 18
+      },
+      {
+        "id": "ms-02-fl-2",
+        "name": "Triple Chocolate",
+        "colorHex": "#5C3317",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/mutant-mass-whole-food-gainer-106.webp",
+        "stock": 29
+      },
+      {
+        "id": "ms-02-fl-3",
+        "name": "Vanilla Ice Cream",
+        "colorHex": "#D4A359",
+        "accentHex": "#171717",
+        "image": "/images/products/mutant-mass-whole-food-gainer-107.webp",
+        "stock": 40
+      },
+      {
+        "id": "ms-02-fl-4",
+        "name": "Strawberry Banana",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/mutant-mass-whole-food-gainer-108.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "pw-01",
+    "slug": "redcon1-total-war-preworkout",
+    "name": "Redcon1 Total War Pre-Workout 30 Serv",
+    "brand": "Redcon1",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "441G (30 SERV)",
+    "price": 680000,
+    "compareAtPrice": 790000,
+    "shortDescription": "6g Citrulline Malate, 3.2g Beta-Alanine, 320mg Caffeine bùng nổ xuyên suốt buổi tập.",
+    "description": "Liều dùng chuẩn quân đội giúp tăng lưu lượng máu bơm cơ, tỉnh táo tập trung cao độ.",
+    "servingSize": "14.7g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CITRULLINE",
+    "highlightValue": "6000MG",
+    "badge": "Pump & Energy #1",
+    "rating": 4.9,
+    "soldCount": 1120,
+    "flavors": [
+      {
+        "id": "pw-01-fl-1",
+        "name": "Green Apple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/redcon1-total-war-preworkout-109.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-01-fl-2",
+        "name": "Rainbow Sherbert",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/redcon1-total-war-preworkout-110.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-01-fl-3",
+        "name": "Blue Lemonade",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/redcon1-total-war-preworkout-111.webp",
+        "stock": 40
+      },
+      {
+        "id": "pw-01-fl-4",
+        "name": "Tigers Blood",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/redcon1-total-war-preworkout-112.webp",
+        "stock": 51
+      },
+      {
+        "id": "pw-01-fl-5",
+        "name": "Strawberry Kiwi",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/redcon1-total-war-preworkout-113.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "pw-02",
+    "slug": "abe-ultimate-preworkout",
+    "name": "Applied Nutrition ABE Ultimate Pre-Workout",
+    "brand": "Applied Nutrition",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "315G (30 SERV)",
+    "price": 650000,
+    "compareAtPrice": 760000,
+    "shortDescription": "4g Citrulline, 3.25g Creatine, 2g Beta-Alanine, Vitamin B3 & B12 chống mệt mỏi.",
+    "description": "Dòng Pre-Workout quốc dân dễ dùng, không tụt năng lượng sau tập, hương vị cực thanh mát.",
+    "servingSize": "10.5g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CAFFEINE",
+    "highlightValue": "200MG",
+    "badge": "Bán Chạy Nhất VN",
+    "rating": 4.9,
+    "soldCount": 1340,
+    "flavors": [
+      {
+        "id": "pw-02-fl-1",
+        "name": "Bubblegum",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/abe-ultimate-preworkout-114.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-02-fl-2",
+        "name": "Sour Apple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/abe-ultimate-preworkout-115.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-02-fl-3",
+        "name": "Blue Razz",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/abe-ultimate-preworkout-116.webp",
+        "stock": 40
+      },
+      {
+        "id": "pw-02-fl-4",
+        "name": "Sour Gummy Bear",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/abe-ultimate-preworkout-117.webp",
+        "stock": 51
+      },
+      {
+        "id": "pw-02-fl-5",
+        "name": "Cherry Cola",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/abe-ultimate-preworkout-118.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "pw-03",
+    "slug": "ryse-loaded-pre-30serv",
+    "name": "RYSE Loaded Pre-Workout 30 Servings",
+    "brand": "RYSE",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "390G (30 SERV)",
+    "price": 760000,
+    "compareAtPrice": 890000,
+    "shortDescription": "4.5g L-Citrulline tinh khiết, 3.5g Beta-Alanine & Cognizin tăng tập trung thần kinh.",
+    "description": "Mang lại cảm giác kết nối cơ bắp – trí não rõ rệt ngay sau 15 phút uống.",
+    "servingSize": "13g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CITRULLINE",
+    "highlightValue": "4.5G",
+    "badge": "Think & Pump",
+    "rating": 4.9,
+    "soldCount": 640,
+    "flavors": [
+      {
+        "id": "pw-03-fl-1",
+        "name": "Country Time Blueberry Lemonade",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ryse-loaded-pre-30serv-119.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-03-fl-2",
+        "name": "Sour Punch Watermelon",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ryse-loaded-pre-30serv-120.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-03-fl-3",
+        "name": "Ring Pop Cherry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ryse-loaded-pre-30serv-121.webp",
+        "stock": 40
+      },
+      {
+        "id": "pw-03-fl-4",
+        "name": "Kool Aid Cherry Limeade",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ryse-loaded-pre-30serv-122.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "pw-04",
+    "slug": "bucked-up-bamf-preworkout",
+    "name": "Bucked Up BAMF Nootropic Pre-Workout",
+    "brand": "Bucked Up",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "372G (30 SERV)",
+    "price": 890000,
+    "compareAtPrice": 1050000,
+    "shortDescription": "6g Citrulline Malate kết hợp AlphaSize & Huperzine A cho độ tập trung sắc lẹm.",
+    "description": "Chuyên biệt cho những buổi tập nặng cần mind-muscle connection tuyệt đối.",
+    "servingSize": "12.4g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "HIGH STIM",
+    "highlightValue": "333MG",
+    "badge": "Nootropic Focus",
+    "rating": 4.9,
+    "soldCount": 520,
+    "flavors": [
+      {
+        "id": "pw-04-fl-1",
+        "name": "Anime Ninja Nectar Plum/Pear",
+        "colorHex": "#7E22CE",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bucked-up-bamf-preworkout-123.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-04-fl-2",
+        "name": "POG",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/bucked-up-bamf-preworkout-124.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-04-fl-3",
+        "name": "Cherry Hard Candy",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bucked-up-bamf-preworkout-125.webp",
+        "stock": 40
+      },
+      {
+        "id": "pw-04-fl-4",
+        "name": "Irish Apple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/bucked-up-bamf-preworkout-126.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "pw-05",
+    "slug": "c4-original-preworkout",
+    "name": "Cellucor C4 Original Pre-Workout 30 Serv",
+    "brand": "Cellucor",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "195G (30 SERV)",
+    "price": 590000,
+    "compareAtPrice": 690000,
+    "shortDescription": "150mg Caffeine vừa phải kết hợp CarnoSyn Beta-Alanine và Arginine AKG.",
+    "description": "Phù hợp cả người mới tập hoặc tập buổi tối không muốn quá kích thích hệ thần kinh.",
+    "servingSize": "6.5g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CAFFEINE",
+    "highlightValue": "150MG",
+    "badge": "Cho Người Mới",
+    "rating": 4.9,
+    "soldCount": 970,
+    "flavors": [
+      {
+        "id": "pw-05-fl-1",
+        "name": "Jolly Rancher Apple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/c4-original-preworkout-127.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-05-fl-2",
+        "name": "Cherry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/c4-original-preworkout-128.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-05-fl-3",
+        "name": "Blue Rasperry",
+        "colorHex": "#0284C7",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/c4-original-preworkout-129.webp",
+        "stock": 40
+      },
+      {
+        "id": "pw-05-fl-4",
+        "name": "Watermelon",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/c4-original-preworkout-130.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "pw-06",
+    "slug": "raw-bum-thavage-preworkout",
+    "name": "RAW Nutrition CBUM Thavage Pre-Workout",
+    "brand": "RAW Nutrition",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "540G (40 SERV)",
+    "price": 940000,
+    "compareAtPrice": 1090000,
+    "shortDescription": "6g L-Citrulline, 2.5g Betaine Anhydrous, Tyrosine & Bitter Orange công thức Olympia.",
+    "description": "Cân bằng hoàn hảo giữa sức mạnh pump cơ, năng lượng và tập trung tinh thần.",
+    "servingSize": "13.5g (1 muỗng)",
+    "servingsPerContainer": 40,
+    "calories": "5 kcal",
+    "protein": "0g",
+    "carbs": "1g",
+    "fat": "0g",
+    "highlightKey": "CITRULLINE",
+    "highlightValue": "6G",
+    "badge": "CBUM Formula",
+    "rating": 4.9,
+    "soldCount": 680,
+    "flavors": [
+      {
+        "id": "pw-06-fl-1",
+        "name": "6PEAT",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/raw-bum-thavage-preworkout-131.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-06-fl-2",
+        "name": "Raspberry Lemonade",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/raw-bum-thavage-preworkout-132.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-06-fl-3",
+        "name": "Peach Bum",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/raw-bum-thavage-preworkout-133.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "pw-07",
+    "slug": "vmi-kxr-preworkout",
+    "name": "VMI Sports KXR High-Stim Pre-Workout",
+    "brand": "VMI Sports",
+    "category": "pre-workout",
+    "shape": "tub",
+    "weightLabel": "300G (30 SERV)",
+    "price": 780000,
+    "compareAtPrice": 890000,
+    "shortDescription": "Năng lượng mạnh mẽ 400mg Caffeine đa tầng kết hợp Beta-Alanine kéo dài sức bền.",
+    "description": "Dành cho gymer kinh nghiệm cần mức kích thích mạnh và bền bỉ trong các buổi tập dài.",
+    "servingSize": "10g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CAFFEINE",
+    "highlightValue": "400MG",
+    "badge": "400mg Caffeine Blend",
+    "rating": 4.9,
+    "soldCount": 390,
+    "flavors": [
+      {
+        "id": "pw-07-fl-1",
+        "name": "GUMMY BEAR",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/vmi-kxr-preworkout-134.webp",
+        "stock": 18
+      },
+      {
+        "id": "pw-07-fl-2",
+        "name": "Peach mango rings",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/vmi-kxr-preworkout-135.webp",
+        "stock": 29
+      },
+      {
+        "id": "pw-07-fl-3",
+        "name": "Pink Lemonade",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/vmi-kxr-preworkout-136.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "ea-01",
+    "slug": "nutrex-eaa-hydration-30serv",
+    "name": "Nutrex EAA+ Hydration 30 Servings",
+    "brand": "Nutrex",
+    "category": "eaa",
+    "shape": "tub",
+    "weightLabel": "390G (30 SERV)",
+    "price": 640000,
+    "compareAtPrice": 750000,
+    "shortDescription": "8g 9 Axit Amin thiết yếu (6g BCAA) + Nước dừa, Taurine bù điện giải trong lúc tập.",
+    "description": "Chống dị hóa cơ bắp tối đa khi tập cường độ cao và giữ cơ thể luôn đủ nước.",
+    "servingSize": "13g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "EAA",
+    "highlightValue": "8G",
+    "badge": "8g EAA + Bù Nước",
+    "rating": 4.9,
+    "soldCount": 830,
+    "flavors": [
+      {
+        "id": "ea-01-fl-1",
+        "name": "It's Mango Time",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/nutrex-eaa-hydration-30serv-137.webp",
+        "stock": 18
+      },
+      {
+        "id": "ea-01-fl-2",
+        "name": "Blueberry Lemonade",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrex-eaa-hydration-30serv-138.webp",
+        "stock": 29
+      },
+      {
+        "id": "ea-01-fl-3",
+        "name": "Blood Orange",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/nutrex-eaa-hydration-30serv-139.webp",
+        "stock": 40
+      },
+      {
+        "id": "ea-01-fl-4",
+        "name": "Fruit Punch",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrex-eaa-hydration-30serv-140.webp",
+        "stock": 51
+      },
+      {
+        "id": "ea-01-fl-5",
+        "name": "Maui Twist",
+        "colorHex": "#FF5A00",
+        "accentHex": "#171717",
+        "image": "/images/products/nutrex-eaa-hydration-30serv-141.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "ea-02",
+    "slug": "panda-aminos-bcaa-eaa",
+    "name": "PANDA Supplements Aminos BCAA + EAA",
+    "brand": "PANDA",
+    "category": "eaa",
+    "shape": "tub",
+    "weightLabel": "420G (30 SERV)",
+    "price": 720000,
+    "compareAtPrice": 840000,
+    "shortDescription": "10g tổng hợp BCAA + EAA kết hợp khoáng biển hồng Himalaya & AstraGin tăng hấp thu.",
+    "description": "Phục hồi cơ bắp nhanh giữa các hiệp tập nặng với vị trái cây mát lạnh tự nhiên.",
+    "servingSize": "14g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "EAA",
+    "highlightValue": "10G",
+    "badge": "10g EAA + AstraGin",
+    "rating": 4.9,
+    "soldCount": 490,
+    "flavors": [
+      {
+        "id": "ea-02-fl-1",
+        "name": "Kiwi Strawberry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/panda-aminos-bcaa-eaa-142.webp",
+        "stock": 18
+      },
+      {
+        "id": "ea-02-fl-2",
+        "name": "Lemon Lime Crusher",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/panda-aminos-bcaa-eaa-143.webp",
+        "stock": 29
+      },
+      {
+        "id": "ea-02-fl-3",
+        "name": "Peach Mango",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/panda-aminos-bcaa-eaa-144.webp",
+        "stock": 40
+      },
+      {
+        "id": "ea-02-fl-4",
+        "name": "Pink Lemonade",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/panda-aminos-bcaa-eaa-145.webp",
+        "stock": 51
+      }
+    ]
+  },
+  {
+    "id": "ea-03",
+    "slug": "project1-amino-evolution-eaa",
+    "name": "Project#1 Amino Evolution EAA + Electrolytes",
+    "brand": "Project#1",
+    "category": "eaa",
+    "shape": "tub",
+    "weightLabel": "360G (30 SERV)",
+    "price": 660000,
+    "compareAtPrice": 780000,
+    "shortDescription": "Full-spectrum 9 EAA kèm phức hợp bù điện giải Natri – Kali – Magie.",
+    "description": "Hỗ trợ tổng hợp protein liên tục trong buổi tập, giảm đau nhức cơ ngày hôm sau.",
+    "servingSize": "12g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "EAA",
+    "highlightValue": "7.5G",
+    "badge": "Phục Hồi Nhanh",
+    "rating": 4.9,
+    "soldCount": 360,
+    "flavors": [
+      {
+        "id": "ea-03-fl-1",
+        "name": "Blue Raspberry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/project1-amino-evolution-eaa-146.webp",
+        "stock": 18
+      },
+      {
+        "id": "ea-03-fl-2",
+        "name": "Cherry Ice",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/project1-amino-evolution-eaa-147.webp",
+        "stock": 29
+      },
+      {
+        "id": "ea-03-fl-3",
+        "name": "Sour Apple",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/project1-amino-evolution-eaa-148.webp",
+        "stock": 40
+      }
+    ]
+  },
+  {
+    "id": "bc-bcaa-01",
+    "slug": "xtend-original-bcaa-30serv",
+    "name": "Scivation Xtend Original BCAA 30 Servings",
+    "brand": "Xtend",
+    "category": "bcaa",
+    "shape": "tub",
+    "weightLabel": "420G (30 SERV)",
+    "price": 590000,
+    "compareAtPrice": 690000,
+    "shortDescription": "7g BCAA chuẩn tỉ lệ 2:1:1 + 2.5g Glutamine & 1g Citrulline Malate.",
+    "description": "Không đường, không calo, hỗ trợ chống mỏi cơ và phục hồi sợi cơ tức thì trong buổi tập.",
+    "servingSize": "14g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "BCAA",
+    "highlightValue": "7G",
+    "badge": "BCAA #1 Thế Giới",
+    "rating": 4.9,
+    "soldCount": 1290,
+    "flavors": [
+      {
+        "id": "bc-bcaa-01-fl-1",
+        "name": "Airheads Cherry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/xtend-original-bcaa-30serv-149.webp",
+        "stock": 18
+      },
+      {
+        "id": "bc-bcaa-01-fl-2",
+        "name": "Mango Madness",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/xtend-original-bcaa-30serv-150.webp",
+        "stock": 29
+      },
+      {
+        "id": "bc-bcaa-01-fl-3",
+        "name": "Knockout Fruit Punch",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/xtend-original-bcaa-30serv-151.webp",
+        "stock": 40
+      },
+      {
+        "id": "bc-bcaa-01-fl-4",
+        "name": "Lemon-Lime Squeeze",
+        "colorHex": "#3F7D3B",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/xtend-original-bcaa-30serv-152.webp",
+        "stock": 51
+      },
+      {
+        "id": "bc-bcaa-01-fl-5",
+        "name": "Glacial Grape",
+        "colorHex": "#7E22CE",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/xtend-original-bcaa-30serv-153.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "bc-bcaa-02",
+    "slug": "mutant-hardcore-bcaa-30serv",
+    "name": "Mutant BCAA 9.7 Hardcore Amino 30 Serv",
+    "brand": "Mutant",
+    "category": "bcaa",
+    "shape": "tub",
+    "weightLabel": "348G (30 SERV)",
+    "price": 550000,
+    "compareAtPrice": 650000,
+    "shortDescription": "9.7g Amino Acid trong đó 7.2g BCAA tan tức thì cùng 8 khoáng chất điện giải.",
+    "description": "Bổ sung BioPerine giúp hấp thu axit amin tối ưu, hương vị đậm đà giải khát.",
+    "servingSize": "11.6g (1 muỗng)",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "AMINO",
+    "highlightValue": "9.7G",
+    "badge": "9.7g Amino",
+    "rating": 4.9,
+    "soldCount": 740,
+    "flavors": [
+      {
+        "id": "bc-bcaa-02-fl-1",
+        "name": "Peach",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/mutant-hardcore-bcaa-30serv-154.webp",
+        "stock": 18
+      },
+      {
+        "id": "bc-bcaa-02-fl-2",
+        "name": "Blue Raspberry",
+        "colorHex": "#D9385A",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/mutant-hardcore-bcaa-30serv-155.webp",
+        "stock": 29
+      },
+      {
+        "id": "bc-bcaa-02-fl-3",
+        "name": "Grape",
+        "colorHex": "#7E22CE",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/mutant-hardcore-bcaa-30serv-156.webp",
+        "stock": 40
+      },
+      {
+        "id": "bc-bcaa-02-fl-4",
+        "name": "Mango",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/mutant-hardcore-bcaa-30serv-157.webp",
+        "stock": 51
+      },
+      {
+        "id": "bc-bcaa-02-fl-5",
+        "name": "Lemonade",
+        "colorHex": "#EA580C",
+        "accentHex": "#F59E0B",
+        "image": "/images/products/mutant-hardcore-bcaa-30serv-158.webp",
+        "stock": 62
+      }
+    ]
+  },
+  {
+    "id": "vt-01",
+    "slug": "on-opti-men-multivitamin",
+    "name": "ON Opti-Men Multivitamin Nam Giới",
+    "brand": "Optimum Nutrition",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 150 VIÊN",
+    "price": 590000,
+    "compareAtPrice": 690000,
+    "shortDescription": "Hơn 75 vitamin, khoáng chất, amino axit và chiết xuất thảo mộc chuyên biệt cho nam tập luyện.",
+    "description": "Tăng đề kháng, chuyển hóa năng lượng và hỗ trợ sinh lý nam giới tập gym cường độ cao.",
+    "servingSize": "3 viên/ngày",
+    "servingsPerContainer": 50,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "ACTIVE",
+    "highlightValue": "75+",
+    "badge": "75+ Hoạt Chất",
+    "rating": 4.9,
+    "soldCount": 980,
+    "flavors": [
+      {
+        "id": "vt-01-opt-1",
+        "name": "Hộp 150 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-opti-men-multivitamin-159.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-01-opt-2",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-opti-men-multivitamin-159.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-01-opt-3",
+        "name": "Hộp 240 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-opti-men-multivitamin-159.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-02",
+    "slug": "on-opti-women-multivitamin",
+    "name": "ON Opti-Women Multivitamin Nữ Giới",
+    "brand": "Optimum Nutrition",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 120 VIÊN",
+    "price": 560000,
+    "compareAtPrice": 650000,
+    "shortDescription": "40 thành phần thiết yếu gồm Sắt, Axit Folic, Canxi & Vitamin nhóm B cho nữ năng động.",
+    "description": "Giúp cân bằng nội tiết, đẹp da tóc và duy trì thể lực dẻo dai khi tập luyện.",
+    "servingSize": "2 viên/ngày",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "ACTIVE",
+    "highlightValue": "40+",
+    "badge": "40+ Hoạt Chất",
+    "rating": 4.9,
+    "soldCount": 640,
+    "flavors": [
+      {
+        "id": "vt-02-opt-1",
+        "name": "Hộp 120 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-opti-women-multivitamin-160.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-02-opt-2",
+        "name": "Hộp 60 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-opti-women-multivitamin-160.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-02-opt-3",
+        "name": "Hộp 240 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/on-opti-women-multivitamin-160.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-03",
+    "slug": "codeage-liposomal-vitamin-c",
+    "name": "Codeage Liposomal Vitamin C+ 1500mg",
+    "brand": "Codeage",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 180 VIÊN",
+    "price": 890000,
+    "compareAtPrice": 990000,
+    "shortDescription": "Vitamin C công nghệ bọc Liposome tăng hấp thu gấp nhiều lần, kèm Rosehip & Quercetin.",
+    "description": "Chống oxy hóa mạnh mẽ, tăng đề kháng và tổng hợp collagen bảo vệ khớp.",
+    "servingSize": "3 viên/ngày",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "VIT C",
+    "highlightValue": "1500MG",
+    "badge": "Liposomal",
+    "rating": 4.9,
+    "soldCount": 410,
+    "flavors": [
+      {
+        "id": "vt-03-opt-1",
+        "name": "Hộp 180 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-liposomal-vitamin-c-161.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-03-opt-2",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-liposomal-vitamin-c-161.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-03-opt-3",
+        "name": "Hộp 360 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-liposomal-vitamin-c-161.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-04",
+    "slug": "codeage-athlete-multivitamin",
+    "name": "Codeage Athlete Multivitamin Platinum",
+    "brand": "Codeage",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 120 VIÊN",
+    "price": 920000,
+    "compareAtPrice": 1050000,
+    "shortDescription": "Vitamin tổng hợp lên men toàn phần kết hợp điện giải và men tiêu hóa cho VĐV.",
+    "description": "Bù đắp vi chất tiêu hao sau các buổi cardio & gym cường độ cao.",
+    "servingSize": "4 viên/ngày",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "PLATINUM",
+    "highlightValue": "FULL",
+    "badge": "Vận Động Viên",
+    "rating": 4.9,
+    "soldCount": 330,
+    "flavors": [
+      {
+        "id": "vt-04-opt-1",
+        "name": "Hộp 120 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-athlete-multivitamin-162.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-04-opt-2",
+        "name": "Hộp 60 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-athlete-multivitamin-162.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-04-opt-3",
+        "name": "Hộp 240 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-athlete-multivitamin-162.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-05",
+    "slug": "blackmores-multivitamin-men",
+    "name": "Blackmores Multivitamin For Men Úc",
+    "brand": "Blackmores",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 50 VIÊN",
+    "price": 420000,
+    "compareAtPrice": 490000,
+    "shortDescription": "21 vitamin khoáng chất cùng Tribulus và Kẽm hỗ trợ thể lực nam giới.",
+    "description": "Giảm stress, tăng cường chuyển hóa năng lượng hàng ngày.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 50,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "MULTI",
+    "highlightValue": "21+",
+    "badge": "Hàng Úc",
+    "rating": 4.9,
+    "soldCount": 720,
+    "flavors": [
+      {
+        "id": "vt-05-opt-1",
+        "name": "Hộp 50 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-multivitamin-men-163.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-05-opt-2",
+        "name": "Hộp 100 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-multivitamin-men-163.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-05-opt-3",
+        "name": "Hộp 150 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-multivitamin-men-163.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-06",
+    "slug": "blackmores-bio-c-1000mg",
+    "name": "Blackmores Bio C 1000mg Tăng Đề Kháng",
+    "brand": "Blackmores",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 31 VIÊN",
+    "price": 260000,
+    "compareAtPrice": 320000,
+    "shortDescription": "1000mg Vitamin C kết hợp Bioflavonoids cam chanh êm dịu dạ dày.",
+    "description": "Giúp phục hồi mô liên kết, giảm mệt mỏi và phòng ngừa cảm cúm khi giao mùa.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 31,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "VIT C",
+    "highlightValue": "1000MG",
+    "badge": "Vitamin C",
+    "rating": 4.9,
+    "soldCount": 890,
+    "flavors": [
+      {
+        "id": "vt-06-opt-1",
+        "name": "Hộp 31 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-bio-c-1000mg-164.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-06-opt-2",
+        "name": "Hộp 62 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-bio-c-1000mg-164.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-06-opt-3",
+        "name": "Hộp 150 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-bio-c-1000mg-164.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-07",
+    "slug": "sports-research-d3-k2",
+    "name": "Sports Research Vitamin D3 + K2 MK-7",
+    "brand": "Sports Research",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 60 VIÊN",
+    "price": 540000,
+    "compareAtPrice": 630000,
+    "shortDescription": "5000 IU Vitamin D3 + 100mcg K2 MK-7 hòa tan trong dầu dừa MCT hữu cơ.",
+    "description": "Giúp gắn kết Canxi chính xác vào khung xương, hỗ trợ testosterone tự nhiên.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 60,
+    "calories": "5 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0.5g",
+    "highlightKey": "D3+K2",
+    "highlightValue": "5000IU",
+    "badge": "Chuẩn Vegan Dầu Dừa",
+    "rating": 4.9,
+    "soldCount": 610,
+    "flavors": [
+      {
+        "id": "vt-07-opt-1",
+        "name": "Hộp 60 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/sports-research-d3-k2-165.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-07-opt-2",
+        "name": "Hộp 160 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/sports-research-d3-k2-165.webp",
+        "stock": 39
+      },
+      {
+        "id": "vt-07-opt-3",
+        "name": "Hộp 30 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/sports-research-d3-k2-165.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "vt-08",
+    "slug": "now-zma-recovery-90caps",
+    "name": "NOW Sports ZMA Phục Hồi Giấc Ngủ",
+    "brand": "NOW Foods",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 410000,
+    "compareAtPrice": 480000,
+    "shortDescription": "Kẽm, Magie Aspartate & Vitamin B6 giúp ngủ sâu giấc và phục hồi hệ thần kinh.",
+    "description": "Uống trước khi ngủ 30–60 phút giúp nâng cao chất lượng tái tạo cơ ban đêm.",
+    "servingSize": "3 viên/tối",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "ZMA",
+    "highlightValue": "30 SERV",
+    "badge": "Ngủ Sâu Phục Hồi",
+    "rating": 4.9,
+    "soldCount": 530,
+    "flavors": [
+      {
+        "id": "vt-08-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-zma-recovery-90caps-166.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-08-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-zma-recovery-90caps-166.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-09",
+    "slug": "now-zinc-picolinate-50mg",
+    "name": "NOW Zinc Picolinate 50mg Kẽm Hấp Thu Cao",
+    "brand": "NOW Foods",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 120 VIÊN",
+    "price": 290000,
+    "compareAtPrice": 350000,
+    "shortDescription": "50mg Kẽm dạng Picolinate sinh khả dụng cao nhất cho miễn dịch và da.",
+    "description": "Hỗ trợ sản sinh hormone nam tự nhiên, giảm mụn viêm và tăng cường đề kháng.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 120,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "ZINC",
+    "highlightValue": "50MG",
+    "badge": "Kẽm Hữu Cơ",
+    "rating": 4.9,
+    "soldCount": 840,
+    "flavors": [
+      {
+        "id": "vt-09-opt-1",
+        "name": "Hộp 120 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-zinc-picolinate-50mg-167.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-09-opt-2",
+        "name": "Hộp 60 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-zinc-picolinate-50mg-167.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-10",
+    "slug": "nutrabio-magnesium-glycinate",
+    "name": "NutraBio Magnesium Glycinate 120 Caps",
+    "brand": "NutraBio",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 120 VIÊN",
+    "price": 490000,
+    "compareAtPrice": 570000,
+    "shortDescription": "Magie Chelate Glycinate không gây khó tiêu, giảm chuột rút và căng thẳng thần kinh.",
+    "description": "Hấp thu êm ái, hỗ trợ chất lượng giấc ngủ và phục hồi cơ sau tập.",
+    "servingSize": "2 viên/ngày",
+    "servingsPerContainer": 60,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "MAGNESIUM",
+    "highlightValue": "400MG",
+    "badge": "Thư Giãn Cơ",
+    "rating": 4.9,
+    "soldCount": 410,
+    "flavors": [
+      {
+        "id": "vt-10-opt-1",
+        "name": "Hộp 120 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrabio-magnesium-glycinate-168.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-10-opt-2",
+        "name": "Hộp 240 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/nutrabio-magnesium-glycinate-168.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-11",
+    "slug": "ostrovit-vitamin-b-complex",
+    "name": "OstroVit Vitamin B Complex + Vit C & E",
+    "brand": "OstroVit",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 230000,
+    "compareAtPrice": 290000,
+    "shortDescription": "Đủ 8 vitamin nhóm B kết hợp Vitamin C & E chuyển hóa tinh bột và đạm.",
+    "description": "Giúp ăn ngon, hấp thu dinh dưỡng hiệu quả hơn trong giai đoạn tăng cơ.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 90,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "VIT B",
+    "highlightValue": "8-IN-1",
+    "badge": "Nhóm B Đầy Đủ",
+    "rating": 4.9,
+    "soldCount": 620,
+    "flavors": [
+      {
+        "id": "vt-11-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-vitamin-b-complex-169.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-11-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-vitamin-b-complex-169.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-12",
+    "slug": "ostrovit-d3-k2-calcium",
+    "name": "OstroVit Vitamin D3 + K2 + Calcium",
+    "brand": "OstroVit",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 260000,
+    "compareAtPrice": 320000,
+    "shortDescription": "Bộ ba Canxi, D3 (2000 IU) và K2 MK-7 tối ưu mật độ xương khớp khi tập tạ nặng.",
+    "description": "Công thức chuẩn châu Âu hỗ trợ vận chuyển canxi trực tiếp vào xương.",
+    "servingSize": "2 viên/ngày",
+    "servingsPerContainer": 45,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "CA+D3+K2",
+    "highlightValue": "90 TABS",
+    "badge": "Chắc Khỏe Xương",
+    "rating": 4.9,
+    "soldCount": 510,
+    "flavors": [
+      {
+        "id": "vt-12-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-d3-k2-calcium-170.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-12-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-d3-k2-calcium-170.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-13",
+    "slug": "codeage-adk-vitamins",
+    "name": "Codeage Vitamins A-D3-K1-K2 Cao Cấp",
+    "brand": "Codeage",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 180 VIÊN",
+    "price": 850000,
+    "compareAtPrice": 960000,
+    "shortDescription": "Phức hợp 4 vitamin tan trong dầu (A, D3, K1, K2 MK-4 & MK-7) bảo vệ xương & thị lực.",
+    "description": "Thuần chay, không chất bảo quản, dễ hấp thu cùng bữa ăn.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 180,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "ADK",
+    "highlightValue": "180D",
+    "badge": "5000IU D3 + K2",
+    "rating": 4.9,
+    "soldCount": 380,
+    "flavors": [
+      {
+        "id": "vt-13-opt-1",
+        "name": "Hộp 180 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-adk-vitamins-171.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-13-opt-2",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-adk-vitamins-171.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-14",
+    "slug": "now-magtein-l-threonate",
+    "name": "NOW Magtein Magnesium L-Threonate",
+    "brand": "NOW Foods",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 780000,
+    "compareAtPrice": 890000,
+    "shortDescription": "Dạng Magie duy nhất vượt qua hàng rào máu não, cải thiện trí nhớ và tập trung.",
+    "description": "Giảm stress tinh thần, hỗ trợ giấc ngủ sâu và phục hồi hệ thần kinh trung ương.",
+    "servingSize": "3 viên/ngày",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "MAGTEIN",
+    "highlightValue": "2000MG",
+    "badge": "Tốt Cho Não Bộ",
+    "rating": 4.9,
+    "soldCount": 320,
+    "flavors": [
+      {
+        "id": "vt-14-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-magtein-l-threonate-172.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-14-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-magtein-l-threonate-172.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "vt-15",
+    "slug": "goodhealth-oyster-plus-zinc",
+    "name": "Goodhealth Oyster Plus Zinc Tinh Chất Hàu",
+    "brand": "Goodhealth",
+    "category": "vitamin",
+    "shape": "bottle",
+    "weightLabel": "HỘP 60 VIÊN",
+    "price": 390000,
+    "compareAtPrice": 460000,
+    "shortDescription": "Bột hàu biển New Zealand kết hợp Kẽm tự nhiên và Taurine tăng sinh lực nam.",
+    "description": "Bổ sung kẽm sinh học hỗ trợ nội tiết tố và sức bền thể chất.",
+    "servingSize": "2 viên/ngày",
+    "servingsPerContainer": 30,
+    "calories": "0 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "0g",
+    "highlightKey": "OYSTER+",
+    "highlightValue": "60 CAPS",
+    "badge": "Chiết Xuất Hàu NZ",
+    "rating": 4.9,
+    "soldCount": 710,
+    "flavors": [
+      {
+        "id": "vt-15-opt-1",
+        "name": "Hộp 60 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/goodhealth-oyster-plus-zinc-173.webp",
+        "stock": 30
+      },
+      {
+        "id": "vt-15-opt-2",
+        "name": "Hộp 120 viên",
+        "colorHex": "#262626",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/goodhealth-oyster-plus-zinc-173.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "dc-01",
+    "slug": "sports-research-omega-3-triple",
+    "name": "Sports Research Triple Strength Omega-3",
+    "brand": "Sports Research",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 150 VIÊN",
+    "price": 950000,
+    "compareAtPrice": 1090000,
+    "shortDescription": "1040mg Omega-3 (690mg EPA / 310mg DHA) dạng rTG tinh khiết chỉ trong 1 viên nang.",
+    "description": "Dầu cá cô đặc gấp 3 lần từ cá minh thái Alaska đánh bắt tự nhiên, chứng nhận IFOS 5 sao không kim loại nặng.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 150,
+    "calories": "10 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "1g",
+    "highlightKey": "EPA+DHA",
+    "highlightValue": "1040MG",
+    "badge": "IFOS 5 Sao",
+    "rating": 4.9,
+    "soldCount": 1120,
+    "flavors": [
+      {
+        "id": "dc-01-opt-1",
+        "name": "Hộp 150 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/sports-research-omega-3-triple-174.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-01-opt-2",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/sports-research-omega-3-triple-174.webp",
+        "stock": 39
+      },
+      {
+        "id": "dc-01-opt-3",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/sports-research-omega-3-triple-174.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "dc-02",
+    "slug": "ostrovit-omega-3-extreme-90",
+    "name": "OstroVit Omega 3 Extreme 90 Caps",
+    "brand": "OstroVit",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 290000,
+    "compareAtPrice": 360000,
+    "shortDescription": "1000mg dầu cá hàm lượng cao 500mg EPA + 250mg DHA bảo vệ tim mạch & khớp.",
+    "description": "Giải pháp bổ sung Omega-3 hiệu năng cao với chi phí cực kỳ hợp lý.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 90,
+    "calories": "10 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "1g",
+    "highlightKey": "OMEGA-3",
+    "highlightValue": "750MG",
+    "badge": "500 EPA / 250 DHA",
+    "rating": 4.9,
+    "soldCount": 940,
+    "flavors": [
+      {
+        "id": "dc-02-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-omega-3-extreme-90-175.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-02-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-omega-3-extreme-90-175.webp",
+        "stock": 39
+      },
+      {
+        "id": "dc-02-opt-3",
+        "name": "Hộp 360 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/ostrovit-omega-3-extreme-90-175.webp",
+        "stock": 48
+      }
+    ]
+  },
+  {
+    "id": "dc-03",
+    "slug": "now-ultra-omega-3-90",
+    "name": "NOW Ultra Omega-3 (500 EPA / 250 DHA)",
+    "brand": "NOW Foods",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 490000,
+    "compareAtPrice": 570000,
+    "shortDescription": "Viên nang bao tan trong ruột hoàn toàn không ợ tanh mùi cá, chưng cất phân tử.",
+    "description": "Thương hiệu NOW Foods uy tín hơn 50 năm, kiểm định khắt khe thủy ngân và PCB.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 90,
+    "calories": "10 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "1g",
+    "highlightKey": "NO FISHY",
+    "highlightValue": "750MG",
+    "badge": "Viên Bao Tan Ruột",
+    "rating": 4.9,
+    "soldCount": 860,
+    "flavors": [
+      {
+        "id": "dc-03-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-ultra-omega-3-90-176.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-03-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-ultra-omega-3-90-176.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "dc-04",
+    "slug": "now-dha-500-fish-oil",
+    "name": "NOW Double Strength DHA-500 Fish Oil",
+    "brand": "NOW Foods",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 460000,
+    "compareAtPrice": 540000,
+    "shortDescription": "500mg DHA + 250mg EPA hàm lượng cao chuyên biệt cho trí não, mắt và thần kinh.",
+    "description": "Viên mềm chưng cất phân tử không gây ợ hơi, hỗ trợ tập trung làm việc & tập luyện.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 90,
+    "calories": "10 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "1g",
+    "highlightKey": "DHA",
+    "highlightValue": "500MG",
+    "badge": "500mg DHA Não Bộ",
+    "rating": 4.9,
+    "soldCount": 510,
+    "flavors": [
+      {
+        "id": "dc-04-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-dha-500-fish-oil-177.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-04-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/now-dha-500-fish-oil-177.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "dc-05",
+    "slug": "blackmores-omega-double",
+    "name": "Blackmores Omega Double High Strength",
+    "brand": "Blackmores",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 490000,
+    "compareAtPrice": 580000,
+    "shortDescription": "Hàm lượng Omega-3 gấp đôi dầu cá thường, hương vani dịu nhẹ không tanh.",
+    "description": "Hỗ trợ giảm viêm khớp gối, cổ tay khi squat/bench press nặng.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 90,
+    "calories": "10 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "1g",
+    "highlightKey": "2X OMEGA",
+    "highlightValue": "600MG",
+    "badge": "Không Mùi Tanh",
+    "rating": 4.9,
+    "soldCount": 740,
+    "flavors": [
+      {
+        "id": "dc-05-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-omega-double-178.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-05-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/blackmores-omega-double-178.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "dc-06",
+    "slug": "codeage-amen-omega-3",
+    "name": "Codeage Amen Omega-3 Fish Oil 90 Viên",
+    "brand": "Codeage",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 590000,
+    "compareAtPrice": 690000,
+    "shortDescription": "Dầu cá tinh khiết kết hợp tinh dầu chanh thơm mát, hoàn toàn không tanh.",
+    "description": "Đạt chuẩn cGMP Hoa Kỳ, hỗ trợ tim mạch, thị lực và làn da khỏe mạnh.",
+    "servingSize": "2 viên/ngày",
+    "servingsPerContainer": 45,
+    "calories": "20 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "2g",
+    "highlightKey": "LEMON OIL",
+    "highlightValue": "800MG",
+    "badge": "Bổ Sung Chanh Tươi",
+    "rating": 4.9,
+    "soldCount": 420,
+    "flavors": [
+      {
+        "id": "dc-06-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-amen-omega-3-179.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-06-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/codeage-amen-omega-3-179.webp",
+        "stock": 39
+      }
+    ]
+  },
+  {
+    "id": "dc-07",
+    "slug": "hitech-fish-oil-90ct",
+    "name": "Hi-Tech Pharma Ultra Fish Oil 1200mg",
+    "brand": "Hi-Tech Pharma",
+    "category": "dau-ca",
+    "shape": "bottle",
+    "weightLabel": "HỘP 90 VIÊN",
+    "price": 440000,
+    "compareAtPrice": 520000,
+    "shortDescription": "1200mg dầu cá tinh lọc phân tử hỗ trợ phục hồi khớp và tuần hoàn máu.",
+    "description": "Giúp hạn chế đau mỏi khớp sau buổi tập nặng, phù hợp cho cả nam và nữ.",
+    "servingSize": "1 viên/ngày",
+    "servingsPerContainer": 90,
+    "calories": "10 kcal",
+    "protein": "0g",
+    "carbs": "0g",
+    "fat": "1g",
+    "highlightKey": "FISH OIL",
+    "highlightValue": "1200MG",
+    "badge": "1200mg Fish Oil",
+    "rating": 4.9,
+    "soldCount": 380,
+    "flavors": [
+      {
+        "id": "dc-07-opt-1",
+        "name": "Hộp 90 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/hitech-fish-oil-90ct-180.webp",
+        "stock": 30
+      },
+      {
+        "id": "dc-07-opt-2",
+        "name": "Hộp 180 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/hitech-fish-oil-90ct-180.webp",
+        "stock": 39
+      },
+      {
+        "id": "dc-07-opt-3",
+        "name": "Hộp 360 viên",
+        "colorHex": "#CA8A04",
+        "accentHex": "#FF5A00",
+        "image": "/images/products/hitech-fish-oil-90ct-180.webp",
+        "stock": 48
+      }
+    ]
+  }
+]
