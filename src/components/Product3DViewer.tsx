@@ -142,6 +142,8 @@ export default function Product3DViewer({
   const [dockCollapsed, setDockCollapsed] = useState(false);
   const [arCameraStatus, setArCameraStatus] = useState<'idle' | 'active' | 'fallback'>('idle');
   const [contextLost, setContextLost] = useState(false);
+  const [webglError, setWebglError] = useState(false);
+  const [webglRetryNonce, setWebglRetryNonce] = useState(0);
   const [snapshotNotice, setSnapshotNotice] = useState<string | null>(null);
 
   const modeRef = useRef<ViewerMode>(mode);
@@ -321,7 +323,7 @@ export default function Product3DViewer({
       }
       try {
         stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: arFacing },
+          video: { facingMode: { ideal: arFacing } },
           audio: false,
         });
         if (cancelled) {
@@ -393,22 +395,36 @@ export default function Product3DViewer({
     const stereoLeftCam = new THREE.PerspectiveCamera(44, (width * 0.5) / height, 0.1, 100);
     const stereoRightCam = new THREE.PerspectiveCamera(44, (width * 0.5) / height, 0.1, 100);
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: !isSoftwareGl,
-      alpha: true,
-      preserveDrawingBuffer: false,
-      powerPreference: 'high-performance',
-    });
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.12;
-    renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(width, height);
-    renderer.shadowMap.enabled = !isSoftwareGl;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    let renderer: THREE.WebGLRenderer;
+    let envTex: THREE.Texture;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: !isSoftwareGl,
+        alpha: true,
+        preserveDrawingBuffer: false,
+        powerPreference: 'high-performance',
+      });
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.12;
+      renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(width, height);
+      renderer.shadowMap.enabled = !isSoftwareGl;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    container.innerHTML = '';
-    container.appendChild(renderer.domElement);
+      container.innerHTML = '';
+      container.appendChild(renderer.domElement);
+
+      // Studio Environment Map (RoomEnvironment)
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+      scene.environment = envTex;
+      pmrem.dispose();
+      setWebglError(false);
+    } catch {
+      setWebglError(true);
+      return;
+    }
 
     const handleContextLost = (e: Event) => {
       e.preventDefault();
@@ -417,12 +433,6 @@ export default function Product3DViewer({
     const handleContextRestored = () => setContextLost(false);
     renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
     renderer.domElement.addEventListener('webglcontextrestored', handleContextRestored);
-
-    // Studio Environment Map (RoomEnvironment)
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const envTex = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    scene.environment = envTex;
-    pmrem.dispose();
 
     // 3-Point Lighting Rig + Studio Softbox on GPU
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0xcbd5e1, 0.72);
@@ -562,7 +572,11 @@ export default function Product3DViewer({
     controls.addEventListener('start', handleControlsStart);
 
     if (!isSoftwareGl) {
-      renderer.compile(scene, camera);
+      try {
+        renderer.compile(scene, camera);
+      } catch {
+        // Ignore non-fatal pre-compile errors
+      }
     }
 
     const renderSingleOrStereo = (w: number, h: number) => {
@@ -643,47 +657,52 @@ export default function Product3DViewer({
         presetTransitionRef.current = { active: true, preset: 'hero' };
       },
       capture: () => {
-        const curW = container.clientWidth || width;
-        const curH = container.clientHeight || height;
-        renderSingleOrStereo(curW, curH);
+        try {
+          const curW = container.clientWidth || width;
+          const curH = container.clientHeight || height;
+          renderSingleOrStereo(curW, curH);
 
-        const activeMode = modeRef.current;
-        const glCanvas = renderer.domElement;
-        const slug = currentProductRef.current.slug || 'product';
+          const activeMode = modeRef.current;
+          const glCanvas = renderer.domElement;
+          const slug = currentProductRef.current.slug || 'product';
 
-        if (activeMode === 'ar' && videoRef.current && videoRef.current.readyState >= 2) {
-          const video = videoRef.current;
-          const outCanvas = document.createElement('canvas');
-          outCanvas.width = glCanvas.width;
-          outCanvas.height = glCanvas.height;
-          const outCtx = outCanvas.getContext('2d');
-          if (outCtx) {
-            // Draw cover-fitted camera feed underneath
-            const vw = video.videoWidth || outCanvas.width;
-            const vh = video.videoHeight || outCanvas.height;
-            const scale = Math.max(outCanvas.width / vw, outCanvas.height / vh);
-            const dw = vw * scale;
-            const dh = vh * scale;
-            outCtx.drawImage(
-              video,
-              (outCanvas.width - dw) / 2,
-              (outCanvas.height - dh) / 2,
-              dw,
-              dh,
-            );
-            outCtx.drawImage(glCanvas, 0, 0);
-            const link = document.createElement('a');
-            link.download = `nhaisupplement-${slug}-ar.png`;
-            link.href = outCanvas.toDataURL('image/png');
-            link.click();
-            return;
+          if (activeMode === 'ar' && videoRef.current && videoRef.current.readyState >= 2) {
+            const video = videoRef.current;
+            const outCanvas = document.createElement('canvas');
+            outCanvas.width = glCanvas.width;
+            outCanvas.height = glCanvas.height;
+            const outCtx = outCanvas.getContext('2d');
+            if (outCtx) {
+              // Draw cover-fitted camera feed underneath
+              const vw = video.videoWidth || outCanvas.width;
+              const vh = video.videoHeight || outCanvas.height;
+              const scale = Math.max(outCanvas.width / vw, outCanvas.height / vh);
+              const dw = vw * scale;
+              const dh = vh * scale;
+              outCtx.drawImage(
+                video,
+                (outCanvas.width - dw) / 2,
+                (outCanvas.height - dh) / 2,
+                dw,
+                dh,
+              );
+              outCtx.drawImage(glCanvas, 0, 0);
+              const link = document.createElement('a');
+              link.download = `nhaisupplement-${slug}-ar.png`;
+              link.href = outCanvas.toDataURL('image/png');
+              link.click();
+              return;
+            }
           }
-        }
 
-        const link = document.createElement('a');
-        link.download = `nhaisupplement-${slug}-${activeMode}.png`;
-        link.href = glCanvas.toDataURL('image/png');
-        link.click();
+          const link = document.createElement('a');
+          link.download = `nhaisupplement-${slug}-${activeMode}.png`;
+          link.href = glCanvas.toDataURL('image/png');
+          link.click();
+        } catch {
+          setSnapshotNotice('Không thể lưu ảnh trên trình duyệt này');
+          window.setTimeout(() => setSnapshotNotice(null), 2400);
+        }
       },
     };
 
@@ -834,7 +853,12 @@ export default function Product3DViewer({
 
       const curW = container.clientWidth || width;
       const curH = container.clientHeight || height;
-      renderSingleOrStereo(curW, curH);
+      try {
+        renderSingleOrStereo(curW, curH);
+      } catch {
+        setWebglError(true);
+        return;
+      }
 
       if (isSoftwareGl) {
         animFrameId = window.setTimeout(() => {
@@ -885,7 +909,7 @@ export default function Product3DViewer({
       if (softboxLight) softboxLight.dispose();
       renderer.dispose();
     };
-  }, []);
+  }, [webglRetryNonce]);
 
   const hasMountedSwapRef = useRef(false);
   useEffect(() => {
@@ -990,11 +1014,33 @@ export default function Product3DViewer({
         className="relative z-[5] h-full w-full cursor-grab active:cursor-grabbing"
       />
 
-      {contextLost && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-neutral-100 p-6 text-center">
-          <p className="text-sm font-medium text-neutral-700">
-            WebGL tạm gián đoạn. Vui lòng chọn lại chế độ xem hoặc tải lại trang.
+      {(contextLost || webglError) && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-neutral-100 p-6 text-center">
+          <img
+            src={selectedFlavor.image}
+            alt={`${product.name} - ${selectedFlavor.name}`}
+            referrerPolicy="no-referrer"
+            onError={(e) => {
+              if (e.currentTarget.src !== selectedFlavor.fallbackImage) {
+                e.currentTarget.src = selectedFlavor.fallbackImage;
+              }
+            }}
+            className="mb-3 max-h-44 w-auto object-contain"
+          />
+          <p className="text-xs font-semibold text-neutral-800">
+            Trình duyệt chưa hỗ trợ hoặc đang tạm ngắt WebGL 3D/AR.
           </p>
+          <button
+            type="button"
+            onClick={() => {
+              setContextLost(false);
+              setWebglError(false);
+              setWebglRetryNonce((n) => n + 1);
+            }}
+            className="mt-2.5 bg-neutral-950 px-3.5 py-1.5 text-xs font-bold uppercase text-white transition-colors hover:bg-[#FF5A00]"
+          >
+            Thử khởi động lại 3D
+          </button>
         </div>
       )}
 

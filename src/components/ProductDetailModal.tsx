@@ -14,6 +14,7 @@ import {
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
 import { checkIsMobilePhone, useIsMobilePhone } from '../utils/deviceDetection';
+import ErrorBoundary from './ErrorBoundary';
 import Product3DViewer, { type ViewerMode } from './Product3DViewer';
 
 interface ProductDetailModalProps {
@@ -219,13 +220,46 @@ export default function ProductDetailModal({
                 </div>
               </>
             ) : (
-              <Product3DViewer
-                product={product}
-                selectedFlavor={selectedFlavor}
-                initialMode={visualTab}
-                onModeChange={setVisualTab}
-                compact
-              />
+              <ErrorBoundary
+                resetKeys={[product.id, selectedFlavor.id, visualTab]}
+                fallback={(reset) => (
+                  <div className="flex h-[390px] flex-col items-center justify-center border border-neutral-200 bg-white p-6 text-center sm:h-[450px]">
+                    <img
+                      src={selectedFlavor.image}
+                      alt={`${product.name} - ${selectedFlavor.name}`}
+                      referrerPolicy="no-referrer"
+                      className="mb-3 max-h-52 w-auto object-contain"
+                    />
+                    <p className="text-xs font-semibold text-neutral-700">
+                      Không thể khởi chạy chế độ 3D/AR trên thiết bị này.
+                    </p>
+                    <div className="mt-3 flex gap-2">
+                      <button
+                        type="button"
+                        onClick={reset}
+                        className="bg-neutral-950 px-3 py-1.5 text-xs font-bold uppercase text-white hover:bg-[#FF5A00]"
+                      >
+                        Thử lại 3D
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setVisualTab('image')}
+                        className="border border-neutral-300 px-3 py-1.5 text-xs font-bold uppercase text-neutral-950 hover:border-neutral-950"
+                      >
+                        Xem ảnh sản phẩm
+                      </button>
+                    </div>
+                  </div>
+                )}
+              >
+                <Product3DViewer
+                  product={product}
+                  selectedFlavor={selectedFlavor}
+                  initialMode={visualTab}
+                  onModeChange={setVisualTab}
+                  compact
+                />
+              </ErrorBoundary>
             )}
 
             {/* Warehouse & Authenticity Summary */}

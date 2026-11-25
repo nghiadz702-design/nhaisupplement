@@ -34,6 +34,8 @@ import CartDrawer from './components/CartDrawer';
 import CheckoutPage from './components/CheckoutPage';
 import SupplementConsultAndFaq from './components/SupplementConsultAndFaq';
 import InfoPoliciesContact from './components/InfoPoliciesContact';
+import ErrorBoundary from './components/ErrorBoundary';
+import { withBasePath } from './utils/assetPath';
 
 type SortOption = 'popular' | 'price-asc' | 'price-desc' | 'flavors-desc';
 type PageRoute = 'home' | 'checkout';
@@ -159,8 +161,9 @@ function loadInitialCart(): CartItem[] {
     if (!Array.isArray(parsed)) return [];
     const hydrated: CartItem[] = [];
     for (const row of parsed) {
+      if (!row || typeof row !== 'object') continue;
       const product = PRODUCTS.find((p) => p.id === row.productId);
-      if (!product) continue;
+      if (!product || !product.flavors.length) continue;
       const flavor =
         product.flavors.find((f) => f.id === row.flavorId) ?? product.flavors[0];
       if (!flavor) continue;
@@ -187,7 +190,8 @@ function loadInitialPrefs(): StoredPrefs {
   try {
     const raw = window.localStorage.getItem(PREFS_STORAGE_KEY);
     if (!raw) return defaults;
-    const parsed = JSON.parse(raw) as Partial<StoredPrefs>;
+    const parsed = JSON.parse(raw) as Partial<StoredPrefs> | null;
+    if (!parsed || typeof parsed !== 'object') return defaults;
     return {
       isFirstOrder: typeof parsed.isFirstOrder === 'boolean' ? parsed.isFirstOrder : true,
       shakerId: SHAKER_OPTIONS.some((s) => s.id === parsed.shakerId)
@@ -202,7 +206,15 @@ function loadInitialPrefs(): StoredPrefs {
 
 function detectInitialRoute(): PageRoute {
   if (typeof window === 'undefined') return 'home';
-  return window.location.pathname.endsWith('/thanh-toan') ? 'checkout' : 'home';
+  const { pathname, hash } = window.location;
+  if (
+    pathname.endsWith('/thanh-toan') ||
+    hash === '#/thanh-toan' ||
+    hash === '#thanh-toan'
+  ) {
+    return 'checkout';
+  }
+  return 'home';
 }
 
 export default function App() {
@@ -268,13 +280,17 @@ export default function App() {
     }
   }, [prefs]);
 
-  // Browser back/forward route sync
+  // Browser back/forward & hash route sync
   useEffect(() => {
-    const onPopState = () => {
+    const onRouteChange = () => {
       setPageRoute(detectInitialRoute());
     };
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
+    window.addEventListener('popstate', onRouteChange);
+    window.addEventListener('hashchange', onRouteChange);
+    return () => {
+      window.removeEventListener('popstate', onRouteChange);
+      window.removeEventListener('hashchange', onRouteChange);
+    };
   }, []);
 
   // Hero slideshow auto-rotate (4.5s)
@@ -306,8 +322,9 @@ export default function App() {
     setMobileMenuOpen(false);
     setPageRoute('checkout');
     try {
-      if (!window.location.pathname.endsWith('/thanh-toan')) {
-        window.history.pushState({}, '', '/thanh-toan');
+      const checkoutUrl = `${withBasePath('/')}#/thanh-toan`;
+      if (`${window.location.pathname}${window.location.hash}` !== checkoutUrl) {
+        window.history.pushState({}, '', checkoutUrl);
       }
     } catch {
       // Ignore history restriction
@@ -319,8 +336,14 @@ export default function App() {
     setMobileMenuOpen(false);
     setPageRoute('home');
     try {
-      if (window.location.pathname.endsWith('/thanh-toan')) {
-        window.history.pushState({}, '', sectionHash ? `/${sectionHash}` : '/');
+      const baseHome = withBasePath('/');
+      const targetUrl = sectionHash ? `${baseHome}${sectionHash}` : baseHome;
+      if (
+        window.location.pathname.endsWith('/thanh-toan') ||
+        window.location.hash === '#/thanh-toan' ||
+        window.location.hash === '#thanh-toan'
+      ) {
+        window.history.pushState({}, '', targetUrl);
       }
     } catch {
       // Ignore history restriction
@@ -398,7 +421,7 @@ export default function App() {
     setShowcaseFlavorId(nextProd.flavors[0].id);
   };
 
-  const activeSlide = HERO_SLIDES[heroSlideIdx];
+  const activeSlide = HERO_SLIDES[heroSlideIdx] ?? HERO_SLIDES[0];
 
   return (
     <div className="min-h-screen bg-white text-neutral-950">
@@ -627,7 +650,7 @@ export default function App() {
                   onClick={navigateToCheckout}
                   className="mt-1 flex items-center justify-between bg-[#FF5A00] px-3 py-2 text-left text-xs font-bold uppercase text-white"
                 >
-                  <span>Đến trang thanh toán (/thanh-toan)</span>
+                  <span>Đến trang thanh toán</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
               )}
@@ -1056,11 +1079,35 @@ export default function App() {
 
                 {/* Live Three.js 3D + AR + VR Viewport */}
                 <div className="lg:col-span-7">
-                  <Product3DViewer
-                    product={showcaseProduct}
-                    selectedFlavor={showcaseFlavor}
-                    initialMode="3d"
-                  />
+                  <ErrorBoundary
+                    resetKeys={[showcaseProduct.id, showcaseFlavor.id]}
+                    fallback={(reset) => (
+                      <div className="flex h-[500px] flex-col items-center justify-center border border-neutral-800 bg-neutral-900 p-6 text-center text-white sm:h-[580px]">
+                        <img
+                          src={showcaseFlavor.image}
+                          alt={`${showcaseProduct.name} - ${showcaseFlavor.name}`}
+                          referrerPolicy="no-referrer"
+                          className="mb-4 max-h-56 w-auto object-contain"
+                        />
+                        <p className="text-xs font-semibold text-neutral-300">
+                          Trình xem 3D/AR tạm gián đoạn trên trình duyệt này.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={reset}
+                          className="mt-3 bg-[#FF5A00] px-4 py-2 text-xs font-bold uppercase text-white hover:bg-white hover:text-neutral-950"
+                        >
+                          Khởi động lại 3D
+                        </button>
+                      </div>
+                    )}
+                  >
+                    <Product3DViewer
+                      product={showcaseProduct}
+                      selectedFlavor={showcaseFlavor}
+                      initialMode="3d"
+                    />
+                  </ErrorBoundary>
                 </div>
               </div>
             </div>
