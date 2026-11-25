@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Eye, ShoppingBag } from 'lucide-react';
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
+import { useIsMobilePhone } from '../utils/deviceDetection';
 import type { ViewerMode } from './Product3DViewer';
 
 interface ProductCardProps {
@@ -15,6 +16,7 @@ export default function ProductCard({
   onOpenDetail,
   onAddToCart,
 }: ProductCardProps) {
+  const isMobilePhone = useIsMobilePhone();
   const [selectedFlavor, setSelectedFlavor] = useState<ProductFlavor>(product.flavors[0]);
   const [imgFadeKey, setImgFadeKey] = useState(0);
 
@@ -60,11 +62,6 @@ export default function ProductCard({
               -{discountPercent}%
             </span>
           )}
-          {product.isWaterMixPowder && (
-            <span className="bg-neutral-950 px-2 py-0.5 text-[11px] font-semibold text-white">
-              Tặng bình lắc
-            </span>
-          )}
         </div>
 
         {/* Live Active Flavor Tag on Image Frame */}
@@ -76,15 +73,15 @@ export default function ProductCard({
           <span className="max-w-[130px] truncate">{selectedFlavor.name}</span>
         </div>
 
-        {/* Quick 3D / AR / VR Trigger */}
+        {/* Quick 3D / AR Trigger */}
         <button
           type="button"
           onClick={() => onOpenDetail(product, selectedFlavor, '3d')}
           className="absolute bottom-3 right-3 flex items-center gap-1 border border-neutral-900 bg-white/95 px-2.5 py-1.5 text-[11px] font-bold text-neutral-950 transition-colors hover:bg-[#FF5A00] hover:border-[#FF5A00] hover:text-white"
-          title="Xem 3D / AR / VR sản phẩm"
+          title={isMobilePhone ? 'Xem 3D / AR / VR sản phẩm' : 'Xem 3D / AR sản phẩm'}
         >
           <Box className="h-3.5 w-3.5" />
-          <span>3D · AR · VR</span>
+          <span>{isMobilePhone ? '3D · AR · VR' : '3D · AR'}</span>
         </button>
       </div>
 

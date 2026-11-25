@@ -10,7 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import type { CartItem } from '../types/product';
-import { SHAKER_OPTIONS, formatVND } from '../data/catalog';
+import { FREE_SHAKER_MIN_SUBTOTAL, SHAKER_OPTIONS, formatVND } from '../data/catalog';
 import { VOUCHERS, evaluateVoucher } from '../data/vouchers';
 
 interface CartDrawerProps {
@@ -51,7 +51,9 @@ export default function CartDrawer({
     return sum + unitPrice * item.quantity;
   }, 0);
 
-  const hasFreeShaker = items.some((item) => item.product.isWaterMixPowder);
+  const hasFreeShaker = subtotal >= FREE_SHAKER_MIN_SUBTOTAL;
+  const remainingForShaker = Math.max(0, FREE_SHAKER_MIN_SUBTOTAL - subtotal);
+  const shakerProgressPct = Math.min(100, Math.round((subtotal / FREE_SHAKER_MIN_SUBTOTAL) * 100));
   const voucherEval = evaluateVoucher(voucherCode, subtotal);
   const baseShippingFee = items.length === 0 ? 0 : 25000;
   const finalShippingFee = isFirstOrder ? 0 : baseShippingFee;
@@ -100,7 +102,7 @@ export default function CartDrawer({
                 onClick={onClose}
                 className="mt-6 bg-[#FF5A00] px-6 py-3 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-neutral-950"
               >
-                Khám phá 62 sản phẩm
+                Khám phá sản phẩm
               </button>
             </div>
           ) : (
@@ -144,11 +146,6 @@ export default function CartDrawer({
                             />
                             <span>Vị: {item.selectedFlavor.name}</span>
                           </div>
-                          {item.product.isWaterMixPowder && (
-                            <span className="mt-1 inline-block text-[10px] font-semibold text-[#FF5A00]">
-                              Bột pha nước · Hợp lệ tặng Bình Lắc
-                            </span>
-                          )}
                         </div>
 
                         <div className="mt-2 flex items-center justify-between">
@@ -183,7 +180,7 @@ export default function CartDrawer({
                 })}
               </div>
 
-              {/* Complementary Shaker Gift Module (ONLY for water-mix powder products) */}
+              {/* Complementary Shaker Gift Module (Orders >= 500,000đ) */}
               <div
                 className={`border p-3.5 ${
                   hasFreeShaker
@@ -201,7 +198,7 @@ export default function CartDrawer({
                     <span className="text-xs font-bold text-neutral-950">
                       {hasFreeShaker
                         ? 'Quà tặng tự động: Bình Lắc 0đ'
-                        : 'Chưa đủ điều kiện tặng Bình Lắc'}
+                        : 'Đơn từ 500.000đ tặng Bình Lắc 0đ'}
                     </span>
                   </div>
                   {hasFreeShaker && (
@@ -212,7 +209,7 @@ export default function CartDrawer({
                 {hasFreeShaker ? (
                   <div className="mt-2.5 space-y-2">
                     <p className="text-[11px] text-neutral-700">
-                      Đơn hàng có sản phẩm dạng bột pha với nước. Chọn mẫu bình lắc tặng kèm:
+                      Đơn hàng đã đạt từ 500.000đ. Chọn mẫu bình lắc tặng kèm:
                     </p>
                     <div className="space-y-1.5">
                       {SHAKER_OPTIONS.map((opt) => (
@@ -244,11 +241,22 @@ export default function CartDrawer({
                     </div>
                   </div>
                 ) : (
-                  <p className="mt-1.5 text-[11px] leading-relaxed text-neutral-600">
-                    Bình lắc 0đ chỉ áp dụng khi đơn hàng có ít nhất 1 sản phẩm dạng bột pha với nước
-                    (Whey, Creatine, Mass, Pre-Workout, EAA, BCAA). Bánh Bar, Vitamin &amp; Dầu cá
-                    không áp dụng quà bình lắc.
-                  </p>
+                  <div className="mt-2 space-y-1.5">
+                    <p className="text-[11px] leading-relaxed text-neutral-600">
+                      Mua thêm{' '}
+                      <strong className="font-mono text-[#FF5A00]">
+                        {formatVND(remainingForShaker)}
+                      </strong>{' '}
+                      nữa (đạt từ {formatVND(FREE_SHAKER_MIN_SUBTOTAL)}) để hệ thống tự động mở mục
+                      chọn tặng Bình Lắc 700ml miễn phí.
+                    </p>
+                    <div className="h-1.5 w-full overflow-hidden bg-neutral-200">
+                      <div
+                        className="h-full bg-[#FF5A00] transition-all duration-300"
+                        style={{ width: `${shakerProgressPct}%` }}
+                      />
+                    </div>
+                  </div>
                 )}
               </div>
 
@@ -315,7 +323,7 @@ export default function CartDrawer({
                   />
                   <div className="text-xs">
                     <span className="font-bold text-neutral-950">
-                      Áp dụng Freeship cho người đầu tiên (Đơn đầu = 0đ ship)
+                      Áp dụng Freeship cho đơn hàng đầu tiên (0đ ship)
                     </span>
                     <p className="mt-0.5 text-[11px] text-neutral-600">
                       Kho hàng Hà Nội giao nhanh toàn quốc. Giảm 100% phí vận chuyển cho khách hàng
@@ -358,7 +366,7 @@ export default function CartDrawer({
               </div>
               {hasFreeShaker && (
                 <div className="flex justify-between font-semibold text-[#FF5A00]">
-                  <span>Bình lắc tặng kèm (Đơn bột pha nước)</span>
+                  <span>Bình lắc tặng kèm (Đơn từ 500.000đ)</span>
                   <span className="font-mono">0đ</span>
                 </div>
               )}

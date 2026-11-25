@@ -1,6 +1,6 @@
 {
   "name": "NhaiSupplement",
-  "description": "NhaiSupplement (nhaisupplement.com) - Cửa hàng thực phẩm bổ sung thể hình tại Hà Nội, ship toàn quốc. Đầy đủ 62 sản phẩm, 212 hương vị, xem 3D/AR/VR trực quan, tặng bình lắc cho sản phẩm bột pha nước và freeship cho đơn hàng đầu tiên.",
+  "description": "NhaiSupplement (nhaisupplement.com) - Cửa hàng thực phẩm bổ sung thể hình tại Hà Nội, ship toàn quốc. Xem 3D/AR/VR trực quan, tự động tặng bình lắc cho đơn hàng từ 500.000đ và freeship cho đơn hàng đầu tiên.",
   "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

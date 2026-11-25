@@ -66,12 +66,12 @@ export default function InfoPoliciesContact() {
 
               <div>
                 <h3 className="font-bold text-neutral-950">
-                  3. Tặng bình lắc cho sản phẩm dạng bột pha với nước
+                  3. Tặng bình lắc 0đ cho đơn hàng từ 500.000đ
                 </h3>
                 <p className="mt-1 text-xs text-neutral-600">
-                  Quà tặng bình lắc thể thao 700ml (0đ) chỉ áp dụng khi đơn hàng có sản phẩm dạng bột
-                  pha với nước (Whey &amp; Hydrolyzed, Creatine bột, Mass, Pre-Workout, EAA, BCAA).
-                  Không áp dụng cho Bar/Cookie, Vitamin viên và Dầu cá.
+                  Mọi đơn hàng có tổng giá trị sản phẩm từ 500.000đ trở lên sẽ tự động hiển thị mục
+                  chọn tặng kèm 1 bình lắc thể thao 700ml (0đ) ngay trong giỏ hàng và trang thanh
+                  toán.
                 </p>
               </div>
             </div>

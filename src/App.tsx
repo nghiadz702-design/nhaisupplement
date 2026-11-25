@@ -5,14 +5,12 @@ import {
   Box,
   ChevronLeft,
   ChevronRight,
-  Gift,
   MapPin,
   Menu,
   MessageCircle,
   Phone,
   Search,
   ShoppingBag,
-  Truck,
   X,
 } from 'lucide-react';
 import {
@@ -36,7 +34,6 @@ import CartDrawer from './components/CartDrawer';
 import CheckoutPage from './components/CheckoutPage';
 import SupplementConsultAndFaq from './components/SupplementConsultAndFaq';
 import InfoPoliciesContact from './components/InfoPoliciesContact';
-import { withBasePath } from './utils/assetPath';
 
 type SortOption = 'popular' | 'price-asc' | 'price-desc' | 'flavors-desc';
 type PageRoute = 'home' | 'checkout';
@@ -56,32 +53,99 @@ interface StoredPrefs {
   voucherCode: string;
 }
 
-const HERO_SLIDES = [
+const HERO_SLIDE_PRODUCT_IDS = ['wh-01', 'pw-01', 'dc-01'] as const;
+
+const HERO_SLIDES = HERO_SLIDE_PRODUCT_IDS.map((pid, idx) => {
+  const product = PRODUCTS.find((p) => p.id === pid) ?? PRODUCTS[idx] ?? PRODUCTS[0];
+  const flavor = product.flavors[0];
+  return {
+    product,
+    flavor,
+    src: flavor?.image ?? product.defaultImage,
+    fallbackSrc: flavor?.fallbackImage ?? product.defaultImage,
+    alt: `${product.name} - ${flavor?.name ?? ''}`,
+    tag: `${product.categoryName.toUpperCase()} · ${product.weightLabel}`,
+    caption: `${product.name}${flavor ? ` · Vị ${flavor.name}` : ''}`,
+  };
+});
+
+interface FooterPolicyItem {
+  label: string;
+  title: string;
+  content: string;
+  sectionHref?: string;
+}
+
+const FOOTER_SUPPORT_LINKS: FooterPolicyItem[] = [
   {
-    src: BRAND_INFO.heroImage,
-    alt: 'NhaiSupplement Whey Protein và Bình Lắc Studio',
-    tag: 'WHEY ISOLATE & HYDROLYZED',
-    caption: 'Tặng bình lắc 0đ cho sản phẩm dạng bột pha với nước',
+    label: 'Hướng dẫn thanh toán',
+    title: 'Hướng dẫn thanh toán tại NhaiSupplement',
+    content:
+      'Quý khách có thể lựa chọn 2 hình thức thanh toán linh hoạt: (1) Thanh toán tiền mặt khi nhận hàng (COD) sau khi kiểm tra tem nhãn và đúng hương vị đã đặt; (2) Chuyển khoản nhanh qua mã VietQR xác nhận tức thì tại bước thanh toán.',
   },
   {
-    src: withBasePath('/src/assets/images/category_powder_tub_1795535036984.jpg'),
-    alt: 'Thực phẩm bổ sung Whey, Pre-Workout và Creatine NhaiSupplement',
-    tag: '212 HƯƠNG VỊ ĐỔI ẢNH 1:1',
-    caption: 'Chọn từng hương vị — hiển thị đúng ảnh thực tế của vị đó',
+    label: 'Hướng dẫn mua hàng Online',
+    title: 'Hướng dẫn mua hàng Online nhanh chóng',
+    content:
+      'Bước 1: Chọn sản phẩm và bấm đúng hương vị mong muốn. Bước 2: Thêm vào giỏ hàng — đơn hàng từ 500.000đ sẽ tự động mở mục chọn Bình lắc 0đ và đơn đầu tiên được Freeship. Bước 3: Nhập địa chỉ nhận hàng tại trang thanh toán để kho Hà Nội đóng gói giao ngay.',
   },
   {
-    src: withBasePath('/src/assets/images/category_vitamin_softgel_1795535039343.jpg'),
-    alt: 'Vitamin, Dầu cá Omega-3 và viên uống hỗ trợ sức khỏe',
-    tag: 'VITAMIN & DẦU CÁ CHÍNH HÃNG',
-    caption: 'Kho Hà Nội giao hỏa tốc 2–4h · Ship toàn quốc Freeship đơn đầu',
+    label: 'Chính sách khách hàng',
+    title: 'Chính sách ưu đãi khách hàng',
+    content:
+      'NhaiSupplement tự động áp dụng Freeship cho đơn hàng đầu tiên, tặng miễn phí Bình lắc 700ml cho mọi đơn hàng từ 500.000đ và hỗ trợ các mã giảm giá NHAI10 (giảm 10%), NHAI100K (giảm 100.000đ cho đơn từ 1.500.000đ).',
+    sectionHref: '#chinh-sach',
+  },
+  {
+    label: 'Góp ý, Khiếu Nại',
+    title: 'Tiếp nhận góp ý & khiếu nại',
+    content:
+      'Mọi phản hồi về chất lượng sản phẩm, thái độ phục vụ hoặc tiến độ giao hàng xin gửi trực tiếp qua Hotline/Zalo 094618430 hoặc email nghiatrinh808@gmail.com để được phản hồi và xử lý trong ngày.',
+    sectionHref: '#lien-he',
+  },
+];
+
+const FOOTER_POLICY_LINKS: FooterPolicyItem[] = [
+  {
+    label: 'Chính sách, quy định chung',
+    title: 'Chính sách & Quy định chung',
+    content:
+      'Mọi sản phẩm thực phẩm bổ sung thể hình đăng bán trên nhaisupplement.com đều minh bạch nguồn gốc, giá niêm yết, giá trị dinh dưỡng và hình ảnh bao bì thực tế theo từng hương vị để khách hàng dễ dàng đối chiếu khi nhận hàng.',
+    sectionHref: '#chinh-sach',
+  },
+  {
+    label: 'Chính sách đổi trả và hoàn tiền',
+    title: 'Chính sách đổi trả và hoàn tiền 7 ngày',
+    content:
+      'Hỗ trợ đổi mới 1–1 hoặc hoàn tiền trong vòng 07 ngày kể từ khi nhận hàng nếu sản phẩm giao sai hương vị/trọng lượng, rách tem niêm phong khi vận chuyển hoặc có lỗi từ nhà sản xuất. Miễn phí cước vận chuyển đổi trả 2 chiều.',
+    sectionHref: '#doi-tra',
+  },
+  {
+    label: 'Chính sách vận chuyển hàng',
+    title: 'Chính sách vận chuyển toàn quốc từ kho Hà Nội',
+    content:
+      'Tất cả đơn hàng xuất trực tiếp từ kho Hà Nội (Quận Đống Đa). Giao hỏa tốc nội thành Hà Nội trong 2–4 giờ; TP.HCM, Đà Nẵng và các tỉnh thành khác nhận hàng sau 1–3 ngày. Đơn hàng đầu tiên được Freeship 0đ toàn quốc.',
+    sectionHref: '#chinh-sach',
+  },
+  {
+    label: 'Bảo mật thông tin khách hàng',
+    title: 'Chính sách bảo mật thông tin khách hàng',
+    content:
+      'Thông tin họ tên, số điện thoại và địa chỉ giao hàng của quý khách chỉ được dùng duy nhất cho mục đích đóng gói, giao nhận đơn hàng và hỗ trợ đổi trả/bảo hành sản phẩm, tuyệt đối không chia sẻ cho bên thứ ba.',
+  },
+  {
+    label: 'Chính sách hàng chính hãng',
+    title: 'Cam kết hàng chính hãng 100%',
+    content:
+      '100% sản phẩm tại NhaiSupplement nguyên seal từ thương hiệu chính hãng (Optimum Nutrition, Dymatize, Rule 1, Nutrabio, Redcon1, Sports Research...). Khách hàng được kiểm tra bao bì, mã vạch và hạn sử dụng trước khi thanh toán.',
   },
 ];
 
 const BENEFIT_TICKER_ITEMS = [
   'KHO HÀ NỘI · GIAO NHANH TOÀN QUỐC',
   'FREESHIP CHO ĐƠN HÀNG ĐẦU TIÊN',
-  'TẶNG BÌNH LẮC 0Đ CHO SẢN PHẨM DẠNG BỘT PHA NƯỚC',
-  '62 SẢN PHẨM · 212 HƯƠNG VỊ ĐỔI ẢNH THỰC TẾ 1:1',
+  'TẶNG BÌNH LẮC 0Đ CHO ĐƠN HÀNG TỪ 500.000Đ',
+  'ĐỔI ẢNH THEO TỪNG HƯƠNG VỊ THỰC TẾ 1:1',
   'MÃ NHAI10 GIẢM 10% · NHAI100K GIẢM 100.000Đ',
   'TRÌNH XEM 3D XOAY 360° · AR CAMERA · VR STEREO',
   'ĐỔI TRẢ MIỄN PHÍ 7 NGÀY · KIỂM TRA SEAL TRƯỚC KHI NHẬN',
@@ -146,7 +210,6 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<'all' | CategorySlug>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('popular');
-  const [onlyPowderShaker, setOnlyPowderShaker] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Hero slideshow & scroll-to-top progress ring
@@ -160,6 +223,7 @@ export default function App() {
     flavor: ProductFlavor;
     tab: 'image' | ViewerMode;
   } | null>(null);
+  const [activePolicyModal, setActivePolicyModal] = useState<FooterPolicyItem | null>(null);
 
   // Interactive 3D Showcase Featured Product & Flavor
   const [showcaseProductId, setShowcaseProductId] = useState<string>(PRODUCTS[0].id);
@@ -277,7 +341,6 @@ export default function App() {
     const q = searchQuery.trim().toLowerCase();
     const list = PRODUCTS.filter((product) => {
       if (selectedCategory !== 'all' && product.category !== selectedCategory) return false;
-      if (onlyPowderShaker && !product.isWaterMixPowder) return false;
       if (!q) return true;
       const matchesBasic =
         product.name.toLowerCase().includes(q) ||
@@ -293,7 +356,7 @@ export default function App() {
       if (sortBy === 'flavors-desc') return b.flavors.length - a.flavors.length;
       return b.soldCount - a.soldCount;
     });
-  }, [selectedCategory, searchQuery, sortBy, onlyPowderShaker]);
+  }, [selectedCategory, searchQuery, sortBy]);
 
   const totalCartQty = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -347,7 +410,7 @@ export default function App() {
             <span aria-hidden="true" className="text-neutral-600">|</span>
             <span>Freeship cho đơn hàng đầu tiên</span>
             <span aria-hidden="true" className="hidden text-neutral-600 sm:inline">|</span>
-            <span className="hidden sm:inline">Tặng bình lắc cho sản phẩm dạng bột pha với nước</span>
+            <span className="hidden sm:inline">Tặng bình lắc 0đ cho đơn từ 500.000đ</span>
           </div>
           <a
             href={BRAND_INFO.zaloUrl}
@@ -616,9 +679,8 @@ export default function App() {
                   </h1>
 
                   <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-300 sm:text-base">
-                    Hệ thống {CATALOG_STATS.totalProducts} sản phẩm qua 9 danh mục và{' '}
-                    {CATALOG_STATS.totalFlavors} hương vị. Đổi ảnh 1:1 chuẩn theo từng vị, hỗ trợ
-                    xem 3D, AR Camera &amp; VR cùng mã ưu đãi ngay tại giỏ.
+                    Hệ thống thực phẩm bổ sung chính hãng qua 9 danh mục, đổi ảnh 1:1 chuẩn theo
+                    từng vị, hỗ trợ xem 3D, AR Camera &amp; VR cùng mã ưu đãi ngay tại giỏ.
                   </p>
 
                   {/* Primary CTAs */}
@@ -627,7 +689,7 @@ export default function App() {
                       href="#san-pham"
                       className="inline-flex h-12 items-center gap-2 whitespace-nowrap bg-[#FF5A00] px-6 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-neutral-950"
                     >
-                      <span>Mua sắm {CATALOG_STATS.totalProducts} sản phẩm</span>
+                      <span>Khám phá sản phẩm</span>
                       <ArrowRight className="h-4 w-4" />
                     </a>
                     <a
@@ -644,15 +706,15 @@ export default function App() {
                 <div className="mt-8 grid grid-cols-2 gap-4 border-t border-neutral-800 pt-6 sm:grid-cols-4">
                   <div>
                     <span className="block font-mono text-2xl font-extrabold text-[#FF5A00] tabular-nums">
-                      {CATALOG_STATS.totalProducts}
+                      9 Nhóm
                     </span>
-                    <span className="text-xs text-neutral-400">Sản phẩm · 9 nhóm</span>
+                    <span className="text-xs text-neutral-400">Đa dạng hương vị</span>
                   </div>
                   <div>
                     <span className="block font-mono text-2xl font-extrabold text-white tabular-nums">
-                      {CATALOG_STATS.totalFlavors}
+                      2–4h
                     </span>
-                    <span className="text-xs text-neutral-400">Hương vị đổi ảnh</span>
+                    <span className="text-xs text-neutral-400">Giao nhanh Hà Nội</span>
                   </div>
                   <div>
                     <span className="block font-mono text-2xl font-extrabold text-white tabular-nums">
@@ -662,67 +724,103 @@ export default function App() {
                   </div>
                   <div>
                     <span className="block font-mono text-2xl font-extrabold text-[#FF5A00] tabular-nums">
-                      700ml
+                      500K+
                     </span>
-                    <span className="text-xs text-neutral-400">Tặng bình lắc bột</span>
+                    <span className="text-xs text-neutral-400">Tặng bình lắc 0đ</span>
                   </div>
                 </div>
               </div>
 
-              {/* Hero Studio Slideshow (ported slideshow concept from MiuGo Pets) */}
-              <div className="relative min-h-[300px] border-t border-neutral-800 lg:col-span-6 lg:border-l lg:border-t-0">
-                <img
-                  key={activeSlide.src}
-                  src={activeSlide.src}
-                  alt={activeSlide.alt}
-                  referrerPolicy="no-referrer"
-                  className="h-full w-full object-cover transition-opacity duration-500"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
+              {/* Hero Real Store Product Slideshow */}
+              <div className="relative flex min-h-[340px] flex-col justify-between border-t border-neutral-800 bg-white lg:col-span-6 lg:border-l lg:border-t-0">
+                <div className="relative flex flex-1 items-center justify-center p-6 pb-28 sm:p-10 sm:pb-28">
+                  <img
+                    key={activeSlide.product.id}
+                    src={activeSlide.src}
+                    alt={activeSlide.alt}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      if (e.currentTarget.src !== activeSlide.fallbackSrc) {
+                        e.currentTarget.src = activeSlide.fallbackSrc;
+                      }
+                    }}
+                    onClick={() =>
+                      setDetailState({
+                        product: activeSlide.product,
+                        flavor: activeSlide.flavor,
+                        tab: 'image',
+                      })
+                    }
+                    className="max-h-[260px] w-full cursor-pointer object-contain transition-transform duration-300 hover:scale-[1.03] sm:max-h-[300px]"
+                  />
 
-                {/* Top Slide Controls */}
-                <div className="absolute right-4 top-4 flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setHeroSlideIdx(
-                        (prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length,
-                      )
-                    }
-                    aria-label="Ảnh trước"
-                    className="flex h-8 w-8 items-center justify-center border border-white/25 bg-black/70 text-white hover:border-[#FF5A00] hover:bg-[#FF5A00]"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setHeroSlideIdx((prev) => (prev + 1) % HERO_SLIDES.length)
-                    }
-                    aria-label="Ảnh tiếp theo"
-                    className="flex h-8 w-8 items-center justify-center border border-white/25 bg-black/70 text-white hover:border-[#FF5A00] hover:bg-[#FF5A00]"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
+                  <span className="absolute left-4 top-4 border border-neutral-950 bg-neutral-950 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white">
+                    {activeSlide.product.brand}
+                  </span>
+
+                  {/* Top Slide Controls */}
+                  <div className="absolute right-4 top-4 flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setHeroSlideIdx(
+                          (prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length,
+                        )
+                      }
+                      aria-label="Sản phẩm trước"
+                      className="flex h-8 w-8 items-center justify-center border border-neutral-950 bg-neutral-950 text-white transition-colors hover:border-[#FF5A00] hover:bg-[#FF5A00]"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setHeroSlideIdx((prev) => (prev + 1) % HERO_SLIDES.length)
+                      }
+                      aria-label="Sản phẩm tiếp theo"
+                      className="flex h-8 w-8 items-center justify-center border border-neutral-950 bg-neutral-950 text-white transition-colors hover:border-[#FF5A00] hover:bg-[#FF5A00]"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="absolute bottom-4 left-4 right-4 border border-white/15 bg-black/85 px-4 py-3 text-xs">
+                <div className="absolute bottom-4 left-4 right-4 border border-neutral-800 bg-neutral-950/95 px-4 py-3 text-xs">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 text-white">
-                      <Gift className="h-4 w-4 shrink-0 text-[#FF5A00]" />
-                      <span>{activeSlide.caption}</span>
+                    <div className="min-w-0">
+                      <span className="block font-mono text-[10px] font-bold text-[#FF5A00]">
+                        {activeSlide.tag}
+                      </span>
+                      <span className="block truncate text-sm font-bold text-white">
+                        {activeSlide.caption}
+                      </span>
                     </div>
-                    <span className="font-mono font-bold text-[#FF5A00]">
-                      {activeSlide.tag}
-                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-mono text-sm font-extrabold text-[#FF5A00] tabular-nums">
+                        {formatVND(activeSlide.product.price)}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setDetailState({
+                            product: activeSlide.product,
+                            flavor: activeSlide.flavor,
+                            tab: 'image',
+                          })
+                        }
+                        className="bg-[#FF5A00] px-3 py-1.5 text-[11px] font-bold uppercase text-white transition-colors hover:bg-white hover:text-neutral-950"
+                      >
+                        Xem ngay
+                      </button>
+                    </div>
                   </div>
-                  <div className="mt-2 flex items-center gap-1.5">
+                  <div className="mt-2.5 flex items-center gap-1.5">
                     {HERO_SLIDES.map((s, idx) => (
                       <button
-                        key={s.tag}
+                        key={s.product.id}
                         type="button"
                         onClick={() => setHeroSlideIdx(idx)}
-                        aria-label={`Slide ${idx + 1}`}
+                        aria-label={`Sản phẩm ${idx + 1}: ${s.product.name}`}
                         className={`h-1.5 transition-all ${
                           heroSlideIdx === idx ? 'w-6 bg-[#FF5A00]' : 'w-2.5 bg-neutral-600'
                         }`}
@@ -753,90 +851,63 @@ export default function App() {
 
           {/* Catalog Section: Search, 9 Categories, Dynamic Flavor Cards */}
           <section id="san-pham" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            {/* Header & Search Toolbar */}
-            <div className="flex flex-col gap-4 border-b border-neutral-200 pb-6 md:flex-row md:items-end md:justify-between">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
-                  Danh mục đầy đủ
-                </span>
-                <h2 className="mt-1 font-display text-3xl font-extrabold uppercase tracking-tight text-neutral-950 sm:text-4xl">
-                  {CATALOG_STATS.totalProducts} Sản Phẩm · {CATALOG_STATS.totalFlavors} Hương Vị
-                </h2>
-                <p className="mt-1 text-xs text-neutral-600">
-                  Bấm vào bất kỳ nút hương vị nào ngay trên thẻ sản phẩm để đổi hình ảnh thực tế của
-                  vị đó.
-                </p>
+            {/* Search & Sort Toolbar */}
+            <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-neutral-200 pb-5">
+              <div className="relative flex-1 sm:max-w-sm">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Tìm tên sản phẩm, vị Chocolate, Whey..."
+                  className="h-10 w-full border border-neutral-300 bg-white pl-9 pr-3 text-xs font-medium text-neutral-950 focus:border-[#FF5A00] focus:outline-none"
+                />
               </div>
 
-              <div className="flex flex-wrap items-center gap-2.5">
-                <div className="relative flex-1 sm:w-72 sm:flex-initial">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
-                  <input
-                    type="search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Tìm tên sản phẩm, vị Chocolate, Whey..."
-                    className="h-10 w-full border border-neutral-300 bg-white pl-9 pr-3 text-xs font-medium text-neutral-950 focus:border-[#FF5A00] focus:outline-none"
-                  />
-                </div>
-
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  aria-label="Sắp xếp sản phẩm"
-                  className="h-10 border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-950 focus:border-[#FF5A00] focus:outline-none"
-                >
-                  <option value="popular">Bán chạy nhất</option>
-                  <option value="price-asc">Giá: Thấp → Cao</option>
-                  <option value="price-desc">Giá: Cao → Thấp</option>
-                  <option value="flavors-desc">Nhiều hương vị nhất</option>
-                </select>
-              </div>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                aria-label="Sắp xếp sản phẩm"
+                className="h-10 border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-950 focus:border-[#FF5A00] focus:outline-none"
+              >
+                <option value="popular">Bán chạy nhất</option>
+                <option value="price-asc">Giá: Thấp → Cao</option>
+                <option value="price-desc">Giá: Cao → Thấp</option>
+                <option value="flavors-desc">Nhiều hương vị nhất</option>
+              </select>
             </div>
 
-            {/* 9 Category Filter Tabs + Powder Shaker Filter */}
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => setSelectedCategory('all')}
-                  className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
-                    selectedCategory === 'all'
-                      ? 'border-neutral-950 bg-neutral-950 text-white'
-                      : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
-                  }`}
-                >
-                  Tất cả ({CATALOG_STATS.totalProducts})
-                </button>
+            {/* 9 Category Filter Tabs */}
+            <div className="mt-5 flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('all')}
+                className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
+                  selectedCategory === 'all'
+                    ? 'border-neutral-950 bg-neutral-950 text-white'
+                    : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
+                }`}
+              >
+                Tất cả ({CATALOG_STATS.totalProducts})
+              </button>
 
-                {CATALOG_STATS.categoryBreakdown.map((cat) => {
-                  const active = selectedCategory === cat.slug;
-                  return (
-                    <button
-                      key={cat.slug}
-                      type="button"
-                      onClick={() => setSelectedCategory(cat.slug)}
-                      className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
-                        active
-                          ? 'border-[#FF5A00] bg-[#FF5A00] text-white'
-                          : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
-                      }`}
-                    >
-                      {cat.name} ({cat.productCount})
-                    </button>
-                  );
-                })}
-              </div>
-
-              <label className="flex cursor-pointer items-center gap-2 border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold text-neutral-900">
-                <input
-                  type="checkbox"
-                  checked={onlyPowderShaker}
-                  onChange={(e) => setOnlyPowderShaker(e.target.checked)}
-                  className="accent-[#FF5A00]"
-                />
-                <span>Chỉ sản phẩm bột pha nước (Tặng bình lắc)</span>
-              </label>
+              {CATALOG_STATS.categoryBreakdown.map((cat) => {
+                const active = selectedCategory === cat.slug;
+                return (
+                  <button
+                    key={cat.slug}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat.slug)}
+                    className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
+                      active
+                        ? 'border-[#FF5A00] bg-[#FF5A00] text-white'
+                        : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
+                    }`}
+                  >
+                    {cat.name} ({cat.productCount})
+                  </button>
+                );
+              })}
             </div>
 
             {/* Results Summary Bar */}
@@ -850,13 +921,12 @@ export default function App() {
                 {selectedCategory !== 'all' &&
                   ` · Danh mục ${CATEGORIES.find((c) => c.slug === selectedCategory)?.name}`}
               </span>
-              {(selectedCategory !== 'all' || searchQuery || onlyPowderShaker) && (
+              {(selectedCategory !== 'all' || searchQuery) && (
                 <button
                   type="button"
                   onClick={() => {
                     setSelectedCategory('all');
                     setSearchQuery('');
-                    setOnlyPowderShaker(false);
                   }}
                   className="font-semibold text-[#FF5A00] hover:underline"
                 >
@@ -909,8 +979,9 @@ export default function App() {
                       Kiểm Tra Sản Phẩm 3D, AR &amp; VR Trực Tiếp
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-neutral-300">
-                      Mỗi trong số {CATALOG_STATS.totalProducts} sản phẩm đều hỗ trợ mô hình 3D xoay
-                      360°, mở nắp xem lõi bột/viên, chế độ AR đặt qua camera và VR song thị cơ bản.
+                      Mỗi sản phẩm đều hỗ trợ xoay 360°, góc xem nhanh bảng thành phần, mở nắp xem
+                      lõi, kèm bình lắc 700ml so tỉ lệ, AR Camera có chụp ảnh và VR Showroom 360°
+                      hỗ trợ toàn màn hình &amp; cảm biến xoay đầu.
                     </p>
 
                     {/* Pick any of the 62 products */}
@@ -1006,8 +1077,9 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t-2 border-neutral-950 bg-neutral-950 text-white">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+            {/* Brand & Warehouse Contact */}
+            <div className="md:col-span-5">
               <div className="flex items-center gap-2.5">
                 <img
                   src={BRAND_INFO.logoPath}
@@ -1019,128 +1091,142 @@ export default function App() {
                 </span>
               </div>
               <p className="mt-3 max-w-md text-xs leading-relaxed text-neutral-400">
-                Website thương mại điện tử thực phẩm bổ sung thể hình tại {BRAND_INFO.domain}. Trụ
-                sở &amp; kho hàng đặt tại Hà Nội, giao hàng toàn quốc. Tự động tặng bình lắc cho
-                sản phẩm dạng bột pha với nước và Freeship cho đơn hàng đầu tiên.
+                Hệ thống phân phối thực phẩm bổ sung thể hình chính hãng tại {BRAND_INFO.domain}.
+                Tặng bình lắc 0đ cho đơn từ 500.000đ và Freeship cho đơn hàng đầu tiên.
               </p>
-              <div className="mt-4 flex flex-wrap gap-3 text-xs font-semibold">
-                <a
-                  href={`tel:${BRAND_INFO.phone}`}
-                  className="inline-flex items-center gap-1.5 text-[#FF5A00] hover:underline"
-                >
-                  <Phone className="h-3.5 w-3.5" />
-                  <span>{BRAND_INFO.phone}</span>
-                </a>
-                <a
-                  href={BRAND_INFO.zaloUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-[#FF5A00]"
-                >
-                  <MessageCircle className="h-3.5 w-3.5" />
-                  <span>Zalo {BRAND_INFO.phone}</span>
-                </a>
-              </div>
+              <ul className="mt-4 space-y-1.5 text-xs text-neutral-300">
+                <li className="flex items-start gap-2">
+                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FF5A00]" />
+                  <span>{BRAND_INFO.warehouseAddress} · Ship toàn quốc</span>
+                </li>
+                <li className="flex items-center gap-3 pt-1 font-semibold">
+                  <a
+                    href={`tel:${BRAND_INFO.phone}`}
+                    className="inline-flex items-center gap-1.5 text-[#FF5A00] hover:underline"
+                  >
+                    <Phone className="h-3.5 w-3.5" />
+                    <span>{BRAND_INFO.phone}</span>
+                  </a>
+                  <a
+                    href={BRAND_INFO.zaloUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-[#FF5A00]"
+                  >
+                    <MessageCircle className="h-3.5 w-3.5" />
+                    <span>Zalo {BRAND_INFO.phone}</span>
+                  </a>
+                </li>
+              </ul>
             </div>
 
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
-                9 Danh mục
+            {/* Hỗ trợ khách hàng */}
+            <div className="md:col-span-3">
+              <h4 className="text-sm font-extrabold uppercase tracking-wide text-white">
+                HỖ TRỢ KHÁCH HÀNG
               </h4>
-              <ul className="mt-3 space-y-1.5 text-xs text-neutral-400">
-                {CATALOG_STATS.categoryBreakdown.map((c) => (
-                  <li key={c.slug}>
-                    <a
-                      href="#san-pham"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedCategory(c.slug);
-                        navigateToHome('#san-pham');
-                      }}
-                      className="hover:text-white"
+              <div className="mt-2 h-[2px] w-16 bg-[#FF5A00]" />
+              <ul className="mt-4 space-y-2.5 text-sm text-neutral-300">
+                {FOOTER_SUPPORT_LINKS.map((item) => (
+                  <li key={item.label}>
+                    <button
+                      type="button"
+                      onClick={() => setActivePolicyModal(item)}
+                      className="text-left transition-colors hover:text-[#FF5A00]"
                     >
-                      {c.name} ({c.productCount})
-                    </a>
+                      {item.label}
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
-                Thông tin &amp; Chính sách
+            {/* Chính sách chung */}
+            <div className="md:col-span-4">
+              <h4 className="text-sm font-extrabold uppercase tracking-wide text-white">
+                CHÍNH SÁCH CHUNG
               </h4>
-              <ul className="mt-3 space-y-2 text-xs text-neutral-400">
-                <li className="flex items-start gap-2">
-                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FF5A00]" />
-                  <span>{BRAND_INFO.warehouseAddress}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Truck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FF5A00]" />
-                  <span>Ship toàn quốc · Freeship đơn đầu</span>
-                </li>
-                <li>
-                  <a
-                    href="#tu-van"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToHome('#tu-van');
-                    }}
-                    className="hover:text-white"
-                  >
-                    Tư vấn lộ trình miễn phí
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#hoi-dap"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToHome('#hoi-dap');
-                    }}
-                    className="hover:text-white"
-                  >
-                    Câu hỏi thường gặp (FAQ)
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#chinh-sach"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToHome('#chinh-sach');
-                    }}
-                    className="hover:text-white"
-                  >
-                    Chính sách cơ bản &amp; Đổi trả
-                  </a>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={navigateToCheckout}
-                    className="text-left text-[#FF5A00] hover:underline"
-                  >
-                    Trang thanh toán (/thanh-toan)
-                  </button>
-                </li>
-                <li>
-                  <a href={`mailto:${BRAND_INFO.email}`} className="hover:text-white">
-                    {BRAND_INFO.email}
-                  </a>
-                </li>
+              <div className="mt-2 h-[2px] w-16 bg-[#FF5A00]" />
+              <ul className="mt-4 space-y-2.5 text-sm text-neutral-300">
+                {FOOTER_POLICY_LINKS.map((item) => (
+                  <li key={item.label}>
+                    <button
+                      type="button"
+                      onClick={() => setActivePolicyModal(item)}
+                      className="text-left transition-colors hover:text-[#FF5A00]"
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
           <div className="mt-10 flex flex-col items-start justify-between gap-2 border-t border-neutral-800 pt-6 text-[11px] text-neutral-500 sm:flex-row sm:items-center">
             <span>
-              © 2026 {BRAND_INFO.name} ({BRAND_INFO.domain}). Portfolio Demo — Không thu tiền thật.
+              © 2026 {BRAND_INFO.name} ({BRAND_INFO.domain}).
             </span>
-            <span>Hà Nội · Giao hàng toàn quốc</span>
+            <span>Kho Hà Nội · Giao hàng toàn quốc</span>
           </div>
         </div>
       </footer>
+
+      {/* Footer Policy / Support Quick Modal */}
+      {activePolicyModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={activePolicyModal.title}
+        >
+          <div className="w-full max-w-lg border-2 border-neutral-950 bg-white p-6">
+            <div className="flex items-start justify-between gap-4 border-b border-neutral-200 pb-3">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF5A00]">
+                  NhaiSupplement · Thông tin hỗ trợ
+                </span>
+                <h3 className="mt-0.5 font-display text-xl font-extrabold uppercase text-neutral-950">
+                  {activePolicyModal.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActivePolicyModal(null)}
+                aria-label="Đóng"
+                className="flex h-8 w-8 items-center justify-center border border-neutral-300 text-neutral-950 hover:border-neutral-950"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-neutral-700">
+              {activePolicyModal.content}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center justify-end gap-2 border-t border-neutral-200 pt-4">
+              {activePolicyModal.sectionHref && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const href = activePolicyModal.sectionHref;
+                    setActivePolicyModal(null);
+                    if (href) navigateToHome(href);
+                  }}
+                  className="border border-neutral-950 px-4 py-2 text-xs font-bold uppercase text-neutral-950 hover:bg-neutral-100"
+                >
+                  Xem mục chi tiết
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setActivePolicyModal(null)}
+                className="bg-[#FF5A00] px-5 py-2 text-xs font-bold uppercase text-white hover:bg-neutral-950"
+              >
+                Đã hiểu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Product Detail Modal */}
       {detailState && (

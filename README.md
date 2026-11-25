@@ -4,10 +4,10 @@ Website cửa hàng thực phẩm bổ sung thể hình **NhaiSupplement** tại
 
 ## Tính năng chính
 
-- **62 sản phẩm chính hãng** thuộc 9 danh mục: Whey & Hydrolyzed, Creatine, Bar / Cookie, Mass, Pre-Workout, EAA, BCAA, Vitamin, Dầu cá.
-- **212 hương vị đổi ảnh thực tế 1:1** khi chọn từng mùi vị.
+- **Đầy đủ 9 danh mục sản phẩm chính hãng**: Whey & Hydrolyzed, Creatine, Bar / Cookie, Mass, Pre-Workout, EAA, BCAA, Vitamin, Dầu cá.
+- **Đổi ảnh thực tế 1:1** khi chọn từng hương vị ngay trên thẻ sản phẩm.
 - **Trình xem 3D xoay 360° / AR Camera / VR Stereo** trực quan bằng Three.js.
-- **Giỏ hàng & Thanh toán đầy đủ**: tự động tặng bình lắc 0đ cho sản phẩm dạng bột pha nước, freeship đơn hàng đầu tiên, áp mã giảm giá (`NHAI10`, `NHAI100K`, `FREESHIP`), lưu trạng thái vào `localStorage`.
+- **Giỏ hàng & Thanh toán đầy đủ**: tự động tặng bình lắc 0đ cho đơn hàng từ 500.000đ, freeship đơn hàng đầu tiên, áp mã giảm giá (`NHAI10`, `NHAI100K`, `FREESHIP`), lưu trạng thái vào `localStorage`.
 
 ---
 

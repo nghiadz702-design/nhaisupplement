@@ -12,6 +12,7 @@ import {
 import type { CartItem, OrderConfirmation } from '../types/product';
 import {
   BRAND_INFO,
+  FREE_SHAKER_MIN_SUBTOTAL,
   SHAKER_OPTIONS,
   VIETNAM_PROVINCES,
   formatVND,
@@ -113,7 +114,7 @@ export default function CheckoutPage({
     0,
   );
   const totalItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const hasFreeShaker = items.some((item) => item.product.isWaterMixPowder);
+  const hasFreeShaker = subtotal >= FREE_SHAKER_MIN_SUBTOTAL;
   const selectedShaker = SHAKER_OPTIONS.find((s) => s.id === shakerId) ?? SHAKER_OPTIONS[0];
 
   const voucherEval = evaluateVoucher(voucherCode, subtotal);
@@ -308,7 +309,7 @@ export default function CheckoutPage({
             onClick={onBackToShop}
             className="mt-7 inline-flex h-12 items-center gap-2 bg-[#FF5A00] px-7 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-neutral-950"
           >
-            <span>Xem 62 sản phẩm</span>
+            <span>Xem sản phẩm</span>
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
@@ -443,7 +444,7 @@ export default function CheckoutPage({
               <div className="border border-[#FF5A00] bg-orange-50/70 p-4">
                 <div className="flex items-center gap-2 text-xs font-bold text-neutral-950">
                   <Gift className="h-4 w-4 text-[#FF5A00]" />
-                  <span>Chọn Bình Lắc Tặng Kèm 0đ (Sản phẩm bột pha nước)</span>
+                  <span>Chọn Bình Lắc Tặng Kèm 0đ (Đơn từ 500.000đ)</span>
                 </div>
                 <div className="mt-2.5 grid grid-cols-1 gap-2">
                   {SHAKER_OPTIONS.map((opt) => (
@@ -487,7 +488,7 @@ export default function CheckoutPage({
                 />
                 <div>
                   <span className="font-bold text-neutral-950">
-                    Freeship cho người đầu tiên (Đơn đầu = 0đ ship)
+                    Freeship cho đơn hàng đầu tiên (0đ ship)
                   </span>
                   <p className="mt-0.5 text-neutral-600">
                     Kho Hà Nội miễn 100% phí vận chuyển toàn quốc cho khách hàng đặt đơn đầu tiên.

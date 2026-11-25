@@ -22,6 +22,8 @@ export const BRAND_INFO = {
   heroImage: withBasePath('/src/assets/images/hero_supplement_studio_1795535037091.jpg'),
 };
 
+export const FREE_SHAKER_MIN_SUBTOTAL = 500000;
+
 export const CATEGORIES: CategoryMeta[] = [
   {
     slug: 'whey-hydrolyzed',

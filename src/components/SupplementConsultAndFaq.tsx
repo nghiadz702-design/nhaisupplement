@@ -4,24 +4,28 @@ import { BRAND_INFO } from '../data/catalog';
 
 const FAQ_ITEMS = [
   {
-    q: 'Sản phẩm nào được tặng bình lắc NhaiSupplement miễn phí?',
-    a: 'Bình lắc 700ml (trị giá 0đ khi kèm đơn) được tự động tặng cho mọi đơn hàng có ít nhất 1 sản phẩm dạng bột pha với nước: Whey & Hydrolyzed, Creatine, Mass, Pre-Workout, EAA hoặc BCAA. Các nhóm dùng trực tiếp như Bar/Cookie, Vitamin và Dầu cá không kèm quà bình lắc.',
+    q: 'Sản phẩm tại NhaiSupplement có đảm bảo chính hãng 100% không?',
+    a: 'Tất cả sản phẩm đều là hàng chính hãng còn nguyên tem niêm phong từ nhà sản xuất, ghi rõ lô sản xuất và hạn sử dụng. Bạn được kiểm tra kỹ bao bì, hương vị trước khi thanh toán và hoàn tiền 100% nếu phát hiện hàng không đạt chuẩn.',
   },
   {
-    q: 'Freeship cho người đầu tiên áp dụng như thế nào?',
-    a: 'Khách hàng đặt đơn đầu tiên tại nhaisupplement.com được miễn phí 100% phí vận chuyển toàn quốc. Chỉ cần bật tùy chọn "Freeship cho người đầu tiên" trong giỏ hàng hoặc trang thanh toán /thanh-toan để trừ phí ship về 0đ.',
+    q: 'Đơn hàng bao nhiêu tiền sẽ được tặng bình lắc miễn phí?',
+    a: 'Mỗi đơn hàng từ 500.000đ trở lên sẽ tự động mở mục chọn Bình lắc thể thao 700ml (0đ) ngay trong giỏ hàng và bước thanh toán, áp dụng cho mọi dòng sản phẩm tại cửa hàng.',
   },
   {
-    q: 'Kho hàng Hà Nội giao đi các tỉnh mất bao lâu?',
-    a: 'Tại nội thành Hà Nội, NhaiSupplement giao hỏa tốc trong 2–4 giờ làm việc. Với TP.HCM, Đà Nẵng và các tỉnh thành khác trên toàn quốc, thời gian nhận hàng tiêu chuẩn từ 1–3 ngày.',
+    q: 'Ưu đãi Freeship cho đơn hàng đầu tiên áp dụng như thế nào?',
+    a: 'Khách hàng đặt mua lần đầu tại nhaisupplement.com được miễn phí 100% phí vận chuyển toàn quốc. Bạn chỉ cần giữ tùy chọn "Freeship cho đơn hàng đầu tiên" được bật trong giỏ hàng để hệ thống trừ phí giao hàng về 0đ.',
   },
   {
-    q: 'Khi chọn hương vị khác nhau, ảnh có đúng với vị thực tế nhận được không?',
-    a: 'Có. Mỗi tùy chọn hương vị trên từng sản phẩm đều liên kết trực tiếp với ảnh studio riêng của đúng hương vị đó và đồng bộ qua giỏ hàng, thanh toán cũng như nhãn 3D/AR/VR để tránh hoàn toàn việc giao nhầm vị.',
+    q: 'Thời gian giao hàng từ kho Hà Nội đi nội thành và các tỉnh mất bao lâu?',
+    a: 'Nội thành Hà Nội nhận hàng hỏa tốc trong 2–4 giờ làm việc. Đơn đi TP.HCM, Đà Nẵng và các tỉnh thành khác trên toàn quốc được giao tiêu chuẩn trong 1–3 ngày.',
   },
   {
-    q: 'Chính sách đổi trả 7 ngày & các hình thức thanh toán hỗ trợ?',
-    a: 'Bạn được kiểm tra tem nhãn, hương vị trước khi nhận và đổi trả miễn phí trong 7 ngày nếu sản phẩm lỗi từ nhà sản xuất hoặc giao sai hương vị. Hỗ trợ thanh toán COD khi nhận hàng hoặc chuyển khoản VietQR.',
+    q: 'Khi chọn hương vị khác nhau, sản phẩm nhận được có đúng mẫu mã và vị đã chọn không?',
+    a: 'Đúng hoàn toàn. Từng hương vị trên mỗi sản phẩm đều hiển thị hình ảnh bao bì thực tế của đúng vị đó và lưu chính xác từ giỏ hàng đến lúc đóng gói xuất kho để tránh giao nhầm vị.',
+  },
+  {
+    q: 'Chính sách đổi trả 7 ngày và hình thức thanh toán gồm những gì?',
+    a: 'Hỗ trợ thanh toán tiền mặt khi nhận hàng (COD) hoặc chuyển khoản ngân hàng qua VietQR. NhaiSupplement đổi mới miễn phí hoặc hoàn tiền trong 7 ngày nếu sản phẩm lỗi từ nhà sản xuất, móp méo rách seal khi vận chuyển hoặc giao sai hương vị.',
   },
 ];
 

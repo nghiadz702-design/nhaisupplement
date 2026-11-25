@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Camera,
@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
-import { getFlavorThumbnailUrls } from '../utils/flavorImageGenerator';
+import { checkIsMobilePhone, useIsMobilePhone } from '../utils/deviceDetection';
 import Product3DViewer, { type ViewerMode } from './Product3DViewer';
 
 interface ProductDetailModalProps {
@@ -31,20 +31,22 @@ export default function ProductDetailModal({
   onClose,
   onAddToCart,
 }: ProductDetailModalProps) {
+  const isMobilePhone = useIsMobilePhone();
+  const safeInitialVisualTab =
+    initialVisualTab === 'vr' && !checkIsMobilePhone() ? '3d' : initialVisualTab;
+
   const [selectedFlavor, setSelectedFlavor] = useState<ProductFlavor>(initialFlavor);
-  const [visualTab, setVisualTab] = useState<'image' | ViewerMode>(initialVisualTab);
+  const [visualTab, setVisualTab] = useState<'image' | ViewerMode>(safeInitialVisualTab);
   const [infoTab, setInfoTab] = useState<'overview' | 'nutrition' | 'usage'>('overview');
-  const [activeThumbIdx, setActiveThumbIdx] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [addedNotice, setAddedNotice] = useState(false);
 
   useEffect(() => {
     setSelectedFlavor(initialFlavor);
-    setVisualTab(initialVisualTab);
+    setVisualTab(initialVisualTab === 'vr' && !isMobilePhone ? '3d' : initialVisualTab);
     setInfoTab('overview');
-    setActiveThumbIdx(0);
     setQuantity(1);
-  }, [product, initialFlavor, initialVisualTab]);
+  }, [product, initialFlavor, initialVisualTab, isMobilePhone]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -54,30 +56,10 @@ export default function ProductDetailModal({
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  const thumbnails = useMemo(() => {
-    return getFlavorThumbnailUrls(
-      {
-        productName: product.name,
-        brand: product.brand,
-        categoryName: product.categoryName,
-        weightLabel: product.weightLabel,
-        shape: product.shape,
-        flavorName: selectedFlavor.name,
-        colorHex: selectedFlavor.colorHex,
-        accentHex: selectedFlavor.accentHex,
-        highlightKey: product.nutritionInfo.highlightKey,
-        highlightValue: product.nutritionInfo.highlightValue,
-        isPowder: product.isWaterMixPowder,
-      },
-      selectedFlavor,
-    );
-  }, [product, selectedFlavor]);
-
   const activePrice = selectedFlavor.priceOverride ?? product.price;
 
   const handleFlavorChange = (flavor: ProductFlavor) => {
     setSelectedFlavor(flavor);
-    setActiveThumbIdx(0);
   };
 
   const handleAdd = () => {
@@ -155,26 +137,28 @@ export default function ProductDetailModal({
                 <Camera className="h-3.5 w-3.5" />
                 <span>AR</span>
               </button>
-              <button
-                type="button"
-                onClick={() => setVisualTab('vr')}
-                className={`flex flex-1 items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold whitespace-nowrap transition-colors ${
-                  visualTab === 'vr'
-                    ? 'bg-[#FF5A00] text-white'
-                    : 'text-neutral-700 hover:text-neutral-950'
-                }`}
-              >
-                <Eye className="h-3.5 w-3.5" />
-                <span>VR</span>
-              </button>
+              {isMobilePhone && (
+                <button
+                  type="button"
+                  onClick={() => setVisualTab('vr')}
+                  className={`flex flex-1 items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold whitespace-nowrap transition-colors ${
+                    visualTab === 'vr'
+                      ? 'bg-[#FF5A00] text-white'
+                      : 'text-neutral-700 hover:text-neutral-950'
+                  }`}
+                >
+                  <Eye className="h-3.5 w-3.5" />
+                  <span>VR</span>
+                </button>
+              )}
             </div>
 
             {visualTab === 'image' ? (
               <>
                 <div className="relative aspect-[4/3] w-full overflow-hidden border border-neutral-200 bg-white">
                   <img
-                    key={`${selectedFlavor.id}-${activeThumbIdx}`}
-                    src={thumbnails[activeThumbIdx] ?? selectedFlavor.image}
+                    key={selectedFlavor.id}
+                    src={selectedFlavor.image}
                     alt={`${product.name} - ${selectedFlavor.name}`}
                     referrerPolicy="no-referrer"
                     onError={(e) => {
@@ -193,32 +177,45 @@ export default function ProductDetailModal({
                   </div>
                 </div>
 
-                {/* Flavor Gallery Thumbnails */}
-                <div className="mt-3 grid grid-cols-3 gap-2">
-                  {thumbnails.map((thumbUrl, idx) => (
-                    <button
-                      key={`${selectedFlavor.id}-thumb-${idx}`}
-                      type="button"
-                      onClick={() => setActiveThumbIdx(idx)}
-                      className={`overflow-hidden border bg-white p-1 transition-all ${
-                        activeThumbIdx === idx
-                          ? 'border-2 border-[#FF5A00]'
-                          : 'border-neutral-200 hover:border-neutral-950'
-                      }`}
-                    >
-                      <img
-                        src={thumbUrl}
-                        alt={`Góc nhìn ${idx + 1} - ${selectedFlavor.name}`}
-                        referrerPolicy="no-referrer"
-                        onError={(e) => {
-                          if (e.currentTarget.src !== selectedFlavor.fallbackImage) {
-                            e.currentTarget.src = selectedFlavor.fallbackImage;
-                          }
-                        }}
-                        className="aspect-[4/3] w-full object-contain"
-                      />
-                    </button>
-                  ))}
+                {/* Real Flavor Photo Strip + 3D Square Tile */}
+                <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-5">
+                  {product.flavors.map((flavor) => {
+                    const isActive = flavor.id === selectedFlavor.id;
+                    return (
+                      <button
+                        key={flavor.id}
+                        type="button"
+                        onClick={() => handleFlavorChange(flavor)}
+                        title={flavor.name}
+                        className={`aspect-square overflow-hidden border bg-white p-1.5 transition-all ${
+                          isActive
+                            ? 'border-2 border-[#FF5A00]'
+                            : 'border-neutral-200 hover:border-neutral-950'
+                        }`}
+                      >
+                        <img
+                          src={flavor.image}
+                          alt={`${product.name} - ${flavor.name}`}
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            if (e.currentTarget.src !== flavor.fallbackImage) {
+                              e.currentTarget.src = flavor.fallbackImage;
+                            }
+                          }}
+                          className="h-full w-full object-contain"
+                        />
+                      </button>
+                    );
+                  })}
+                  <button
+                    type="button"
+                    onClick={() => setVisualTab('3d')}
+                    title="Mở trình xem 3D tương tác"
+                    className="flex aspect-square flex-col items-center justify-center gap-1.5 border border-neutral-950 bg-neutral-950 text-white transition-colors hover:border-[#FF5A00] hover:bg-neutral-900"
+                  >
+                    <Box className="h-6 w-6 text-[#FF5A00]" />
+                    <span className="text-xs font-extrabold tracking-wide">3D</span>
+                  </button>
                 </div>
               </>
             ) : (
@@ -313,42 +310,18 @@ export default function ProductDetailModal({
                 </div>
               </div>
 
-              {/* Shaker Gift Rule Notice (ONLY water-mixable powders) */}
-              <div
-                className={`mt-5 border p-3 text-xs ${
-                  product.isWaterMixPowder
-                    ? 'border-[#FF5A00] bg-orange-50/70 text-neutral-900'
-                    : 'border-neutral-200 bg-neutral-100 text-neutral-700'
-                }`}
-              >
+              {/* Shaker Gift Rule Notice (Orders >= 500,000đ) */}
+              <div className="mt-5 border border-[#FF5A00] bg-orange-50/70 p-3 text-xs text-neutral-900">
                 <div className="flex items-start gap-2">
-                  <Gift
-                    className={`mt-0.5 h-4 w-4 shrink-0 ${
-                      product.isWaterMixPowder ? 'text-[#FF5A00]' : 'text-neutral-500'
-                    }`}
-                  />
+                  <Gift className="mt-0.5 h-4 w-4 shrink-0 text-[#FF5A00]" />
                   <div>
-                    {product.isWaterMixPowder ? (
-                      <>
-                        <p className="font-bold text-neutral-950">
-                          Tặng kèm Bình Lắc NhaiSupplement 0đ (Sản phẩm dạng bột pha nước)
-                        </p>
-                        <p className="mt-0.5 text-neutral-700">
-                          Tự động thêm bình lắc vào giỏ hàng khi đặt mua, được chọn màu bình khi
-                          thanh toán. Kèm Freeship cho khách hàng đơn đầu tiên!
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="font-bold text-neutral-950">
-                          Ưu đãi Freeship cho khách hàng đơn đầu tiên
-                        </p>
-                        <p className="mt-0.5 text-neutral-600">
-                          Lưu ý: Quà tặng bình lắc chỉ áp dụng cho sản phẩm dạng bột pha với nước
-                          (Whey, Creatine, Mass, Pre-Workout, EAA, BCAA).
-                        </p>
-                      </>
-                    )}
+                    <p className="font-bold text-neutral-950">
+                      Tặng kèm Bình Lắc NhaiSupplement 0đ cho đơn từ 500.000đ
+                    </p>
+                    <p className="mt-0.5 text-neutral-700">
+                      Mỗi đơn hàng có tổng giá trị từ 500.000đ trở lên sẽ tự động hiện mục chọn mẫu
+                      bình lắc tặng kèm trong giỏ hàng. Kèm Freeship cho đơn đầu tiên!
+                    </p>
                   </div>
                 </div>
               </div>
@@ -453,7 +426,7 @@ export default function ProductDetailModal({
                     <div className="flex justify-between">
                       <span className="text-neutral-500">Quà tặng bình lắc 700ml</span>
                       <strong className="text-neutral-950">
-                        {product.isWaterMixPowder ? 'Có (Bột pha nước)' : 'Không áp dụng'}
+                        Tặng kèm đơn từ 500.000đ
                       </strong>
                     </div>
                   </div>
