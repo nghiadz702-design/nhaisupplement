@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 import { formatVND } from '../data/catalog';
 import type { Product, ProductFlavor } from '../types/product';
+import {
+  getProductTransparencyInfo,
+  getRealPhysicalDimensions,
+  getRealSizeLabel,
+  type RealPhysicalDimensions,
+} from './productTransparency';
 
-export interface RealPhysicalDimensions {
-  widthCm: number;
-  heightCm: number;
-  depthCm: number;
-  heightMeters: number;
-  label: string;
-}
+export { getRealPhysicalDimensions, getRealSizeLabel, type RealPhysicalDimensions };
 
 export interface RealProductVisualAssets {
   cutoutTexture: THREE.CanvasTexture;
@@ -25,87 +25,6 @@ export interface BuiltPhotoShowcase {
   setFacingBack: (isBack: boolean) => void;
   getRealMeterScale: () => number;
   disposables: Array<{ dispose: () => void }>;
-}
-
-export function getRealPhysicalDimensions(product: Product): RealPhysicalDimensions {
-  const wLower = product.weightLabel.toLowerCase();
-
-  if (product.shape === 'bar') {
-    return {
-      widthCm: 14,
-      heightCm: 5,
-      depthCm: 2.5,
-      heightMeters: 0.055,
-      label: '~ 14 × 5 × 2.5 cm',
-    };
-  }
-
-  if (product.shape === 'bottle') {
-    return {
-      widthCm: 7,
-      heightCm: 13,
-      depthCm: 7,
-      heightMeters: 0.13,
-      label: '~ 13 × 7 cm',
-    };
-  }
-
-  if (product.shape === 'pouch') {
-    const isLarge = wLower.includes('10') || wLower.includes('12') || wLower.includes('5kg');
-    const h = isLarge ? 38 : 30;
-    const w = isLarge ? 25 : 22;
-    return {
-      widthCm: w,
-      heightCm: h,
-      depthCm: 11,
-      heightMeters: h / 100,
-      label: `~ ${h} × ${w} × 11 cm`,
-    };
-  }
-
-  // Tubs: scale smoothly by weight
-  if (wLower.includes('10') || wLower.includes('12') || wLower.includes('5kg')) {
-    return {
-      widthCm: 21,
-      heightCm: 32,
-      depthCm: 21,
-      heightMeters: 0.32,
-      label: '~ 32 × 21 cm',
-    };
-  }
-
-  if (wLower.includes('5lb') || wLower.includes('4.5lb') || wLower.includes('2.2kg')) {
-    return {
-      widthCm: 16,
-      heightCm: 26,
-      depthCm: 16,
-      heightMeters: 0.26,
-      label: '~ 26 × 16 cm',
-    };
-  }
-
-  if (wLower.includes('2lb') || wLower.includes('2.2lb') || wLower.includes('900g') || wLower.includes('1kg')) {
-    return {
-      widthCm: 13,
-      heightCm: 22,
-      depthCm: 13,
-      heightMeters: 0.22,
-      label: '~ 22 × 13 cm',
-    };
-  }
-
-  // Creatine / Pre-Workout / EAA / BCAA compact tubs (200g - 500g)
-  return {
-    widthCm: 10,
-    heightCm: 14,
-    depthCm: 10,
-    heightMeters: 0.14,
-    label: '~ 14 × 10 cm',
-  };
-}
-
-export function getRealSizeLabel(product: Product): string {
-  return getRealPhysicalDimensions(product).label;
 }
 
 function getShowcaseTargetHeight(product: Product): number {
@@ -322,6 +241,7 @@ function createBackNutritionTexture(
   flavor: ProductFlavor,
   anisotropy: number,
 ): THREE.CanvasTexture {
+  const transparency = getProductTransparencyInfo(product, flavor);
   const canvas = document.createElement('canvas');
   canvas.width = 560;
   canvas.height = 720;
@@ -341,12 +261,16 @@ function createBackNutritionTexture(
   ctx.fillRect(28, 28, canvas.width - 56, 48);
   ctx.fillStyle = '#FFFFFF';
   ctx.font = 'bold 20px sans-serif';
-  ctx.fillText('SUPPLEMENT FACTS · CHÍNH HÃNG', 44, 59);
+  ctx.fillText('THÔNG TIN MINH BẠCH · CHÍNH HÃNG', 44, 59);
 
-  // Product & flavor summary
+  // Product & brand origin summary
   ctx.fillStyle = '#A1A1AA';
-  ctx.font = 'bold 17px sans-serif';
-  ctx.fillText(`${product.brand.toUpperCase()} · ${product.weightLabel.toUpperCase()}`, 32, 108);
+  ctx.font = 'bold 15px sans-serif';
+  ctx.fillText(
+    `NSX: ${transparency.manufacturerShort.toUpperCase()} · ${product.weightLabel.toUpperCase()}`,
+    32,
+    108,
+  );
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = 'bold 24px sans-serif';
@@ -354,66 +278,76 @@ function createBackNutritionTexture(
     product.name.length > 34 ? `${product.name.slice(0, 32)}…` : product.name;
   ctx.fillText(truncatedName, 32, 142);
 
-  // Flavor indicator badge
+  // Flavor & stock indicator badge
   ctx.fillStyle = flavor.colorHex;
   ctx.fillRect(32, 160, 16, 16);
   ctx.fillStyle = '#FF5A00';
-  ctx.font = 'bold 18px sans-serif';
-  ctx.fillText(`Hương vị: ${flavor.name}`, 58, 174);
+  ctx.font = 'bold 17px sans-serif';
+  ctx.fillText(`Vị: ${flavor.name} · Còn ${flavor.stock} hộp`, 58, 174);
 
   // Divider
   ctx.fillStyle = '#27272A';
   ctx.fillRect(32, 194, canvas.width - 64, 3);
 
-  // Nutrition table rows
+  // Category-adaptive transparent nutrition & spec rows
   const rows: Array<[string, string, boolean?]> = [
-    ['Khẩu phần (Serving)', product.nutritionInfo.servingSize, false],
-    ['Số lần dùng / Hộp', `${product.nutritionInfo.servingsPerContainer} lần`, false],
-    ['Năng lượng (Calories)', product.nutritionInfo.calories, false],
-    ['Protein', product.nutritionInfo.protein, true],
-    ['Carbohydrates', product.nutritionInfo.carbs, false],
-    ['Chất béo (Fat)', product.nutritionInfo.fat, false],
-    [product.nutritionInfo.highlightKey || 'Điểm nổi bật', product.nutritionInfo.highlightValue, true],
-    ['Kích thước thật', getRealSizeLabel(product), false],
+    ...transparency.keyFacts.slice(0, 6).map((fact): [string, string, boolean?] => [
+      fact.label,
+      fact.value,
+      fact.accent,
+    ]),
+    ['Công ty sản xuất', transparency.manufacturerShort, false],
+    ['Xuất xứ / HSD', `${transparency.origin.split(' (')[0]} · Date 12–24 tháng`, false],
   ];
 
-  let y = 236;
+  let y = 234;
   rows.forEach(([label, value, accent], idx) => {
     if (idx % 2 === 0) {
       ctx.fillStyle = '#18181B';
       ctx.fillRect(32, y - 26, canvas.width - 64, 42);
     }
     ctx.fillStyle = '#D4D4D8';
-    ctx.font = '18px sans-serif';
-    ctx.fillText(label, 44, y);
+    ctx.font = '17px sans-serif';
+    const shortLabel = label.length > 22 ? `${label.slice(0, 20)}…` : label;
+    ctx.fillText(shortLabel, 44, y);
 
     ctx.fillStyle = accent ? '#FF5A00' : '#FFFFFF';
-    ctx.font = 'bold 19px monospace';
+    ctx.font = 'bold 18px monospace';
     ctx.textAlign = 'right';
-    ctx.fillText(value, canvas.width - 44, y);
+    const shortValue = value.length > 26 ? `${value.slice(0, 24)}…` : value;
+    ctx.fillText(shortValue, canvas.width - 44, y);
     ctx.textAlign = 'left';
-    y += 46;
+    y += 45;
   });
 
-  // Usage note box
+  // Usage note box (wrapped cleanly up to 2 lines)
   ctx.fillStyle = '#18181B';
-  ctx.fillRect(32, 606, canvas.width - 64, 78);
+  ctx.fillRect(32, 594, canvas.width - 64, 92);
   ctx.strokeStyle = '#3F3F46';
   ctx.lineWidth = 2;
-  ctx.strokeRect(32, 606, canvas.width - 64, 78);
+  ctx.strokeRect(32, 594, canvas.width - 64, 92);
 
   ctx.fillStyle = '#FF5A00';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.fillText('NHAISUPPLEMENT.COM · KHO HÀ NỘI', 46, 634);
+  ctx.font = 'bold 15px sans-serif';
+  ctx.fillText('HƯỚNG DẪN DÙNG · NHAISUPPLEMENT.COM', 46, 620);
   ctx.fillStyle = '#E4E4E7';
-  ctx.font = '15px sans-serif';
-  ctx.fillText(
-    product.isWaterMixPowder
-      ? `Pha ${product.nutritionInfo.servingSize} với 250-350ml nước lạnh`
-      : `Dùng trực tiếp ${product.nutritionInfo.servingSize} mỗi ngày`,
-    46,
-    662,
-  );
+  ctx.font = '14px sans-serif';
+
+  const usageLine = transparency.usageSteps[0] || '';
+  const words = usageLine.split(' ');
+  let line1 = '';
+  let line2 = '';
+  for (const w of words) {
+    if ((line1 + ' ' + w).trim().length <= 54 && !line2) {
+      line1 = (line1 + ' ' + w).trim();
+    } else if ((line2 + ' ' + w).trim().length <= 54) {
+      line2 = (line2 + ' ' + w).trim();
+    }
+  }
+  ctx.fillText(line1, 46, 646);
+  if (line2) {
+    ctx.fillText(line2.length >= 52 ? `${line2}…` : line2, 46, 668);
+  }
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
@@ -688,6 +622,7 @@ function createVrPlaqueTexture(
   flavor: ProductFlavor,
   anisotropy: number,
 ): THREE.CanvasTexture {
+  const transparency = getProductTransparencyInfo(product, flavor);
   const canvas = document.createElement('canvas');
   canvas.width = 640;
   canvas.height = 264;
@@ -701,23 +636,27 @@ function createVrPlaqueTexture(
   ctx.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
 
   ctx.fillStyle = '#FF5A00';
-  ctx.font = 'bold 18px monospace';
-  ctx.fillText(`${product.brand.toUpperCase()} · ${product.weightLabel.toUpperCase()}`, 26, 44);
+  ctx.font = 'bold 17px monospace';
+  ctx.fillText(
+    `${product.brand.toUpperCase()} (${transparency.origin.toUpperCase()}) · ${product.weightLabel.toUpperCase()}`,
+    26,
+    44,
+  );
 
   ctx.fillStyle = '#FFFFFF';
-  ctx.font = 'bold 28px sans-serif';
+  ctx.font = 'bold 27px sans-serif';
   const nameLine = product.name.length > 34 ? `${product.name.slice(0, 32)}…` : product.name;
   ctx.fillText(nameLine, 26, 84);
 
   ctx.fillStyle = flavor.colorHex;
   ctx.fillRect(26, 102, 16, 16);
   ctx.fillStyle = '#E4E4E7';
-  ctx.font = 'bold 20px sans-serif';
-  ctx.fillText(`Vị: ${flavor.name}`, 52, 117);
+  ctx.font = 'bold 19px sans-serif';
+  ctx.fillText(`Vị: ${flavor.name} · Còn ${flavor.stock}`, 52, 117);
 
   const activePrice = flavor.priceOverride ?? product.price;
   ctx.fillStyle = '#FF5A00';
-  ctx.font = 'bold 38px monospace';
+  ctx.font = 'bold 36px monospace';
   ctx.textAlign = 'right';
   ctx.fillText(formatVND(activePrice), canvas.width - 26, 118);
   ctx.textAlign = 'left';
@@ -726,22 +665,30 @@ function createVrPlaqueTexture(
   ctx.fillRect(26, 138, canvas.width - 52, 2);
 
   ctx.fillStyle = '#A1A1AA';
-  ctx.font = '18px sans-serif';
-  ctx.fillText('Khẩu phần', 26, 174);
-  ctx.fillText('Protein / Điểm nổi bật', 240, 174);
-  ctx.fillText('Kích thước thật', 465, 174);
+  ctx.font = '17px sans-serif';
+  ctx.fillText('Liều dùng · Khẩu phần', 26, 174);
+  ctx.fillText(product.nutritionInfo.highlightKey || 'Hoạt chất chính', 238, 174);
+  ctx.fillText('Chi phí · Kích thước', 450, 174);
 
   ctx.fillStyle = '#FFFFFF';
-  ctx.font = 'bold 21px monospace';
-  ctx.fillText(product.nutritionInfo.servingSize.slice(0, 18), 26, 210);
-  ctx.fillStyle = '#FF5A00';
+  ctx.font = 'bold 19px monospace';
   ctx.fillText(
-    `${product.nutritionInfo.protein} · ${product.nutritionInfo.highlightValue}`,
-    240,
+    `${product.nutritionInfo.servingsPerContainer}x (${product.nutritionInfo.servingSize.split(' (')[0].slice(0, 11)})`,
+    26,
     210,
   );
+  ctx.fillStyle = '#FF5A00';
+  const highlightCol =
+    product.category === 'whey-hydrolyzed' || product.category === 'mass'
+      ? `${product.nutritionInfo.protein} · ${product.nutritionInfo.highlightValue}`
+      : product.nutritionInfo.highlightValue;
+  ctx.fillText(highlightCol.slice(0, 18), 238, 210);
   ctx.fillStyle = '#FFFFFF';
-  ctx.fillText(getRealSizeLabel(product), 465, 210);
+  ctx.fillText(transparency.costPerServingLabel.replace('~', ''), 450, 210);
+
+  ctx.fillStyle = '#A1A1AA';
+  ctx.font = '14px sans-serif';
+  ctx.fillText(getRealSizeLabel(product), 450, 234);
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;

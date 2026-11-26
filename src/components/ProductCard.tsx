@@ -3,6 +3,7 @@ import { Camera, Eye, ShoppingBag } from 'lucide-react';
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
 import { useIsMobilePhone } from '../utils/deviceDetection';
+import { getProductTransparencyInfo } from '../utils/productTransparency';
 import type { ViewerMode } from './Product3DViewer';
 
 interface ProductCardProps {
@@ -21,6 +22,7 @@ export default function ProductCard({
   const [imgFadeKey, setImgFadeKey] = useState(0);
 
   const activePrice = selectedFlavor.priceOverride ?? product.price;
+  const transparency = getProductTransparencyInfo(product, selectedFlavor);
   const discountPercent =
     product.compareAtPrice && product.compareAtPrice > activePrice
       ? Math.round(((product.compareAtPrice - activePrice) / product.compareAtPrice) * 100)
@@ -108,19 +110,52 @@ export default function ProductCard({
             </button>
           </h3>
 
+          <p
+            className="mt-1 truncate text-[10px] font-medium text-neutral-500"
+            title={transparency.manufacturer}
+          >
+            NSX: <span className="font-semibold text-neutral-800">{transparency.manufacturerShort}</span>
+          </p>
+
           <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-neutral-600">
             {product.shortDescription}
           </p>
 
+          {/* Transparent Key Specs Strip */}
+          <div className="mt-2.5 grid grid-cols-3 divide-x divide-neutral-200 border border-neutral-200 bg-neutral-50 text-[10px]">
+            <div className="px-2 py-1.5">
+              <span className="block truncate text-neutral-500">
+                {product.nutritionInfo.highlightKey || 'Hoạt chất'}
+              </span>
+              <span className="block truncate font-mono font-bold text-[#FF5A00]">
+                {product.nutritionInfo.highlightValue}
+              </span>
+            </div>
+            <div className="px-2 py-1.5">
+              <span className="block truncate text-neutral-500">Liều dùng</span>
+              <span className="block truncate font-mono font-bold text-neutral-950">
+                {product.nutritionInfo.servingsPerContainer} lần
+              </span>
+            </div>
+            <div className="px-2 py-1.5">
+              <span className="block truncate text-neutral-500">
+                {transparency.origin.split(' (')[0]}
+              </span>
+              <span className="block truncate font-mono font-bold text-neutral-950">
+                {transparency.costPerServingLabel.replace('~', '')}
+              </span>
+            </div>
+          </div>
+
           {/* Dynamic Flavor Switcher Swatches on Card */}
           <div className="mt-3 border-t border-neutral-100 pt-3">
             <div className="flex items-center justify-between text-[11px]">
-              <span className="font-medium text-neutral-500">
-                Vị đang chọn:{' '}
+              <span className="truncate font-medium text-neutral-500">
+                Vị:{' '}
                 <strong className="font-semibold text-neutral-950">{selectedFlavor.name}</strong>
               </span>
-              <span className="font-mono text-neutral-400 tabular-nums">
-                {product.flavors.length} vị
+              <span className="shrink-0 font-mono text-neutral-500 tabular-nums">
+                {product.flavors.length} vị · Còn {selectedFlavor.stock}
               </span>
             </div>
 

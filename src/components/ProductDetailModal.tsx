@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  AlertTriangle,
   Camera,
   Check,
   Eye,
@@ -13,6 +14,7 @@ import {
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
 import { checkIsMobilePhone, useIsMobilePhone } from '../utils/deviceDetection';
+import { getProductTransparencyInfo, getRealSizeLabel } from '../utils/productTransparency';
 import ErrorBoundary from './ErrorBoundary';
 import Product3DViewer, { type ViewerMode } from './Product3DViewer';
 
@@ -57,6 +59,8 @@ export default function ProductDetailModal({
   }, [onClose]);
 
   const activePrice = selectedFlavor.priceOverride ?? product.price;
+  const transparency = getProductTransparencyInfo(product, selectedFlavor);
+  const realSizeLabel = getRealSizeLabel(product);
 
   const handleFlavorChange = (flavor: ProductFlavor) => {
     setSelectedFlavor(flavor);
@@ -299,6 +303,32 @@ export default function ProductDetailModal({
                 </span>
               </div>
 
+              {/* Transparent Quick Spec Bar */}
+              <div className="grid grid-cols-2 gap-2 border-b border-neutral-200 py-2.5 text-[11px] sm:grid-cols-4">
+                <div title={transparency.manufacturer}>
+                  <span className="block text-neutral-500">Công ty sản xuất</span>
+                  <strong className="block truncate font-semibold text-neutral-950">
+                    {transparency.manufacturerShort}
+                  </strong>
+                </div>
+                <div>
+                  <span className="block text-neutral-500">Xuất xứ</span>
+                  <strong className="font-semibold text-neutral-950">{transparency.origin}</strong>
+                </div>
+                <div>
+                  <span className="block text-neutral-500">Chi phí / lần</span>
+                  <strong className="font-mono font-bold text-[#FF5A00]">
+                    {transparency.costPerServingLabel}
+                  </strong>
+                </div>
+                <div>
+                  <span className="block text-neutral-500">Kích thước hộp</span>
+                  <strong className="font-mono font-semibold text-neutral-950">
+                    {realSizeLabel}
+                  </strong>
+                </div>
+              </div>
+
               {/* Dynamic Flavor Selector */}
               <div className="mt-5">
                 <div className="flex items-center justify-between text-xs">
@@ -348,133 +378,170 @@ export default function ProductDetailModal({
                 </div>
               </div>
 
-              {/* Structured Detail Tabs (Overview / Nutrition / Usage Guide — inspired by MiuGo Pets) */}
+              {/* Structured Detail Tabs (Benefits & Ingredients / Manufacturer & Specs / Usage & Safety) */}
               <div className="mt-5 border border-neutral-950 bg-white">
-                <div className="grid grid-cols-3 border-b border-neutral-950 bg-neutral-950 text-xs font-bold uppercase tracking-wider">
+                <div className="grid grid-cols-3 border-b border-neutral-950 bg-neutral-950 text-[11px] font-bold uppercase tracking-wider sm:text-xs">
                   <button
                     type="button"
                     onClick={() => setInfoTab('overview')}
-                    className={`py-2 px-2 text-center transition-colors ${
+                    className={`px-2 py-2.5 text-center transition-colors ${
                       infoTab === 'overview'
                         ? 'bg-[#FF5A00] text-white'
                         : 'text-neutral-300 hover:text-white'
                     }`}
                   >
-                    Thành phần chính
+                    Công dụng & Thành phần
                   </button>
                   <button
                     type="button"
                     onClick={() => setInfoTab('nutrition')}
-                    className={`py-2 px-2 text-center transition-colors ${
+                    className={`px-2 py-2.5 text-center transition-colors ${
                       infoTab === 'nutrition'
                         ? 'bg-[#FF5A00] text-white'
                         : 'text-neutral-300 hover:text-white'
                     }`}
                   >
-                    Thông số chi tiết
+                    NSX & Thông số
                   </button>
                   <button
                     type="button"
                     onClick={() => setInfoTab('usage')}
-                    className={`py-2 px-2 text-center transition-colors ${
+                    className={`px-2 py-2.5 text-center transition-colors ${
                       infoTab === 'usage'
                         ? 'bg-[#FF5A00] text-white'
                         : 'text-neutral-300 hover:text-white'
                     }`}
                   >
-                    Cách sử dụng
+                    Cách dùng & Lưu ý
                   </button>
                 </div>
 
                 {infoTab === 'overview' && (
-                  <div className="grid grid-cols-2 divide-x divide-y divide-neutral-200 text-xs sm:grid-cols-3">
-                    <div className="p-2.5">
-                      <span className="block text-neutral-500">Khẩu phần</span>
-                      <span className="font-mono font-bold text-neutral-950 tabular-nums">
-                        {product.nutritionInfo.servingSize}
-                      </span>
+                  <div>
+                    <div className="grid grid-cols-2 divide-x divide-y divide-neutral-200 text-xs sm:grid-cols-3">
+                      {transparency.keyFacts.map((fact) => (
+                        <div key={fact.label} className="p-2.5">
+                          <span className="block text-[11px] text-neutral-500">{fact.label}</span>
+                          <span
+                            className={`mt-0.5 block font-mono font-bold tabular-nums ${
+                              fact.accent ? 'text-[#FF5A00]' : 'text-neutral-950'
+                            }`}
+                          >
+                            {fact.value}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                    <div className="p-2.5">
-                      <span className="block text-neutral-500">Số lần dùng</span>
-                      <span className="font-mono font-bold text-neutral-950 tabular-nums">
-                        {product.nutritionInfo.servingsPerContainer} lần
-                      </span>
-                    </div>
-                    <div className="p-2.5">
-                      <span className="block text-neutral-500">Năng lượng</span>
-                      <span className="font-mono font-bold text-neutral-950 tabular-nums">
-                        {product.nutritionInfo.calories}
-                      </span>
-                    </div>
-                    <div className="p-2.5">
-                      <span className="block text-neutral-500">Protein</span>
-                      <span className="font-mono font-bold text-[#FF5A00] tabular-nums">
-                        {product.nutritionInfo.protein}
-                      </span>
-                    </div>
-                    <div className="p-2.5">
-                      <span className="block text-neutral-500">Carbs / Fat</span>
-                      <span className="font-mono font-bold text-neutral-950 tabular-nums">
-                        {product.nutritionInfo.carbs} / {product.nutritionInfo.fat}
-                      </span>
-                    </div>
-                    <div className="p-2.5">
-                      <span className="block text-neutral-500">Điểm nổi bật</span>
-                      <span className="font-mono font-bold text-neutral-950 tabular-nums">
-                        {product.nutritionInfo.highlightValue}
-                      </span>
+                    <div className="border-t border-neutral-200 bg-neutral-50 p-3 text-xs leading-relaxed text-neutral-700">
+                      <div className="font-bold uppercase tracking-wide text-neutral-950">
+                        Công dụng chính của sản phẩm
+                      </div>
+                      <ul className="mt-1.5 space-y-1">
+                        {transparency.benefits.map((benefit, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#FF5A00]" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 border-t border-neutral-200 pt-2 text-[11px] text-neutral-600">
+                        {product.shortDescription}
+                      </p>
                     </div>
                   </div>
                 )}
 
                 {infoTab === 'nutrition' && (
                   <div className="space-y-1.5 p-3 text-xs text-neutral-700">
-                    <div className="flex justify-between border-b border-neutral-100 pb-1">
-                      <span className="text-neutral-500">Thương hiệu</span>
-                      <strong className="text-neutral-950">{product.brand}</strong>
+                    <div className="flex justify-between gap-3 border-b border-neutral-200 bg-orange-50/60 px-2 py-1.5">
+                      <span className="font-semibold text-neutral-700">Công ty sản xuất</span>
+                      <strong className="text-right text-neutral-950">
+                        {transparency.manufacturer}
+                      </strong>
                     </div>
-                    <div className="flex justify-between border-b border-neutral-100 pb-1">
-                      <span className="text-neutral-500">Danh mục</span>
-                      <strong className="text-neutral-950">{product.categoryName}</strong>
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Thương hiệu · Xuất xứ</span>
+                      <strong className="text-right text-neutral-950">
+                        {product.brand} · {transparency.origin}
+                      </strong>
                     </div>
-                    <div className="flex justify-between border-b border-neutral-100 pb-1">
-                      <span className="text-neutral-500">Quy cách đóng gói</span>
-                      <strong className="font-mono text-neutral-950">{product.weightLabel}</strong>
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Danh mục · Dạng dùng</span>
+                      <strong className="text-right text-neutral-950">
+                        {product.categoryName} · {transparency.dosageForm}
+                      </strong>
                     </div>
-                    <div className="flex justify-between border-b border-neutral-100 pb-1">
-                      <span className="text-neutral-500">Hương vị đang chọn</span>
-                      <strong className="text-[#FF5A00]">{selectedFlavor.name}</strong>
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Quy cách · Kích thước thật</span>
+                      <strong className="text-right font-mono text-neutral-950">
+                        {product.weightLabel} · {realSizeLabel}
+                      </strong>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-neutral-500">Quà tặng bình lắc 700ml</span>
-                      <strong className="text-neutral-950">
-                        Tặng kèm đơn từ 500.000đ
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Chi phí mỗi khẩu phần</span>
+                      <strong className="text-right font-mono text-[#FF5A00]">
+                        {transparency.costPerServingLabel} ({product.nutritionInfo.servingsPerContainer} lần)
+                      </strong>
+                    </div>
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Hương vị & Tồn kho thực tế</span>
+                      <strong className="text-right text-neutral-950">
+                        {selectedFlavor.name} · Còn {selectedFlavor.stock} hộp tại Kho HN
+                      </strong>
+                    </div>
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Hạn sử dụng cam kết</span>
+                      <strong className="text-right text-neutral-950">
+                        {transparency.shelfLifeCommitment}
+                      </strong>
+                    </div>
+                    <div className="flex justify-between gap-3 border-b border-neutral-100 pb-1.5">
+                      <span className="text-neutral-500">Chứng thực nguồn gốc</span>
+                      <strong className="text-right text-neutral-950">
+                        {transparency.authenticityNote}
+                      </strong>
+                    </div>
+                    <div className="flex justify-between gap-3 pt-0.5">
+                      <span className="text-neutral-500">Quà tặng kèm đơn</span>
+                      <strong className="text-right text-[#FF5A00]">
+                        Bình lắc 700ml 0đ (đơn từ 500.000đ)
                       </strong>
                     </div>
                   </div>
                 )}
 
                 {infoTab === 'usage' && (
-                  <div className="space-y-1.5 p-3 text-xs leading-relaxed text-neutral-700">
-                    {product.isWaterMixPowder ? (
-                      <>
-                        <p>
-                          <strong>Cách pha chuẩn:</strong> Pha 1 khẩu phần ({product.nutritionInfo.servingSize}) với 250–350ml nước lọc lạnh bằng bình lắc tặng kèm, lắc đều 15–20 giây.
-                        </p>
-                        <p>
-                          <strong>Thời điểm tốt nhất:</strong> Ngay sau buổi tập (Whey/EAA) hoặc trước tập 20–30 phút (Pre-Workout) / hàng ngày (Creatine).
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p>
-                          <strong>Cách dùng chuẩn:</strong> Dùng trực tiếp {product.nutritionInfo.servingSize} với nước lọc (Vitamin / Dầu cá dùng ngay sau bữa ăn chính có chất béo) hoặc ăn trực tiếp làm bữa phụ.
-                        </p>
-                        <p>
-                          <strong>Bảo quản:</strong> Nơi khô ráo thoáng mát, đậy kín nắp sau khi mở, tránh ánh nắng trực tiếp.
-                        </p>
-                      </>
-                    )}
+                  <div className="space-y-2.5 p-3 text-xs leading-relaxed text-neutral-700">
+                    <div>
+                      <div className="font-bold uppercase tracking-wide text-neutral-950">
+                        Hướng dẫn sử dụng chi tiết
+                      </div>
+                      <ol className="mt-1.5 space-y-1">
+                        {transparency.usageSteps.map((step, idx) => (
+                          <li key={idx} className="flex gap-1.5">
+                            <span className="font-mono font-bold text-[#FF5A00]">
+                              {idx + 1}.
+                            </span>
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                    <div className="border-t border-neutral-200 pt-2">
+                      <strong className="text-neutral-950">Đối tượng phù hợp: </strong>
+                      <span>{transparency.targetAudience}</span>
+                    </div>
+                    <div className="border-t border-neutral-200 pt-2">
+                      <strong className="text-neutral-950">Bảo quản: </strong>
+                      <span>{transparency.storageNote}</span>
+                    </div>
+                    <div className="flex items-start gap-2 border border-amber-300 bg-amber-50/70 p-2.5 text-neutral-800">
+                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                      <div>
+                        <strong className="text-neutral-950">Lưu ý an toàn: </strong>
+                        <span>{transparency.safetyCaution}</span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

@@ -2,10 +2,13 @@ import { useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
+  Check,
   CheckCircle2,
+  Copy,
   Gift,
   Loader2,
   MessageCircle,
+  QrCode,
   Tag,
   Truck,
 } from 'lucide-react';
@@ -18,6 +21,14 @@ import {
   formatVND,
 } from '../data/catalog';
 import { VOUCHERS, evaluateVoucher } from '../data/vouchers';
+import { withBasePath } from '../utils/assetPath';
+
+const BANK_QR_INFO = {
+  qrImage: withBasePath('/assets/aistudio/_nh_ChatGPT_14_02_07_24_thg_11__2026_14a8802a.jpg'),
+  bankName: 'Timo Digital Bank by BVBank',
+  accountName: 'TRINH DAI NGHIA',
+  accountNumber: '9021343141535',
+};
 
 interface CheckoutPageProps {
   items: CartItem[];
@@ -103,11 +114,22 @@ export default function CheckoutPage({
   const [note, setNote] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'vietqr'>('cod');
   const [voucherInput, setVoucherInput] = useState(voucherCode);
+  const [copiedAccount, setCopiedAccount] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmed, setConfirmed] = useState<
     (OrderConfirmation & { paymentMethod: 'cod' | 'vietqr'; voucherCode: string; voucherDiscount: number }) | null
   >(null);
+
+  const handleCopyAccount = async () => {
+    try {
+      await navigator.clipboard.writeText(BANK_QR_INFO.accountNumber);
+      setCopiedAccount(true);
+      window.setTimeout(() => setCopiedAccount(false), 1800);
+    } catch {
+      // Ignore clipboard failures on restricted contexts
+    }
+  };
 
   const subtotal = items.reduce(
     (sum, item) => sum + (item.selectedFlavor.priceOverride ?? item.product.price) * item.quantity,
@@ -261,13 +283,76 @@ export default function CheckoutPage({
                 </span>
               </div>
               <div className="flex justify-between pt-1.5 text-sm font-bold text-neutral-950">
-                <span>Tổng thanh toán (Demo)</span>
+                <span>Tổng thanh toán</span>
                 <span className="font-mono text-[#FF5A00] tabular-nums">
                   {formatVND(confirmed.total)}
                 </span>
               </div>
             </div>
           </div>
+
+          {confirmed.paymentMethod === 'vietqr' && (
+            <div className="mt-6 border-2 border-[#FF5A00] bg-white p-5 text-left">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-neutral-950">
+                <QrCode className="h-4 w-4 text-[#FF5A00]" />
+                <span>Quét mã VietQR để hoàn tất thanh toán</span>
+              </div>
+              <div className="mt-4 grid items-center gap-5 sm:grid-cols-[200px_1fr]">
+                <div className="mx-auto w-[200px] border border-neutral-200 bg-white p-2">
+                  <img
+                    src={BANK_QR_INFO.qrImage}
+                    alt="Mã QR chuyển khoản VietQR - Timo Digital Bank - TRINH DAI NGHIA"
+                    className="h-auto w-full object-contain"
+                  />
+                </div>
+                <div className="space-y-2 text-xs text-neutral-700">
+                  <div>
+                    <span className="text-neutral-500">Ngân hàng:</span>{' '}
+                    <strong className="text-neutral-950">{BANK_QR_INFO.bankName}</strong>
+                  </div>
+                  <div>
+                    <span className="text-neutral-500">Chủ tài khoản:</span>{' '}
+                    <strong className="text-neutral-950">{BANK_QR_INFO.accountName}</strong>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-neutral-500">Số tài khoản:</span>{' '}
+                    <strong className="font-mono text-sm text-neutral-950">
+                      {BANK_QR_INFO.accountNumber}
+                    </strong>
+                    <button
+                      type="button"
+                      onClick={handleCopyAccount}
+                      className="inline-flex items-center gap-1 border border-neutral-300 bg-neutral-50 px-2 py-0.5 text-[11px] font-bold text-neutral-800 hover:border-[#FF5A00]"
+                    >
+                      {copiedAccount ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-600" />
+                          <span>Đã chép</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          <span>Sao chép STK</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <div>
+                    <span className="text-neutral-500">Số tiền chuyển khoản:</span>{' '}
+                    <strong className="font-mono text-base text-[#FF5A00]">
+                      {formatVND(confirmed.total)}
+                    </strong>
+                  </div>
+                  <div className="border border-orange-200 bg-orange-50/70 p-2">
+                    <span className="text-neutral-600">Nội dung chuyển khoản: </span>
+                    <strong className="font-mono text-neutral-950">
+                      {confirmed.orderCode} {confirmed.customer.phone}
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <button
@@ -522,10 +607,73 @@ export default function CheckoutPage({
                 >
                   <span className="block font-bold">Chuyển khoản / VietQR</span>
                   <span className="mt-0.5 block text-[11px] opacity-75">
-                    Demo không phát sinh giao dịch thật
+                    Quét mã QR · Timo Digital Bank
                   </span>
                 </button>
               </div>
+
+              {paymentMethod === 'vietqr' && (
+                <div className="border-2 border-[#FF5A00] bg-neutral-50 p-4">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-neutral-950">
+                    <QrCode className="h-4 w-4 text-[#FF5A00]" />
+                    <span>Quét mã VietQR để chuyển khoản</span>
+                  </div>
+                  <div className="mt-3 grid items-center gap-4 sm:grid-cols-[190px_1fr]">
+                    <div className="mx-auto w-[190px] border border-neutral-200 bg-white p-2">
+                      <img
+                        src={BANK_QR_INFO.qrImage}
+                        alt="Mã QR chuyển khoản VietQR - Timo Digital Bank - TRINH DAI NGHIA"
+                        className="h-auto w-full object-contain"
+                      />
+                    </div>
+                    <div className="space-y-1.5 text-xs text-neutral-700">
+                      <div>
+                        <span className="text-neutral-500">Ngân hàng:</span>{' '}
+                        <strong className="text-neutral-950">{BANK_QR_INFO.bankName}</strong>
+                      </div>
+                      <div>
+                        <span className="text-neutral-500">Chủ tài khoản:</span>{' '}
+                        <strong className="text-neutral-950">{BANK_QR_INFO.accountName}</strong>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-neutral-500">Số tài khoản:</span>{' '}
+                        <strong className="font-mono text-sm text-neutral-950">
+                          {BANK_QR_INFO.accountNumber}
+                        </strong>
+                        <button
+                          type="button"
+                          onClick={handleCopyAccount}
+                          className="inline-flex items-center gap-1 border border-neutral-300 bg-white px-2 py-0.5 text-[11px] font-bold text-neutral-800 hover:border-[#FF5A00]"
+                        >
+                          {copiedAccount ? (
+                            <>
+                              <Check className="h-3 w-3 text-emerald-600" />
+                              <span>Đã chép</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3 w-3" />
+                              <span>Sao chép STK</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                      <div>
+                        <span className="text-neutral-500">Số tiền cần chuyển:</span>{' '}
+                        <strong className="font-mono text-sm text-[#FF5A00]">
+                          {formatVND(grandTotal)}
+                        </strong>
+                      </div>
+                      <div className="border border-orange-200 bg-white p-2 text-[11px]">
+                        <span className="text-neutral-500">Nội dung CK: </span>
+                        <strong className="font-mono text-neutral-950">
+                          NHAISUPPLEMENT {phone.trim() || 'SDT'}
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <button
@@ -544,7 +692,7 @@ export default function CheckoutPage({
             </button>
 
             <p className="text-center text-xs text-neutral-500">
-              Website Portfolio Demo — không thu tiền thật. Khách hàng kiểm tra hàng thoải mái trước khi thanh toán.
+              Khách hàng kiểm tra nguyên seal và hạn sử dụng sản phẩm thoải mái trước khi nhận hàng.
             </p>
           </form>
 

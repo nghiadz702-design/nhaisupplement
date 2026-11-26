@@ -142,6 +142,7 @@ export default function Product3DViewer({
   const [arParallaxActive, setArParallaxActive] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [dockCollapsed, setDockCollapsed] = useState(false);
+  const [arCameraEnabled, setArCameraEnabled] = useState(false);
   const [arCameraStatus, setArCameraStatus] = useState<'idle' | 'active' | 'fallback'>('idle');
   const [photoStatus, setPhotoStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [contextLost, setContextLost] = useState(false);
@@ -229,6 +230,9 @@ export default function Product3DViewer({
     }
     setVrMobileNotice(false);
     setMode(nextMode);
+    if (nextMode !== 'ar') {
+      setArCameraEnabled(false);
+    }
     if (nextMode !== 'vr' && vrGyroActive) {
       setVrGyroActive(false);
     }
@@ -382,13 +386,13 @@ export default function Product3DViewer({
     }
   };
 
-  // Manage live AR camera stream when entering/leaving AR mode or switching camera
+  // Request rear camera ONLY after explicit user action (never auto-prompt on page load)
   useEffect(() => {
     let stream: MediaStream | null = null;
     let cancelled = false;
 
     async function startCamera() {
-      if (mode !== 'ar' || xrSessionType === 'ar') {
+      if (mode !== 'ar' || !arCameraEnabled || xrSessionType === 'ar') {
         setArCameraStatus('idle');
         return;
       }
@@ -432,7 +436,7 @@ export default function Product3DViewer({
         videoRef.current.srcObject = null;
       }
     };
-  }, [mode, arFacing, arRetryNonce, xrSessionType]);
+  }, [mode, arCameraEnabled, arFacing, arRetryNonce, xrSessionType]);
 
   // Automatic Room Brightness & Color Warmth Estimation from live camera video
   useEffect(() => {
@@ -1367,20 +1371,46 @@ export default function Product3DViewer({
                 }}
               />
               {arCameraStatus === 'fallback' && (
-                <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 border border-neutral-300 bg-white/95 px-3 py-1.5 text-xs font-medium text-neutral-800 shadow-sm">
-                  <span>Đặt trên mặt bàn · Kích thước thật {dims.label}</span>
+                <div className="relative z-20 flex flex-wrap items-center justify-center gap-2 border border-neutral-300 bg-white/95 px-3 py-1.5 text-xs font-medium text-neutral-800 shadow-sm">
+                  <span>Chưa cấp quyền Camera · Dùng nền bàn 3D ({dims.label})</span>
                   <button
                     type="button"
-                    onClick={() => setArRetryNonce((n) => n + 1)}
+                    onClick={() => {
+                      setArFacing('environment');
+                      setArCameraEnabled(true);
+                      setArRetryNonce((n) => n + 1);
+                    }}
                     className="inline-flex items-center gap-1 bg-neutral-950 px-2.5 py-1 text-[11px] font-bold text-white hover:bg-[#FF5A00]"
                   >
                     <RefreshCw className="h-3 w-3" />
-                    <span>Bật Camera</span>
+                    <span>Thử bật Cam sau</span>
                   </button>
                 </div>
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Explicit Rear-Camera AR Activation Prompt (never asks camera permission automatically) */}
+      {mode === 'ar' && arCameraStatus === 'idle' && xrSessionType === 'none' && (
+        <div
+          className={`pointer-events-none absolute inset-x-0 z-20 flex justify-center px-3 ${
+            dockCollapsed ? 'bottom-12' : 'bottom-28 sm:bottom-28'
+          }`}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              setArFacing('environment');
+              setArCameraEnabled(true);
+              setArRetryNonce((n) => n + 1);
+            }}
+            className="pointer-events-auto flex items-center gap-2 border border-[#FF5A00] bg-neutral-950/95 px-4 py-2 text-xs font-bold text-white shadow-lg transition-colors hover:bg-[#FF5A00]"
+          >
+            <Camera className="h-4 w-4 text-[#FF5A00]" />
+            <span>Đặt sản phẩm qua Camera sau ({dims.label})</span>
+          </button>
         </div>
       )}
 
@@ -1717,16 +1747,42 @@ export default function Product3DViewer({
                       />
                     </label>
 
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setArFacing((prev) => (prev === 'environment' ? 'user' : 'environment'))
-                      }
-                      className="flex items-center gap-1 bg-neutral-800 px-2.5 py-1 text-[11px] font-semibold text-neutral-200 hover:bg-neutral-700"
-                    >
-                      <RefreshCw className="h-3 w-3" />
-                      <span>{arFacing === 'environment' ? 'Cam sau' : 'Cam trước'}</span>
-                    </button>
+                    {!arCameraEnabled ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setArFacing('environment');
+                          setArCameraEnabled(true);
+                          setArRetryNonce((n) => n + 1);
+                        }}
+                        className="flex items-center gap-1 bg-[#FF5A00] px-2.5 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-neutral-800"
+                      >
+                        <Camera className="h-3 w-3" />
+                        <span>Bật Cam sau</span>
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setArFacing((prev) => (prev === 'environment' ? 'user' : 'environment'))
+                          }
+                          className="flex items-center gap-1 bg-neutral-800 px-2.5 py-1 text-[11px] font-semibold text-neutral-200 hover:bg-neutral-700"
+                        >
+                          <RefreshCw className="h-3 w-3" />
+                          <span>{arFacing === 'environment' ? 'Cam sau' : 'Cam trước'}</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setArCameraEnabled(false)}
+                          className="flex items-center gap-1 bg-neutral-800 px-2 py-1 text-[11px] font-semibold text-neutral-300 hover:bg-neutral-700"
+                          title="Tắt camera AR"
+                        >
+                          <X className="h-3 w-3" />
+                          <span>Tắt Cam</span>
+                        </button>
+                      </>
+                    )}
 
                     {isMobilePhone && (
                       <button
