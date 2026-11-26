@@ -87,7 +87,6 @@ const _lookDir = new THREE.Vector3();
 const _camGoalPos = new THREE.Vector3();
 const _camGoalTarget = new THREE.Vector3();
 const _arWorldOffset = new THREE.Vector3();
-const _xrCamWorldPos = new THREE.Vector3();
 const _hitMatrix = new THREE.Matrix4();
 
 function getViewerCameraVectors(
@@ -96,10 +95,10 @@ function getViewerCameraVectors(
   posOut: THREE.Vector3,
   targetOut: THREE.Vector3,
 ) {
-  const scaleDist = compact ? 1.14 : 1.02;
-  const targetY = shape === 'bar' ? 0.56 : 0.88;
+  const scaleDist = compact ? 1.16 : 1.04;
+  const targetY = shape === 'bar' ? 0.34 : 0.6;
   targetOut.set(0, targetY, 0);
-  posOut.set(0.32 * scaleDist, targetY + 0.5 * scaleDist, 4.85 * scaleDist);
+  posOut.set(0.32 * scaleDist, targetY + 0.56 * scaleDist, 5.15 * scaleDist);
 }
 
 export default function Product3DViewer({
@@ -132,7 +131,7 @@ export default function Product3DViewer({
   const [autoLightMatch, setAutoLightMatch] = useState(true);
   const [arFacing, setArFacing] = useState<'environment' | 'user'>('environment');
   const [arOffset, setArOffset] = useState<{ x: number; z: number }>({ x: 0, z: 0 });
-  const [arInteractMode, setArInteractMode] = useState<'move' | 'orbit'>('move');
+  const [arInteractMode, setArInteractMode] = useState<'move' | 'orbit'>('orbit');
   const [showBackFacts, setShowBackFacts] = useState(false);
   const [showRuler, setShowRuler] = useState(false);
   const [arRetryNonce, setArRetryNonce] = useState(0);
@@ -488,11 +487,12 @@ export default function Product3DViewer({
     return () => window.clearInterval(timer);
   }, [mode, arCameraStatus, autoLightMatch]);
 
-  // Direct Canvas Drag-to-Place & Two-Finger Pinch-to-Scale in AR Move Mode
+  // Direct Canvas Drag-to-Place (Move Mode) + Two-Finger Pinch & Wheel Scale (Always in AR)
   useEffect(() => {
     const el = mountRef.current;
-    if (!el || mode !== 'ar' || arInteractMode !== 'move' || xrSessionType !== 'none') return;
+    if (!el || mode !== 'ar' || xrSessionType !== 'none') return;
 
+    const isMoveMode = arInteractMode === 'move';
     let dragging = false;
     let lastX = 0;
     let lastY = 0;
@@ -500,13 +500,13 @@ export default function Product3DViewer({
     let pinchStartScale = arScaleRef.current;
 
     const onPointerDown = (e: PointerEvent) => {
-      if (e.pointerType === 'touch') return;
+      if (!isMoveMode || e.pointerType === 'touch') return;
       dragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
     };
     const onPointerMove = (e: PointerEvent) => {
-      if (!dragging || e.pointerType === 'touch') return;
+      if (!isMoveMode || !dragging || e.pointerType === 'touch') return;
       const dx = e.clientX - lastX;
       const dy = e.clientY - lastY;
       lastX = e.clientX;
@@ -524,7 +524,7 @@ export default function Product3DViewer({
       Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
 
     const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
+      if (e.touches.length === 1 && isMoveMode) {
         dragging = true;
         lastX = e.touches[0].clientX;
         lastY = e.touches[0].clientY;
@@ -535,7 +535,7 @@ export default function Product3DViewer({
       }
     };
     const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 1 && dragging) {
+      if (e.touches.length === 1 && dragging && isMoveMode) {
         e.preventDefault();
         const dx = e.touches[0].clientX - lastX;
         const dy = e.touches[0].clientY - lastY;
@@ -732,9 +732,11 @@ export default function Product3DViewer({
     controls.enableDamping = !isSoftwareGl;
     controls.dampingFactor = 0.06;
     controls.target.copy(_camGoalTarget);
-    controls.minDistance = 2.0;
+    controls.minDistance = 2.1;
     controls.maxDistance = 8.6;
-    controls.maxPolarAngle = Math.PI * 0.56;
+    controls.minPolarAngle = 0.14;
+    controls.maxPolarAngle = Math.PI * 0.62;
+    controls.enablePan = false;
     controls.update();
 
     const handleControlsStart = () => {
@@ -1088,8 +1090,9 @@ export default function Product3DViewer({
       }
 
       if (presentingType === 'none') {
-        // OrbitControls enabled only when orbiting or in VR
+        // OrbitControls enabled for 360° orbit or VR; wheel/pinch zoom disabled in AR so arScale handles sizing smoothly
         controls.enabled = activeMode === 'vr' || arInteractModeRef.current === 'orbit';
+        controls.enableZoom = activeMode === 'vr';
 
         const targetScale = activeMode === 'ar' ? arScaleRef.current : 1;
         const dampedScale = THREE.MathUtils.damp(stageGroup.scale.x, targetScale, 8, delta);
@@ -1121,28 +1124,15 @@ export default function Product3DViewer({
       currentPhotoShowcase.setLightTint(combinedBrightness, tint.r, tint.g, tint.b);
 
       if (realPhotoReady) {
-        if (renderer.xr.isPresenting) {
-          renderer.xr.getCamera().getWorldPosition(_xrCamWorldPos);
-        } else {
-          _xrCamWorldPos.copy(camera.position);
-        }
-        const baseYaw = Math.atan2(
-          _xrCamWorldPos.x - stageGroup.position.x,
-          _xrCamWorldPos.z - stageGroup.position.z,
-        );
-        const flipAngle = showBackFactsRef.current ? Math.PI : 0;
-        const swayAngle =
-          autoRotateRef.current && !renderer.xr.isPresenting
-            ? Math.sin(clock.elapsedTime * 1.15) * 0.36
-            : 0;
-        const targetYaw = baseYaw + flipAngle + swayAngle;
+        // True 3D volumetric packaging: keep orientation steady (0 = front, PI = back specs)
+        // so user can orbit 360° freely to inspect front, left/right sides, top lid, and back label!
+        const targetYaw =
+          (showBackFactsRef.current ? Math.PI : 0) +
+          (renderer.xr.isPresenting && autoRotateRef.current ? clock.elapsedTime * 0.45 : 0);
         let diff = targetYaw - currentPhotoShowcase.root.rotation.y;
         while (diff > Math.PI) diff -= Math.PI * 2;
         while (diff < -Math.PI) diff += Math.PI * 2;
-        currentPhotoShowcase.root.rotation.y += diff * (1 - Math.exp(-12 * delta));
-
-        const relAngle = currentPhotoShowcase.root.rotation.y - baseYaw;
-        currentPhotoShowcase.setFacingBack(Math.cos(relAngle) < 0);
+        currentPhotoShowcase.root.rotation.y += diff * (1 - Math.exp(-10 * delta));
       }
 
       if (!renderer.xr.isPresenting) {
@@ -1203,7 +1193,7 @@ export default function Product3DViewer({
 
         controls.autoRotate =
           autoRotateRef.current && !isSoftwareGl && !cameraResetRef.current;
-        controls.autoRotateSpeed = 1.25;
+        controls.autoRotateSpeed = 2.0;
         controls.update();
       }
 
@@ -1357,17 +1347,17 @@ export default function Product3DViewer({
           />
           {arCameraStatus !== 'active' && (
             <div
-              className="absolute inset-0 flex flex-col items-center justify-end pb-40 text-center"
+              className="absolute inset-0 flex flex-col items-center justify-start pt-16 text-center"
               style={{
                 background:
-                  'linear-gradient(180deg, #eceae6 0%, #dcd8d1 56%, #c2bab0 56.4%, #9c9286 100%)',
+                  'linear-gradient(180deg, #f6f5f1 0%, #eae7e0 56%, #d0c9bd 56.3%, #b6aea0 100%)',
               }}
             >
               <div
                 className="pointer-events-none absolute inset-x-0 bottom-0 h-[44%]"
                 style={{
                   background:
-                    'radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.28) 0%, rgba(0,0,0,0.18) 100%)',
+                    'radial-gradient(ellipse at 50% 18%, rgba(255,255,255,0.34) 0%, rgba(0,0,0,0.16) 100%)',
                 }}
               />
               {arCameraStatus === 'fallback' && (
@@ -1389,28 +1379,6 @@ export default function Product3DViewer({
               )}
             </div>
           )}
-        </div>
-      )}
-
-      {/* Explicit Rear-Camera AR Activation Prompt (never asks camera permission automatically) */}
-      {mode === 'ar' && arCameraStatus === 'idle' && xrSessionType === 'none' && (
-        <div
-          className={`pointer-events-none absolute inset-x-0 z-20 flex justify-center px-3 ${
-            dockCollapsed ? 'bottom-12' : 'bottom-28 sm:bottom-28'
-          }`}
-        >
-          <button
-            type="button"
-            onClick={() => {
-              setArFacing('environment');
-              setArCameraEnabled(true);
-              setArRetryNonce((n) => n + 1);
-            }}
-            className="pointer-events-auto flex items-center gap-2 border border-[#FF5A00] bg-neutral-950/95 px-4 py-2 text-xs font-bold text-white shadow-lg transition-colors hover:bg-[#FF5A00]"
-          >
-            <Camera className="h-4 w-4 text-[#FF5A00]" />
-            <span>Đặt sản phẩm qua Camera sau ({dims.label})</span>
-          </button>
         </div>
       )}
 
@@ -1543,8 +1511,8 @@ export default function Product3DViewer({
             <span className="font-mono font-bold text-[#FF5A00]">
               {mode === 'ar'
                 ? arCameraStatus === 'active'
-                  ? 'AR CAMERA LIVE'
-                  : 'AR ĐẶT BÀN'
+                  ? 'AR CAMERA 360°'
+                  : '360° STUDIO · XEM TRƯỚC'
                 : 'VR SHOWROOM 360°'}
             </span>
             <span aria-hidden="true">·</span>
@@ -1555,10 +1523,10 @@ export default function Product3DViewer({
           </div>
           <p className="mt-0.5 text-xs font-semibold text-white">
             {mode === 'ar'
-              ? arInteractMode === 'move'
-                ? 'Kéo trên màn hình để đặt vị trí · Chụm 2 ngón phóng/thu tỉ lệ'
-                : 'Kéo xoay góc nhìn · Lật xem mặt sau dinh dưỡng'
-              : vrGyroHint ?? 'Lắp kính VR vào điện thoại · Đổi vị & sản phẩm ngay bên dưới'}
+              ? arInteractMode === 'orbit'
+                ? 'Kéo xoay 360° xem đủ 4 mặt & nắp hộp · Cuộn/chụm chỉnh tỉ lệ'
+                : 'Kéo trên màn hình để đặt vị trí · Chụm 2 ngón phóng/thu tỉ lệ'
+              : vrGyroHint ?? 'Lắp kính VR vào điện thoại · Xoay 360° & đổi vị ngay bên dưới'}
           </p>
         </div>
 
@@ -1651,20 +1619,36 @@ export default function Product3DViewer({
         </div>
       </div>
 
-      {/* Collapsible Bottom Control Dock */}
+      {/* Collapsible Bottom Control Dock (never overlaps camera CTA) */}
       {xrSessionType === 'none' && (
-        <div className="absolute inset-x-0 bottom-3 z-20 flex flex-col items-center px-2 sm:px-3">
-          <button
-            type="button"
-            onClick={() => setDockCollapsed((v) => !v)}
-            className="mb-1.5 flex items-center gap-1.5 bg-neutral-950 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-[#FF5A00]"
-          >
-            <SlidersHorizontal className="h-3.5 w-3.5" />
-            {dockCollapsed ? 'Mở thanh điều khiển AR/VR' : 'Thu gọn điều khiển'}
-          </button>
+        <div className="pointer-events-none absolute inset-x-0 bottom-3 z-20 flex flex-col items-center gap-1.5 px-2 sm:px-3">
+          <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-2">
+            {mode === 'ar' && arCameraStatus === 'idle' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setArFacing('environment');
+                  setArCameraEnabled(true);
+                  setArRetryNonce((n) => n + 1);
+                }}
+                className="flex items-center gap-1.5 border border-[#FF5A00] bg-neutral-950/95 px-3 py-1 text-[11px] font-bold text-white shadow-md transition-colors hover:bg-[#FF5A00]"
+              >
+                <Camera className="h-3.5 w-3.5 text-[#FF5A00]" />
+                <span>Bật Camera sau ({dims.label})</span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setDockCollapsed((v) => !v)}
+              className="flex items-center gap-1.5 bg-neutral-950/95 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-[#FF5A00]"
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5" />
+              {dockCollapsed ? 'Mở thanh điều khiển AR/VR' : 'Thu gọn điều khiển'}
+            </button>
+          </div>
 
           {!dockCollapsed && (
-            <div className="flex w-full max-w-[820px] flex-col gap-2 border border-neutral-800 bg-neutral-950/95 p-2 text-white">
+            <div className="pointer-events-auto flex w-full max-w-[820px] flex-col gap-2 border border-neutral-800 bg-neutral-950/95 p-2 text-white">
               {/* Row 1: Mode Switcher + AR Placement / VR Stereo Controls */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-1 bg-neutral-900 p-1">
@@ -1709,30 +1693,34 @@ export default function Product3DViewer({
                 {/* AR Controls */}
                 {mode === 'ar' && (
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setArInteractMode((m) => (m === 'move' ? 'orbit' : 'move'))
-                      }
-                      className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold transition-colors ${
-                        arInteractMode === 'move'
-                          ? 'bg-white text-neutral-950'
-                          : 'bg-neutral-800 text-neutral-200 hover:bg-neutral-700'
-                      }`}
-                      title="Chuyển giữa Kéo đặt vị trí và Xoay góc nhìn"
-                    >
-                      {arInteractMode === 'move' ? (
-                        <>
-                          <Hand className="h-3 w-3 text-[#FF5A00]" />
-                          <span>Đang kéo đặt bàn</span>
-                        </>
-                      ) : (
-                        <>
-                          <Move className="h-3 w-3 text-[#FF5A00]" />
-                          <span>Đang xoay góc</span>
-                        </>
-                      )}
-                    </button>
+                    <div className="flex items-center bg-neutral-900 p-0.5 text-[11px] font-semibold">
+                      <button
+                        type="button"
+                        onClick={() => setArInteractMode('orbit')}
+                        className={`flex items-center gap-1 px-2 py-1 transition-colors ${
+                          arInteractMode === 'orbit'
+                            ? 'bg-white text-neutral-950'
+                            : 'text-neutral-300 hover:text-white'
+                        }`}
+                        title="Kéo xoay 360° xem đủ các mặt hộp"
+                      >
+                        <Move className="h-3 w-3 text-[#FF5A00]" />
+                        <span>Xoay 360°</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setArInteractMode('move')}
+                        className={`flex items-center gap-1 px-2 py-1 transition-colors ${
+                          arInteractMode === 'move'
+                            ? 'bg-white text-neutral-950'
+                            : 'text-neutral-300 hover:text-white'
+                        }`}
+                        title="Kéo trượt vị trí đặt hộp trên mặt bàn"
+                      >
+                        <Hand className="h-3 w-3 text-[#FF5A00]" />
+                        <span>Đặt vị trí</span>
+                      </button>
+                    </div>
 
                     <label className="flex items-center gap-1.5 text-xs text-neutral-300">
                       <span className="whitespace-nowrap">Tỉ lệ {Math.round(arScale * 100)}%</span>
@@ -1846,7 +1834,7 @@ export default function Product3DViewer({
                     }`}
                   >
                     <FlipHorizontal2 className="h-3.5 w-3.5" />
-                    <span>{showBackFacts ? 'Ảnh mặt trước' : 'Mặt sau dinh dưỡng'}</span>
+                    <span>{showBackFacts ? 'Lật về mặt trước' : 'Lật mặt sau NSX'}</span>
                   </button>
 
                   <button
@@ -1950,7 +1938,7 @@ export default function Product3DViewer({
                     ) : (
                       <Play className="h-3.5 w-3.5" />
                     )}
-                    <span>{autoRotate ? 'Dừng' : 'Xoay'}</span>
+                    <span>{autoRotate ? 'Dừng xoay' : 'Tự xoay 360°'}</span>
                   </button>
 
                   <button

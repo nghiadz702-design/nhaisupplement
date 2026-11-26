@@ -7,6 +7,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Mail,
   MapPin,
   Menu,
   MessageCircle,
@@ -38,6 +39,8 @@ import SupplementConsultAndFaq from './components/SupplementConsultAndFaq';
 import InfoPoliciesContact from './components/InfoPoliciesContact';
 import ErrorBoundary from './components/ErrorBoundary';
 import { withBasePath } from './utils/assetPath';
+import { getProductTransparencyInfo } from './utils/productTransparency';
+import { getProductSoldCount } from './utils/reviewsStore';
 
 type SortOption = 'popular' | 'price-asc' | 'price-desc' | 'flavors-desc';
 type PageRoute = 'home' | 'checkout';
@@ -467,7 +470,11 @@ export default function App() {
       if (sortBy === 'price-asc') return a.price - b.price;
       if (sortBy === 'price-desc') return b.price - a.price;
       if (sortBy === 'flavors-desc') return b.flavors.length - a.flavors.length;
-      return b.soldCount - a.soldCount;
+      const soldDiff = getProductSoldCount(b) - getProductSoldCount(a);
+      if (soldDiff !== 0) return soldDiff;
+      const featDiff = (FEATURED_PRODUCT_IDS.has(b.id) ? 1 : 0) - (FEATURED_PRODUCT_IDS.has(a.id) ? 1 : 0);
+      if (featDiff !== 0) return featDiff;
+      return b.flavors.length - a.flavors.length;
     });
   }, [selectedCategory, searchQuery, sortBy]);
 
@@ -525,14 +532,24 @@ export default function App() {
             <span aria-hidden="true" className="hidden text-neutral-600 sm:inline">|</span>
             <span className="hidden sm:inline">Tặng bình lắc 0đ cho đơn từ 500.000đ</span>
           </div>
-          <a
-            href={BRAND_INFO.zaloUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden shrink-0 items-center gap-1 whitespace-nowrap font-mono font-semibold text-[#FF5A00] hover:underline md:inline-flex"
-          >
-            Zalo {BRAND_INFO.phone}
-          </a>
+          <div className="hidden shrink-0 items-center gap-3 whitespace-nowrap font-mono text-[11px] font-semibold md:flex">
+            <a
+              href={`mailto:${BRAND_INFO.email}`}
+              className="inline-flex items-center gap-1 text-neutral-300 hover:text-[#FF5A00] hover:underline"
+            >
+              <Mail className="h-3 w-3 text-[#FF5A00]" />
+              <span>{BRAND_INFO.email}</span>
+            </a>
+            <span aria-hidden="true" className="text-neutral-700">|</span>
+            <a
+              href={BRAND_INFO.zaloUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[#FF5A00] hover:underline"
+            >
+              Zalo {BRAND_INFO.phone}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -834,6 +851,12 @@ export default function App() {
               >
                 Liên hệ trực tiếp ({BRAND_INFO.phone})
               </a>
+              <a
+                href={`mailto:${BRAND_INFO.email}`}
+                className="py-1 text-xs font-semibold text-[#FF5A00]"
+              >
+                Gmail: {BRAND_INFO.email}
+              </a>
               {totalCartQty > 0 && (
                 <button
                   type="button"
@@ -1126,7 +1149,7 @@ export default function App() {
                 aria-label="Sắp xếp sản phẩm"
                 className="h-10 border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-950 focus:border-[#FF5A00] focus:outline-none"
               >
-                <option value="popular">Bán chạy nhất</option>
+                <option value="popular">Nổi bật &amp; Phổ biến</option>
                 <option value="price-asc">Giá: Thấp → Cao</option>
                 <option value="price-desc">Giá: Cao → Thấp</option>
                 <option value="flavors-desc">Nhiều hương vị nhất</option>
@@ -1379,16 +1402,16 @@ export default function App() {
                 <div className="flex flex-col justify-between lg:col-span-5">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
-                      WebXR · AR Quick Look · VR Stereo
+                      Xem trước – Chọn đúng · WebXR · 360° Studio
                     </span>
                     <h2 className="mt-1 font-display text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">
                       Xem Sản Phẩm Thực Tế Qua AR &amp; VR
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-neutral-300">
-                      Hiển thị ảnh thật 100% cho toàn bộ 62 sản phẩm &amp; 212 hương vị: đặt bám
-                      mặt bàn qua WebXR / iPhone AR, kéo thả &amp; chụm 2 ngón chỉnh tỉ lệ, khớp
-                      ánh sáng phòng tự động, thước đo cm thực tế, lật mặt sau xem bảng dinh dưỡng
-                      và trải nghiệm VR Showroom 360° trên điện thoại.
+                      Xoay đủ 4 mặt &amp; nắp hộp trên mô hình khối 3D cho 62 sản phẩm &amp; 212
+                      hương vị. Dùng AR để đặt kích thước thật lên mặt bàn qua camera điện thoại
+                      (hoặc bàn xoay 360° dự phòng trên mọi trình duyệt), và dùng VR Showroom để
+                      quan sát không gian trưng bày 360°.
                     </p>
 
                     {/* Pick any of the 62 products */}
@@ -1445,7 +1468,7 @@ export default function App() {
                   <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800 pt-5">
                     <div>
                       <span className="block text-xs text-neutral-400">
-                        {showcaseProduct.brand} · Vị {showcaseFlavor.name}
+                        {showcaseProduct.brand} ({getProductTransparencyInfo(showcaseProduct, showcaseFlavor).manufacturerShort}) · Vị {showcaseFlavor.name}
                       </span>
                       <span className="font-mono text-2xl font-extrabold text-[#FF5A00] tabular-nums">
                         {formatVND(showcaseFlavor.priceOverride ?? showcaseProduct.price)}
@@ -1532,6 +1555,15 @@ export default function App() {
                 <li className="flex items-start gap-2">
                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FF5A00]" />
                   <span>{BRAND_INFO.warehouseAddress} · Ship toàn quốc</span>
+                </li>
+                <li className="flex items-center gap-2 pt-0.5">
+                  <Mail className="h-3.5 w-3.5 shrink-0 text-[#FF5A00]" />
+                  <a
+                    href={`mailto:${BRAND_INFO.email}`}
+                    className="font-semibold text-neutral-200 transition-colors hover:text-[#FF5A00] hover:underline"
+                  >
+                    Gmail: {BRAND_INFO.email}
+                  </a>
                 </li>
                 <li className="flex items-center gap-3 pt-1 font-semibold">
                   <a

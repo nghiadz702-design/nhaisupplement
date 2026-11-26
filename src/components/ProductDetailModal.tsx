@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import {
   AlertTriangle,
   Camera,
@@ -8,12 +8,18 @@ import {
   Image as ImageIcon,
   ShieldCheck,
   ShoppingBag,
+  Star,
   Truck,
   X,
 } from 'lucide-react';
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
 import { checkIsMobilePhone, useIsMobilePhone } from '../utils/deviceDetection';
+import {
+  addProductReview,
+  useProductReviews,
+  useProductSoldCount,
+} from '../utils/reviewsStore';
 import { getProductTransparencyInfo, getRealSizeLabel } from '../utils/productTransparency';
 import ErrorBoundary from './ErrorBoundary';
 import Product3DViewer, { type ViewerMode } from './Product3DViewer';
@@ -39,15 +45,25 @@ export default function ProductDetailModal({
 
   const [selectedFlavor, setSelectedFlavor] = useState<ProductFlavor>(initialFlavor);
   const [visualTab, setVisualTab] = useState<'image' | ViewerMode>(safeInitialVisualTab);
-  const [infoTab, setInfoTab] = useState<'overview' | 'nutrition' | 'usage'>('overview');
+  const [infoTab, setInfoTab] = useState<'overview' | 'nutrition' | 'usage' | 'reviews'>('overview');
   const [quantity, setQuantity] = useState(1);
   const [addedNotice, setAddedNotice] = useState(false);
+
+  const { reviews, stats } = useProductReviews(product.id);
+  const soldCount = useProductSoldCount(product);
+  const [reviewAuthor, setReviewAuthor] = useState('');
+  const [reviewRating, setReviewRating] = useState<1 | 2 | 3 | 4 | 5>(5);
+  const [reviewFlavorName, setReviewFlavorName] = useState(initialFlavor.name);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewSubmittedNotice, setReviewSubmittedNotice] = useState(false);
 
   useEffect(() => {
     setSelectedFlavor(initialFlavor);
     setVisualTab(initialVisualTab === 'vr' && !isMobilePhone ? 'ar' : initialVisualTab);
     setInfoTab('overview');
     setQuantity(1);
+    setReviewFlavorName(initialFlavor.name);
+    setReviewSubmittedNotice(false);
   }, [product, initialFlavor, initialVisualTab, isMobilePhone]);
 
   useEffect(() => {
@@ -64,12 +80,33 @@ export default function ProductDetailModal({
 
   const handleFlavorChange = (flavor: ProductFlavor) => {
     setSelectedFlavor(flavor);
+    setReviewFlavorName(flavor.name);
   };
 
   const handleAdd = () => {
     onAddToCart(product, selectedFlavor, quantity);
     setAddedNotice(true);
     window.setTimeout(() => setAddedNotice(false), 1800);
+  };
+
+  const handleReviewSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const trimmedName = reviewAuthor.trim() || 'Khách hàng';
+    const trimmedComment = reviewComment.trim();
+    if (!trimmedComment) return;
+
+    addProductReview({
+      productId: product.id,
+      authorName: trimmedName,
+      rating: reviewRating,
+      flavorName: reviewFlavorName || selectedFlavor.name,
+      comment: trimmedComment,
+    });
+    setReviewAuthor('');
+    setReviewComment('');
+    setReviewRating(5);
+    setReviewSubmittedNotice(true);
+    window.setTimeout(() => setReviewSubmittedNotice(false), 3000);
   };
 
   return (
@@ -284,6 +321,52 @@ export default function ProductDetailModal({
                 {product.name}
               </h2>
 
+              {/* Honest Clickable Review & Sold Summary */}
+              <div className="mt-2 flex flex-wrap items-center gap-3 text-xs">
+                {stats.reviewCount > 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => setInfoTab('reviews')}
+                    className="flex items-center gap-1.5 font-semibold text-neutral-900 transition-colors hover:text-[#FF5A00]"
+                  >
+                    <span className="flex items-center gap-0.5 text-[#FF5A00]">
+                      {[1, 2, 3, 4, 5].map((starIdx) => (
+                        <Star
+                          key={starIdx}
+                          className={`h-3.5 w-3.5 ${
+                            starIdx <= Math.round(stats.averageRating)
+                              ? 'fill-[#FF5A00] text-[#FF5A00]'
+                              : 'text-neutral-300'
+                          }`}
+                        />
+                      ))}
+                    </span>
+                    <span className="font-mono font-bold text-neutral-950">
+                      {stats.averageRating.toFixed(1)} / 5
+                    </span>
+                    <span className="text-neutral-500 underline">
+                      ({stats.reviewCount} đánh giá)
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setInfoTab('reviews')}
+                    className="font-semibold text-neutral-500 underline transition-colors hover:text-[#FF5A00]"
+                  >
+                    Chưa có đánh giá · Viết đánh giá đầu tiên
+                  </button>
+                )}
+                {soldCount > 0 && (
+                  <>
+                    <span aria-hidden="true" className="text-neutral-300">|</span>
+                    <span className="font-mono font-semibold text-neutral-700 tabular-nums">
+                      Đã bán {soldCount}
+                    </span>
+                  </>
+                )}
+              </div>
+
               <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                 {product.description}
               </p>
@@ -299,7 +382,7 @@ export default function ProductDetailModal({
                   </span>
                 )}
                 <span className="ml-auto font-mono text-xs font-semibold text-neutral-700 tabular-nums">
-                  Còn {selectedFlavor.stock} hộp · Đã bán {product.soldCount}
+                  Còn {selectedFlavor.stock} tại kho{soldCount > 0 ? ` · Đã bán ${soldCount}` : ''}
                 </span>
               </div>
 
@@ -378,9 +461,9 @@ export default function ProductDetailModal({
                 </div>
               </div>
 
-              {/* Structured Detail Tabs (Benefits & Ingredients / Manufacturer & Specs / Usage & Safety) */}
+              {/* Structured Detail Tabs (Benefits / Manufacturer / Usage / Customer Reviews) */}
               <div className="mt-5 border border-neutral-950 bg-white">
-                <div className="grid grid-cols-3 border-b border-neutral-950 bg-neutral-950 text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+                <div className="grid grid-cols-2 border-b border-neutral-950 bg-neutral-950 text-[11px] font-bold uppercase tracking-wider sm:grid-cols-4 sm:text-xs">
                   <button
                     type="button"
                     onClick={() => setInfoTab('overview')}
@@ -390,7 +473,7 @@ export default function ProductDetailModal({
                         : 'text-neutral-300 hover:text-white'
                     }`}
                   >
-                    Công dụng & Thành phần
+                    Công dụng
                   </button>
                   <button
                     type="button"
@@ -412,7 +495,18 @@ export default function ProductDetailModal({
                         : 'text-neutral-300 hover:text-white'
                     }`}
                   >
-                    Cách dùng & Lưu ý
+                    Cách dùng
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setInfoTab('reviews')}
+                    className={`px-2 py-2.5 text-center transition-colors ${
+                      infoTab === 'reviews'
+                        ? 'bg-[#FF5A00] text-white'
+                        : 'text-neutral-300 hover:text-white'
+                    }`}
+                  >
+                    Đánh giá{stats.reviewCount > 0 ? ` (${stats.reviewCount})` : ''}
                   </button>
                 </div>
 
@@ -542,6 +636,189 @@ export default function ProductDetailModal({
                         <span>{transparency.safetyCaution}</span>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {infoTab === 'reviews' && (
+                  <div className="space-y-4 p-3 text-xs">
+                    {reviews.length > 0 ? (
+                      <>
+                        {/* Real Rating Summary & Breakdown */}
+                        <div className="grid grid-cols-1 gap-3 border border-neutral-200 bg-neutral-50 p-3 sm:grid-cols-12">
+                          <div className="flex flex-col justify-center sm:col-span-4">
+                            <div className="font-mono text-2xl font-extrabold text-neutral-950">
+                              {stats.averageRating.toFixed(1)}
+                              <span className="text-sm font-medium text-neutral-500"> / 5</span>
+                            </div>
+                            <div className="mt-1 flex items-center gap-0.5 text-[#FF5A00]">
+                              {[1, 2, 3, 4, 5].map((starIdx) => (
+                                <Star
+                                  key={starIdx}
+                                  className={`h-3.5 w-3.5 ${
+                                    starIdx <= Math.round(stats.averageRating)
+                                      ? 'fill-[#FF5A00] text-[#FF5A00]'
+                                      : 'text-neutral-300'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <p className="mt-1 text-[11px] text-neutral-600">
+                              {stats.reviewCount} đánh giá thực tế
+                              {soldCount > 0 ? ` · Đã bán ${soldCount}` : ''}
+                            </p>
+                          </div>
+
+                          <div className="space-y-1 sm:col-span-8">
+                            {([5, 4, 3, 2, 1] as const).map((starVal) => {
+                              const count = stats.starCounts[starVal] || 0;
+                              const pct =
+                                stats.reviewCount > 0
+                                  ? Math.round((count / stats.reviewCount) * 100)
+                                  : 0;
+                              return (
+                                <div key={starVal} className="flex items-center gap-2 text-[11px]">
+                                  <span className="w-8 font-mono font-semibold text-neutral-700">
+                                    {starVal} ★
+                                  </span>
+                                  <div className="h-2 flex-1 overflow-hidden bg-neutral-200">
+                                    <div
+                                      className="h-full bg-[#FF5A00]"
+                                      style={{ width: `${pct}%` }}
+                                    />
+                                  </div>
+                                  <span className="w-8 text-right font-mono text-neutral-500">
+                                    {pct}%
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Customer Reviews Feed */}
+                        <div className="max-h-60 space-y-2.5 overflow-y-auto pr-1">
+                          {reviews.map((rev) => (
+                            <div
+                              key={rev.id}
+                              className="border border-neutral-200 bg-white p-2.5 leading-relaxed"
+                            >
+                              <div className="flex flex-wrap items-center justify-between gap-2">
+                                <strong className="text-neutral-950">{rev.authorName}</strong>
+                                <span className="text-[10px] text-neutral-500">
+                                  {rev.createdAt}
+                                </span>
+                              </div>
+                              <div className="mt-1 flex items-center gap-2">
+                                <span className="flex items-center gap-0.5 text-[#FF5A00]">
+                                  {[1, 2, 3, 4, 5].map((starIdx) => (
+                                    <Star
+                                      key={starIdx}
+                                      className={`h-3 w-3 ${
+                                        starIdx <= rev.rating
+                                          ? 'fill-[#FF5A00] text-[#FF5A00]'
+                                          : 'text-neutral-300'
+                                      }`}
+                                    />
+                                  ))}
+                                </span>
+                                {rev.flavorName && (
+                                  <span className="text-[11px] font-medium text-neutral-500">
+                                    Hương vị: {rev.flavorName}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="mt-1.5 text-neutral-700">{rev.comment}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="border border-dashed border-neutral-300 bg-neutral-50 p-4 text-center">
+                        <p className="font-semibold text-neutral-900">
+                          Chưa có đánh giá nào từ khách hàng
+                        </p>
+                        <p className="mt-1 text-[11px] text-neutral-600">
+                          Hãy là người đầu tiên dùng thử hoặc xem sản phẩm qua AR/VR và để lại nhận
+                          xét thực tế bên dưới.
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Interactive Review Submission Form */}
+                    <form
+                      onSubmit={handleReviewSubmit}
+                      className="space-y-2.5 border-t border-neutral-200 pt-3"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <strong className="uppercase tracking-wide text-neutral-950">
+                          Viết đánh giá của bạn
+                        </strong>
+                        <div className="flex items-center gap-1">
+                          {([1, 2, 3, 4, 5] as const).map((starVal) => (
+                            <button
+                              key={starVal}
+                              type="button"
+                              onClick={() => setReviewRating(starVal)}
+                              aria-label={`Chọn ${starVal} sao`}
+                              className="p-0.5 transition-transform hover:scale-110"
+                            >
+                              <Star
+                                className={`h-4 w-4 ${
+                                  starVal <= reviewRating
+                                    ? 'fill-[#FF5A00] text-[#FF5A00]'
+                                    : 'text-neutral-300'
+                                }`}
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        <input
+                          type="text"
+                          value={reviewAuthor}
+                          onChange={(e) => setReviewAuthor(e.target.value)}
+                          placeholder="Tên của bạn"
+                          className="h-9 border border-neutral-300 px-2.5 text-xs outline-none focus:border-[#FF5A00]"
+                        />
+                        <select
+                          value={reviewFlavorName}
+                          onChange={(e) => setReviewFlavorName(e.target.value)}
+                          aria-label="Hương vị đã chọn"
+                          className="h-9 border border-neutral-300 bg-white px-2.5 text-xs outline-none focus:border-[#FF5A00]"
+                        >
+                          {product.flavors.map((fl) => (
+                            <option key={fl.id} value={fl.name}>
+                              Vị: {fl.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <textarea
+                        rows={2}
+                        required
+                        value={reviewComment}
+                        onChange={(e) => setReviewComment(e.target.value)}
+                        placeholder="Chia sẻ cảm nhận về độ tan, hương vị, bao bì hoặc trải nghiệm xem AR/VR..."
+                        className="w-full border border-neutral-300 p-2 text-xs outline-none focus:border-[#FF5A00]"
+                      />
+
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <button
+                          type="submit"
+                          className="bg-neutral-950 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#FF5A00]"
+                        >
+                          Gửi đánh giá
+                        </button>
+                        {reviewSubmittedNotice && (
+                          <span className="font-semibold text-emerald-700">
+                            Cảm ơn bạn! Đánh giá đã được ghi nhận.
+                          </span>
+                        )}
+                      </div>
+                    </form>
                   </div>
                 )}
               </div>

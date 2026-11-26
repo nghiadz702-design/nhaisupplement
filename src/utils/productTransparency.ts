@@ -33,15 +33,17 @@ export function getRealPhysicalDimensions(product: Product): RealPhysicalDimensi
   }
 
   if (product.shape === 'pouch') {
-    const isLarge = wLower.includes('10') || wLower.includes('12') || wLower.includes('5kg');
-    const h = isLarge ? 38 : 30;
-    const w = isLarge ? 25 : 22;
+    const isLarge = wLower.includes('10') || wLower.includes('12') || wLower.includes('15') || wLower.includes('5kg') || wLower.includes('6.8kg');
+    const isSmall = wLower.includes('500g') || wLower.includes('300g') || wLower.includes('250g');
+    const h = isLarge ? 38 : isSmall ? 22 : 30;
+    const w = isLarge ? 25 : isSmall ? 16 : 22;
+    const d = isLarge ? 11 : isSmall ? 7 : 10;
     return {
       widthCm: w,
       heightCm: h,
-      depthCm: 11,
+      depthCm: d,
       heightMeters: h / 100,
-      label: `~ ${h} × ${w} × 11 cm`,
+      label: `~ ${h} × ${w} × ${d} cm`,
     };
   }
 
@@ -305,8 +307,10 @@ function detectDosageForm(product: Product): string {
     }
     return 'Viên nén / Viên nang uống trực tiếp';
   }
-  if (product.category === 'creatine') return 'Bột siêu mịn dễ hòa tan';
-  return 'Bột hòa tan mịn (Powder)';
+  if (product.category === 'creatine') {
+    return product.shape === 'pouch' ? 'Bột siêu mịn (Túi zip)' : 'Bột siêu mịn dễ hòa tan';
+  }
+  return product.shape === 'pouch' ? 'Bột hòa tan mịn (Túi zip)' : 'Bột hòa tan mịn (Powder)';
 }
 
 function buildSpecificBenefits(product: Product, textLower: string): string[] {

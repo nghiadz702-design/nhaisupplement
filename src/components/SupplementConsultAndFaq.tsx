@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, ChevronDown, Dumbbell, Flame, HeartPulse } from 'lucide-react';
+import { CheckCircle2, ChevronDown, Dumbbell, Flame, HeartPulse, Mail } from 'lucide-react';
 import { BRAND_INFO } from '../data/catalog';
 
 const FAQ_ITEMS = [
@@ -111,21 +111,34 @@ export default function SupplementConsultAndFaq() {
                 <p className="mt-2 text-xs leading-relaxed text-neutral-700">
                   Cảm ơn <strong>{name}</strong> ({phone}) tại <strong>{area}</strong>. Chuyên viên{' '}
                   {BRAND_INFO.name} sẽ phản hồi lộ trình cho mục tiêu <strong>{goal}</strong> qua
-                  Zalo {BRAND_INFO.phone}.
+                  Zalo {BRAND_INFO.phone} hoặc Gmail {BRAND_INFO.email}.
                 </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSubmitted(false);
-                    setName('');
-                    setPhone('');
-                    setArea('');
-                    setNote('');
-                  }}
-                  className="mt-4 bg-neutral-950 px-4 py-2 text-xs font-bold uppercase text-white hover:bg-[#FF5A00]"
-                >
-                  Gửi yêu cầu khác
-                </button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <a
+                    href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+                      `[Tư vấn lộ trình] ${name} - ${phone}`,
+                    )}&body=${encodeURIComponent(
+                      `Họ tên: ${name}\nSĐT/Zalo: ${phone}\nKhu vực: ${area}\nMục tiêu: ${goal}\nGhi chú: ${note || 'Không có'}`,
+                    )}`}
+                    className="inline-flex items-center gap-1.5 bg-[#FF5A00] px-4 py-2 text-xs font-bold uppercase text-white hover:bg-neutral-950"
+                  >
+                    <Mail className="h-3.5 w-3.5" />
+                    <span>Gửi qua Gmail ({BRAND_INFO.email})</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setName('');
+                      setPhone('');
+                      setArea('');
+                      setNote('');
+                    }}
+                    className="bg-neutral-950 px-4 py-2 text-xs font-bold uppercase text-white hover:bg-[#FF5A00]"
+                  >
+                    Gửi yêu cầu khác
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-4 space-y-3.5 text-sm">

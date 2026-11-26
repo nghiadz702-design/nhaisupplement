@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Camera, Eye, ShoppingBag } from 'lucide-react';
+import { Camera, Eye, ShoppingBag, Star } from 'lucide-react';
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
 import { useIsMobilePhone } from '../utils/deviceDetection';
+import { useProductReviews, useProductSoldCount } from '../utils/reviewsStore';
 import { getProductTransparencyInfo } from '../utils/productTransparency';
 import type { ViewerMode } from './Product3DViewer';
 
@@ -20,6 +21,8 @@ export default function ProductCard({
   const isMobilePhone = useIsMobilePhone();
   const [selectedFlavor, setSelectedFlavor] = useState<ProductFlavor>(product.flavors[0]);
   const [imgFadeKey, setImgFadeKey] = useState(0);
+  const { stats } = useProductReviews(product.id);
+  const soldCount = useProductSoldCount(product);
 
   const activePrice = selectedFlavor.priceOverride ?? product.price;
   const transparency = getProductTransparencyInfo(product, selectedFlavor);
@@ -116,6 +119,50 @@ export default function ProductCard({
           >
             NSX: <span className="font-semibold text-neutral-800">{transparency.manufacturerShort}</span>
           </p>
+
+          {/* Honest Rating & Sales Status Row (never fabricates sales or shows 0) */}
+          <div className="mt-1.5 flex items-center justify-between gap-2 text-[11px]">
+            {stats.reviewCount > 0 ? (
+              <button
+                type="button"
+                onClick={() => onOpenDetail(product, selectedFlavor, 'image')}
+                className="flex items-center gap-1 text-left font-medium text-neutral-700 transition-colors hover:text-[#FF5A00]"
+                title="Xem đánh giá từ khách hàng"
+              >
+                <span className="flex items-center gap-0.5 text-[#FF5A00]">
+                  {[1, 2, 3, 4, 5].map((starIdx) => (
+                    <Star
+                      key={starIdx}
+                      className={`h-3 w-3 ${
+                        starIdx <= Math.round(stats.averageRating)
+                          ? 'fill-[#FF5A00] text-[#FF5A00]'
+                          : 'text-neutral-300'
+                      }`}
+                    />
+                  ))}
+                </span>
+                <span className="font-mono font-bold text-neutral-950 tabular-nums">
+                  {stats.averageRating.toFixed(1)}
+                </span>
+                <span className="text-neutral-500">({stats.reviewCount})</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onOpenDetail(product, selectedFlavor, 'image')}
+                className="text-left font-medium text-neutral-500 transition-colors hover:text-[#FF5A00]"
+              >
+                Chưa có đánh giá
+              </button>
+            )}
+            {soldCount > 0 ? (
+              <span className="font-mono text-[11px] font-semibold text-neutral-600 tabular-nums">
+                Đã bán {soldCount}
+              </span>
+            ) : (
+              <span className="font-semibold text-[#FF5A00]">Chính hãng 100%</span>
+            )}
+          </div>
 
           <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-neutral-600">
             {product.shortDescription}

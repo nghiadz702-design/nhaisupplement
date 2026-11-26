@@ -20,8 +20,8 @@
     "highlightKey": "PROTEIN",
     "highlightValue": "24G",
     "badge": "Bán chạy #1",
-    "rating": 4.9,
-    "soldCount": 1420,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-01-fl-1",
@@ -86,8 +86,8 @@
     "highlightKey": "HYDROLYZED",
     "highlightValue": "25G",
     "badge": "Hydrolyzed Cao Cấp",
-    "rating": 4.9,
-    "soldCount": 1180,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-02-fl-1",
@@ -152,8 +152,8 @@
     "highlightKey": "ISOLATE",
     "highlightValue": "25G",
     "badge": "Vị Ngon Đậm Đà",
-    "rating": 4.9,
-    "soldCount": 845,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-03-fl-1",
@@ -218,8 +218,8 @@
     "highlightKey": "ISOLATE",
     "highlightValue": "25G",
     "badge": "Trải Dài Hấp Thu",
-    "rating": 4.9,
-    "soldCount": 690,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-04-fl-1",
@@ -276,8 +276,8 @@
     "highlightKey": "ZERO CARB",
     "highlightValue": "25G",
     "badge": "0g Đường",
-    "rating": 4.9,
-    "soldCount": 730,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-05-fl-1",
@@ -334,8 +334,8 @@
     "highlightKey": "ISOLATE",
     "highlightValue": "25G",
     "badge": "MCT Oil Clean",
-    "rating": 4.9,
-    "soldCount": 540,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-06-fl-1",
@@ -392,8 +392,8 @@
     "highlightKey": "PURE WPI",
     "highlightValue": "25G",
     "badge": "Minh Bạch 100%",
-    "rating": 4.9,
-    "soldCount": 620,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-07-fl-1",
@@ -450,8 +450,8 @@
     "highlightKey": "PROTEIN",
     "highlightValue": "27G",
     "badge": "Informed Choice",
-    "rating": 4.9,
-    "soldCount": 670,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-08-fl-1",
@@ -508,8 +508,8 @@
     "highlightKey": "PROTEIN",
     "highlightValue": "25G",
     "badge": "Prebiotic Fiber",
-    "rating": 4.9,
-    "soldCount": 510,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-09-fl-1",
@@ -566,8 +566,8 @@
     "highlightKey": "ISOLATE",
     "highlightValue": "25G",
     "badge": "CBUM Signature",
-    "rating": 4.9,
-    "soldCount": 790,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-10-fl-1",
@@ -624,8 +624,8 @@
     "highlightKey": "NO DAIRY",
     "highlightValue": "23G",
     "badge": "0% Lactose",
-    "rating": 4.9,
-    "soldCount": 480,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-11-fl-1",
@@ -682,8 +682,8 @@
     "highlightKey": "WHOLE FOOD",
     "highlightValue": "24G",
     "badge": "Whole Food",
-    "rating": 4.9,
-    "soldCount": 430,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-12-fl-1",
@@ -740,8 +740,8 @@
     "highlightKey": "GRASS-FED",
     "highlightValue": "27G",
     "badge": "Grass-Fed NZ",
-    "rating": 4.9,
-    "soldCount": 590,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-13-fl-1",
@@ -798,8 +798,8 @@
     "highlightKey": "PEPTIDES",
     "highlightValue": "25G",
     "badge": "EET Enzyme",
-    "rating": 4.9,
-    "soldCount": 310,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-14-fl-1",
@@ -848,8 +848,8 @@
     "highlightKey": "ELECTROLYTE",
     "highlightValue": "25G",
     "badge": "Thêm Điện Giải",
-    "rating": 4.9,
-    "soldCount": 280,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-15-fl-1",
@@ -898,8 +898,8 @@
     "highlightKey": "GRASS-FED",
     "highlightValue": "22G",
     "badge": "Men Tiêu Hóa",
-    "rating": 4.9,
-    "soldCount": 340,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-16-fl-1",
@@ -948,8 +948,8 @@
     "highlightKey": "ISOLATE",
     "highlightValue": "22G",
     "badge": "DigeSEB Enzyme",
-    "rating": 4.9,
-    "soldCount": 295,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "wh-17-fl-1",
@@ -975,7 +975,7 @@
     "name": "OstroVit Creatine Monohydrate 500g",
     "brand": "OstroVit",
     "category": "creatine",
-    "shape": "tub",
+    "shape": "pouch",
     "weightLabel": "500G (100 SERV)",
     "price": 390000,
     "compareAtPrice": 490000,
@@ -990,8 +990,8 @@
     "highlightKey": "CREATINE",
     "highlightValue": "5000MG",
     "badge": "Siêu Tiết Kiệm",
-    "rating": 4.9,
-    "soldCount": 1850,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "cr-01-fl-1",
@@ -1056,8 +1056,8 @@
     "highlightKey": "USP PURE",
     "highlightValue": "5000MG",
     "badge": "Chuẩn USP Mỹ",
-    "rating": 4.9,
-    "soldCount": 740,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "cr-02-fl-1",
@@ -1114,8 +1114,8 @@
     "highlightKey": "HCL",
     "highlightValue": "750MG",
     "badge": "HCl Không Tích Nước",
-    "rating": 4.9,
-    "soldCount": 620,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "cr-03-fl-1",
@@ -1172,8 +1172,8 @@
     "highlightKey": "CREATINE",
     "highlightValue": "5G",
     "badge": "Tan Mịn 100%",
-    "rating": 4.9,
-    "soldCount": 510,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "cr-04-fl-1",
@@ -1230,8 +1230,8 @@
     "highlightKey": "6-BLEND",
     "highlightValue": "4G",
     "badge": "6 Dạng Creatine",
-    "rating": 4.9,
-    "soldCount": 440,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "cr-05-fl-1",
@@ -1280,8 +1280,8 @@
     "highlightKey": "CREATINE",
     "highlightValue": "5G",
     "badge": "UK Informed Sport",
-    "rating": 4.9,
-    "soldCount": 560,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "cr-06-fl-1",
@@ -1322,8 +1322,8 @@
     "highlightKey": "PROTEIN",
     "highlightValue": "20G",
     "badge": "20g Protein · 0g Đường",
-    "rating": 4.9,
-    "soldCount": 930,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "bc-01-fl-1",
@@ -1388,8 +1388,8 @@
     "highlightKey": "PROTEIN",
     "highlightValue": "20G",
     "badge": "20g Đạm · Ít Tinh Bột",
-    "rating": 4.9,
-    "soldCount": 610,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "bc-02-fl-1",
@@ -1446,8 +1446,8 @@
     "highlightKey": "COOKIE",
     "highlightValue": "15G",
     "badge": "15g Protein · 9g Xơ",
-    "rating": 4.9,
-    "soldCount": 540,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "bc-03-fl-1",
@@ -1481,7 +1481,7 @@
     "name": "MuscleMeds Carnivor Mass Big Steer Gainer",
     "brand": "MuscleMeds",
     "category": "mass",
-    "shape": "pouch",
+    "shape": "tub",
     "weightLabel": "10LBS (4.5KG)",
     "price": 1690000,
     "compareAtPrice": 1950000,
@@ -1496,8 +1496,8 @@
     "highlightKey": "BEEF MASS",
     "highlightValue": "50G",
     "badge": "Tăng Cân Không Lactose",
-    "rating": 4.9,
-    "soldCount": 680,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "ms-01-fl-1",
@@ -1554,8 +1554,8 @@
     "highlightKey": "CALORIES",
     "highlightValue": "1100",
     "badge": "1100 Calo / Liều",
-    "rating": 4.9,
-    "soldCount": 820,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "ms-02-fl-1",
@@ -1612,8 +1612,8 @@
     "highlightKey": "CITRULLINE",
     "highlightValue": "6000MG",
     "badge": "Pump & Energy #1",
-    "rating": 4.9,
-    "soldCount": 1120,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-01-fl-1",
@@ -1678,8 +1678,8 @@
     "highlightKey": "CAFFEINE",
     "highlightValue": "200MG",
     "badge": "Bán Chạy Nhất VN",
-    "rating": 4.9,
-    "soldCount": 1340,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-02-fl-1",
@@ -1744,8 +1744,8 @@
     "highlightKey": "CITRULLINE",
     "highlightValue": "4.5G",
     "badge": "Think & Pump",
-    "rating": 4.9,
-    "soldCount": 640,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-03-fl-1",
@@ -1802,8 +1802,8 @@
     "highlightKey": "HIGH STIM",
     "highlightValue": "333MG",
     "badge": "Nootropic Focus",
-    "rating": 4.9,
-    "soldCount": 520,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-04-fl-1",
@@ -1860,8 +1860,8 @@
     "highlightKey": "CAFFEINE",
     "highlightValue": "150MG",
     "badge": "Cho Người Mới",
-    "rating": 4.9,
-    "soldCount": 970,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-05-fl-1",
@@ -1918,8 +1918,8 @@
     "highlightKey": "CITRULLINE",
     "highlightValue": "6G",
     "badge": "CBUM Formula",
-    "rating": 4.9,
-    "soldCount": 680,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-06-fl-1",
@@ -1968,8 +1968,8 @@
     "highlightKey": "CAFFEINE",
     "highlightValue": "400MG",
     "badge": "400mg Caffeine Blend",
-    "rating": 4.9,
-    "soldCount": 390,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "pw-07-fl-1",
@@ -2018,8 +2018,8 @@
     "highlightKey": "EAA",
     "highlightValue": "8G",
     "badge": "8g EAA + Bù Nước",
-    "rating": 4.9,
-    "soldCount": 830,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "ea-01-fl-1",
@@ -2084,8 +2084,8 @@
     "highlightKey": "EAA",
     "highlightValue": "10G",
     "badge": "10g EAA + AstraGin",
-    "rating": 4.9,
-    "soldCount": 490,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "ea-02-fl-1",
@@ -2142,8 +2142,8 @@
     "highlightKey": "EAA",
     "highlightValue": "7.5G",
     "badge": "Phục Hồi Nhanh",
-    "rating": 4.9,
-    "soldCount": 360,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "ea-03-fl-1",
@@ -2192,8 +2192,8 @@
     "highlightKey": "BCAA",
     "highlightValue": "7G",
     "badge": "BCAA #1 Thế Giới",
-    "rating": 4.9,
-    "soldCount": 1290,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "bc-bcaa-01-fl-1",
@@ -2258,8 +2258,8 @@
     "highlightKey": "AMINO",
     "highlightValue": "9.7G",
     "badge": "9.7g Amino",
-    "rating": 4.9,
-    "soldCount": 740,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "bc-bcaa-02-fl-1",
@@ -2324,8 +2324,8 @@
     "highlightKey": "ACTIVE",
     "highlightValue": "75+",
     "badge": "75+ Hoạt Chất",
-    "rating": 4.9,
-    "soldCount": 980,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-01-opt-1",
@@ -2374,8 +2374,8 @@
     "highlightKey": "ACTIVE",
     "highlightValue": "40+",
     "badge": "40+ Hoạt Chất",
-    "rating": 4.9,
-    "soldCount": 640,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-02-opt-1",
@@ -2424,8 +2424,8 @@
     "highlightKey": "VIT C",
     "highlightValue": "1500MG",
     "badge": "Liposomal",
-    "rating": 4.9,
-    "soldCount": 410,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-03-opt-1",
@@ -2474,8 +2474,8 @@
     "highlightKey": "PLATINUM",
     "highlightValue": "FULL",
     "badge": "Vận Động Viên",
-    "rating": 4.9,
-    "soldCount": 330,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-04-opt-1",
@@ -2524,8 +2524,8 @@
     "highlightKey": "MULTI",
     "highlightValue": "21+",
     "badge": "Hàng Úc",
-    "rating": 4.9,
-    "soldCount": 720,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-05-opt-1",
@@ -2574,8 +2574,8 @@
     "highlightKey": "VIT C",
     "highlightValue": "1000MG",
     "badge": "Vitamin C",
-    "rating": 4.9,
-    "soldCount": 890,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-06-opt-1",
@@ -2624,8 +2624,8 @@
     "highlightKey": "D3+K2",
     "highlightValue": "5000IU",
     "badge": "Chuẩn Vegan Dầu Dừa",
-    "rating": 4.9,
-    "soldCount": 610,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-07-opt-1",
@@ -2674,8 +2674,8 @@
     "highlightKey": "ZMA",
     "highlightValue": "30 SERV",
     "badge": "Ngủ Sâu Phục Hồi",
-    "rating": 4.9,
-    "soldCount": 530,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-08-opt-1",
@@ -2716,8 +2716,8 @@
     "highlightKey": "ZINC",
     "highlightValue": "50MG",
     "badge": "Kẽm Hữu Cơ",
-    "rating": 4.9,
-    "soldCount": 840,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-09-opt-1",
@@ -2758,8 +2758,8 @@
     "highlightKey": "MAGNESIUM",
     "highlightValue": "400MG",
     "badge": "Thư Giãn Cơ",
-    "rating": 4.9,
-    "soldCount": 410,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-10-opt-1",
@@ -2800,8 +2800,8 @@
     "highlightKey": "VIT B",
     "highlightValue": "8-IN-1",
     "badge": "Nhóm B Đầy Đủ",
-    "rating": 4.9,
-    "soldCount": 620,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-11-opt-1",
@@ -2842,8 +2842,8 @@
     "highlightKey": "CA+D3+K2",
     "highlightValue": "90 TABS",
     "badge": "Chắc Khỏe Xương",
-    "rating": 4.9,
-    "soldCount": 510,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-12-opt-1",
@@ -2884,8 +2884,8 @@
     "highlightKey": "ADK",
     "highlightValue": "180D",
     "badge": "5000IU D3 + K2",
-    "rating": 4.9,
-    "soldCount": 380,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-13-opt-1",
@@ -2926,8 +2926,8 @@
     "highlightKey": "MAGTEIN",
     "highlightValue": "2000MG",
     "badge": "Tốt Cho Não Bộ",
-    "rating": 4.9,
-    "soldCount": 320,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-14-opt-1",
@@ -2968,8 +2968,8 @@
     "highlightKey": "OYSTER+",
     "highlightValue": "60 CAPS",
     "badge": "Chiết Xuất Hàu NZ",
-    "rating": 4.9,
-    "soldCount": 710,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "vt-15-opt-1",
@@ -3010,8 +3010,8 @@
     "highlightKey": "EPA+DHA",
     "highlightValue": "1040MG",
     "badge": "IFOS 5 Sao",
-    "rating": 4.9,
-    "soldCount": 1120,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-01-opt-1",
@@ -3060,8 +3060,8 @@
     "highlightKey": "OMEGA-3",
     "highlightValue": "750MG",
     "badge": "500 EPA / 250 DHA",
-    "rating": 4.9,
-    "soldCount": 940,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-02-opt-1",
@@ -3110,8 +3110,8 @@
     "highlightKey": "NO FISHY",
     "highlightValue": "750MG",
     "badge": "Viên Bao Tan Ruột",
-    "rating": 4.9,
-    "soldCount": 860,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-03-opt-1",
@@ -3152,8 +3152,8 @@
     "highlightKey": "DHA",
     "highlightValue": "500MG",
     "badge": "500mg DHA Não Bộ",
-    "rating": 4.9,
-    "soldCount": 510,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-04-opt-1",
@@ -3194,8 +3194,8 @@
     "highlightKey": "2X OMEGA",
     "highlightValue": "600MG",
     "badge": "Không Mùi Tanh",
-    "rating": 4.9,
-    "soldCount": 740,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-05-opt-1",
@@ -3236,8 +3236,8 @@
     "highlightKey": "LEMON OIL",
     "highlightValue": "800MG",
     "badge": "Bổ Sung Chanh Tươi",
-    "rating": 4.9,
-    "soldCount": 420,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-06-opt-1",
@@ -3278,8 +3278,8 @@
     "highlightKey": "FISH OIL",
     "highlightValue": "1200MG",
     "badge": "1200mg Fish Oil",
-    "rating": 4.9,
-    "soldCount": 380,
+    "rating": 0,
+    "soldCount": 0,
     "flavors": [
       {
         "id": "dc-07-opt-1",

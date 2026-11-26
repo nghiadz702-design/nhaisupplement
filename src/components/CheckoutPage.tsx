@@ -7,6 +7,7 @@ import {
   Copy,
   Gift,
   Loader2,
+  Mail,
   MessageCircle,
   QrCode,
   Tag,
@@ -22,6 +23,7 @@ import {
 } from '../data/catalog';
 import { VOUCHERS, evaluateVoucher } from '../data/vouchers';
 import { withBasePath } from '../utils/assetPath';
+import { recordCompletedOrderSales } from '../utils/reviewsStore';
 
 const BANK_QR_INFO = {
   qrImage: withBasePath('/assets/aistudio/_nh_ChatGPT_14_02_07_24_thg_11__2026_14a8802a.jpg'),
@@ -194,6 +196,7 @@ export default function CheckoutPage({
         voucherDiscount: voucherEval.discount,
       });
       setSubmitting(false);
+      recordCompletedOrderSales(items);
       onClearCart();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 350);
@@ -370,7 +373,20 @@ export default function CheckoutPage({
               className="inline-flex h-12 items-center gap-2 border-2 border-neutral-950 bg-white px-6 text-xs font-bold uppercase tracking-wider text-neutral-950 transition-colors hover:bg-neutral-950 hover:text-white"
             >
               <MessageCircle className="h-4 w-4 text-[#FF5A00]" />
-              <span>Nhắn Zalo cho shop ({BRAND_INFO.phone})</span>
+              <span>Nhắn Zalo ({BRAND_INFO.phone})</span>
+            </a>
+            <a
+              href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+                `Đơn hàng ${confirmed.orderCode} - ${confirmed.customer.fullName}`,
+              )}&body=${encodeURIComponent(
+                `Mã đơn: ${confirmed.orderCode}\nKhách hàng: ${confirmed.customer.fullName}\nSĐT: ${confirmed.customer.phone}\nĐịa chỉ: ${confirmed.customer.address}, ${confirmed.customer.province}\nThanh toán: ${confirmed.paymentMethod === 'vietqr' ? 'Chuyển khoản VietQR' : 'COD'}\nTổng tiền: ${formatVND(confirmed.total)}\n\nSản phẩm:\n${confirmed.items
+                  .map((it) => `- ${it.product.name} (${it.selectedFlavor.name}) x${it.quantity}`)
+                  .join('\n')}`,
+              )}`}
+              className="inline-flex h-12 items-center gap-2 border-2 border-neutral-300 bg-white px-5 text-xs font-bold uppercase tracking-wider text-neutral-950 transition-colors hover:border-[#FF5A00] hover:text-[#FF5A00]"
+            >
+              <Mail className="h-4 w-4 text-[#FF5A00]" />
+              <span>Gửi đơn qua {BRAND_INFO.email}</span>
             </a>
           </div>
         </div>

@@ -16,10 +16,16 @@ export default function InfoPoliciesContact() {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
+  const [lastSubmission, setLastSubmission] = useState({ name: '', phone: '', message: '' });
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim() || !message.trim()) return;
+    setLastSubmission({
+      name: name.trim(),
+      phone: phone.trim(),
+      message: message.trim(),
+    });
     setSent(true);
     setName('');
     setPhone('');
@@ -238,7 +244,14 @@ export default function InfoPoliciesContact() {
               </h3>
               <p className="mt-1 text-xs text-neutral-600">
                 Để lại thông tin sản phẩm cần tư vấn hoặc yêu cầu đổi trả, chúng tôi phản hồi qua
-                SĐT/Zalo {BRAND_INFO.phone}.
+                SĐT/Zalo {BRAND_INFO.phone} hoặc Gmail{' '}
+                <a
+                  href={`mailto:${BRAND_INFO.email}`}
+                  className="font-semibold text-[#FF5A00] underline"
+                >
+                  {BRAND_INFO.email}
+                </a>
+                .
               </p>
 
               {sent ? (
@@ -251,15 +264,28 @@ export default function InfoPoliciesContact() {
                   </div>
                   <p className="mt-2 text-xs text-neutral-600">
                     Cảm ơn bạn đã liên hệ NhaiSupplement. Để được hỗ trợ ngay lập tức, bạn cũng có
-                    thể nhắn trực tiếp qua Zalo {BRAND_INFO.phone} hoặc email {BRAND_INFO.email}.
+                    thể nhắn trực tiếp qua Zalo {BRAND_INFO.phone} hoặc gửi qua Gmail {BRAND_INFO.email}.
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => setSent(false)}
-                    className="mt-4 bg-neutral-950 px-4 py-2 text-xs font-bold text-white hover:bg-[#FF5A00]"
-                  >
-                    Gửi tin nhắn khác
-                  </button>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <a
+                      href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+                        `[Liên hệ NhaiSupplement] ${lastSubmission.name} - ${lastSubmission.phone}`,
+                      )}&body=${encodeURIComponent(
+                        `Họ tên: ${lastSubmission.name}\nSĐT/Zalo: ${lastSubmission.phone}\nNội dung: ${lastSubmission.message}`,
+                      )}`}
+                      className="inline-flex items-center gap-1.5 bg-[#FF5A00] px-4 py-2 text-xs font-bold text-white hover:bg-neutral-950"
+                    >
+                      <Mail className="h-3.5 w-3.5" />
+                      <span>Mở Gmail gửi tới {BRAND_INFO.email}</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setSent(false)}
+                      className="bg-neutral-950 px-4 py-2 text-xs font-bold text-white hover:bg-[#FF5A00]"
+                    >
+                      Gửi tin nhắn khác
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="mt-5 space-y-4">
@@ -311,14 +337,23 @@ export default function InfoPoliciesContact() {
                     >
                       Gửi yêu cầu trực tiếp
                     </button>
-                    <a
-                      href={BRAND_INFO.zaloUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs font-bold text-neutral-950 underline hover:text-[#FF5A00]"
-                    >
-                      Hoặc mở Zalo {BRAND_INFO.phone} ngay
-                    </a>
+                    <div className="flex flex-wrap items-center gap-3 text-xs font-bold">
+                      <a
+                        href={BRAND_INFO.zaloUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-neutral-950 underline hover:text-[#FF5A00]"
+                      >
+                        Zalo {BRAND_INFO.phone}
+                      </a>
+                      <span aria-hidden="true" className="text-neutral-400">·</span>
+                      <a
+                        href={`mailto:${BRAND_INFO.email}`}
+                        className="text-[#FF5A00] underline hover:text-neutral-950"
+                      >
+                        Gmail {BRAND_INFO.email}
+                      </a>
+                    </div>
                   </div>
                 </form>
               )}
