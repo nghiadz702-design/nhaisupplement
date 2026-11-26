@@ -9,7 +9,12 @@ import type { ViewerMode } from './Product3DViewer';
 
 interface ProductCardProps {
   product: Product;
-  onOpenDetail: (product: Product, flavor: ProductFlavor, initialTab?: 'image' | ViewerMode) => void;
+  onOpenDetail: (
+    product: Product,
+    flavor: ProductFlavor,
+    initialTab?: 'image' | ViewerMode,
+    initialFocus?: 'details' | 'reviews',
+  ) => void;
   onAddToCart: (product: Product, flavor: ProductFlavor) => void;
 }
 
@@ -125,9 +130,9 @@ export default function ProductCard({
             {stats.reviewCount > 0 ? (
               <button
                 type="button"
-                onClick={() => onOpenDetail(product, selectedFlavor, 'image')}
+                onClick={() => onOpenDetail(product, selectedFlavor, 'image', 'reviews')}
                 className="flex items-center gap-1 text-left font-medium text-neutral-700 transition-colors hover:text-[#FF5A00]"
-                title="Xem đánh giá từ khách hàng"
+                title="Xem & viết đánh giá từ khách hàng"
               >
                 <span className="flex items-center gap-0.5 text-[#FF5A00]">
                   {[1, 2, 3, 4, 5].map((starIdx) => (
@@ -144,15 +149,16 @@ export default function ProductCard({
                 <span className="font-mono font-bold text-neutral-950 tabular-nums">
                   {stats.averageRating.toFixed(1)}
                 </span>
-                <span className="text-neutral-500">({stats.reviewCount})</span>
+                <span className="text-neutral-500 underline">({stats.reviewCount} đánh giá)</span>
               </button>
             ) : (
               <button
                 type="button"
-                onClick={() => onOpenDetail(product, selectedFlavor, 'image')}
-                className="text-left font-medium text-neutral-500 transition-colors hover:text-[#FF5A00]"
+                onClick={() => onOpenDetail(product, selectedFlavor, 'image', 'reviews')}
+                className="flex items-center gap-1 text-left font-semibold text-neutral-700 underline transition-colors hover:text-[#FF5A00]"
               >
-                Chưa có đánh giá
+                <Star className="h-3 w-3 text-[#FF5A00]" />
+                <span>Đánh giá sản phẩm</span>
               </button>
             )}
             {soldCount > 0 ? (

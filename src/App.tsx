@@ -264,6 +264,7 @@ export default function App() {
     product: Product;
     flavor: ProductFlavor;
     tab: 'image' | ViewerMode;
+    focus?: 'details' | 'reviews';
   } | null>(null);
   const [activePolicyModal, setActivePolicyModal] = useState<FooterPolicyItem | null>(null);
 
@@ -1343,8 +1344,8 @@ export default function App() {
                     <ProductCard
                       key={product.id}
                       product={product}
-                      onOpenDetail={(prod, flav, tab = 'image') =>
-                        setDetailState({ product: prod, flavor: flav, tab })
+                      onOpenDetail={(prod, flav, tab = 'image', focus = 'details') =>
+                        setDetailState({ product: prod, flavor: flav, tab, focus })
                       }
                       onAddToCart={(prod, flav) => handleAddToCart(prod, flav, 1)}
                     />
@@ -1474,13 +1475,29 @@ export default function App() {
                         {formatVND(showcaseFlavor.priceOverride ?? showcaseProduct.price)}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => handleAddToCart(showcaseProduct, showcaseFlavor, 1)}
-                      className="h-11 bg-[#FF5A00] px-5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-neutral-950"
-                    >
-                      Thêm vào giỏ hàng
-                    </button>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setDetailState({
+                            product: showcaseProduct,
+                            flavor: showcaseFlavor,
+                            tab: 'image',
+                            focus: 'reviews',
+                          })
+                        }
+                        className="h-11 border border-neutral-600 bg-neutral-900 px-4 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-[#FF5A00] hover:text-[#FF5A00]"
+                      >
+                        Xem &amp; viết đánh giá
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleAddToCart(showcaseProduct, showcaseFlavor, 1)}
+                        className="h-11 bg-[#FF5A00] px-5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-neutral-950"
+                      >
+                        Thêm vào giỏ hàng
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -1700,6 +1717,7 @@ export default function App() {
           product={detailState.product}
           initialFlavor={detailState.flavor}
           initialVisualTab={detailState.tab}
+          initialFocus={detailState.focus}
           onClose={() => setDetailState(null)}
           onAddToCart={(prod, flav, qty) => handleAddToCart(prod, flav, qty)}
         />

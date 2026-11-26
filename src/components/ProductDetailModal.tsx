@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import {
   AlertTriangle,
   Camera,
@@ -6,6 +6,7 @@ import {
   Eye,
   Gift,
   Image as ImageIcon,
+  MessageSquarePlus,
   ShieldCheck,
   ShoppingBag,
   Star,
@@ -28,6 +29,7 @@ interface ProductDetailModalProps {
   product: Product;
   initialFlavor: ProductFlavor;
   initialVisualTab?: 'image' | ViewerMode;
+  initialFocus?: 'details' | 'reviews';
   onClose: () => void;
   onAddToCart: (product: Product, flavor: ProductFlavor, quantity: number) => void;
 }
@@ -36,6 +38,7 @@ export default function ProductDetailModal({
   product,
   initialFlavor,
   initialVisualTab = 'image',
+  initialFocus = 'details',
   onClose,
   onAddToCart,
 }: ProductDetailModalProps) {
@@ -45,9 +48,10 @@ export default function ProductDetailModal({
 
   const [selectedFlavor, setSelectedFlavor] = useState<ProductFlavor>(initialFlavor);
   const [visualTab, setVisualTab] = useState<'image' | ViewerMode>(safeInitialVisualTab);
-  const [infoTab, setInfoTab] = useState<'overview' | 'nutrition' | 'usage' | 'reviews'>('overview');
+  const [infoTab, setInfoTab] = useState<'overview' | 'nutrition' | 'usage'>('overview');
   const [quantity, setQuantity] = useState(1);
   const [addedNotice, setAddedNotice] = useState(false);
+  const reviewsSectionRef = useRef<HTMLDivElement>(null);
 
   const { reviews, stats } = useProductReviews(product.id);
   const soldCount = useProductSoldCount(product);
@@ -57,6 +61,10 @@ export default function ProductDetailModal({
   const [reviewComment, setReviewComment] = useState('');
   const [reviewSubmittedNotice, setReviewSubmittedNotice] = useState(false);
 
+  const scrollToReviews = () => {
+    reviewsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   useEffect(() => {
     setSelectedFlavor(initialFlavor);
     setVisualTab(initialVisualTab === 'vr' && !isMobilePhone ? 'ar' : initialVisualTab);
@@ -64,7 +72,13 @@ export default function ProductDetailModal({
     setQuantity(1);
     setReviewFlavorName(initialFlavor.name);
     setReviewSubmittedNotice(false);
-  }, [product, initialFlavor, initialVisualTab, isMobilePhone]);
+    if (initialFocus === 'reviews') {
+      const timer = window.setTimeout(() => {
+        reviewsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 90);
+      return () => window.clearTimeout(timer);
+    }
+  }, [product, initialFlavor, initialVisualTab, initialFocus, isMobilePhone]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -326,7 +340,7 @@ export default function ProductDetailModal({
                 {stats.reviewCount > 0 ? (
                   <button
                     type="button"
-                    onClick={() => setInfoTab('reviews')}
+                    onClick={scrollToReviews}
                     className="flex items-center gap-1.5 font-semibold text-neutral-900 transition-colors hover:text-[#FF5A00]"
                   >
                     <span className="flex items-center gap-0.5 text-[#FF5A00]">
@@ -351,10 +365,11 @@ export default function ProductDetailModal({
                 ) : (
                   <button
                     type="button"
-                    onClick={() => setInfoTab('reviews')}
-                    className="font-semibold text-neutral-500 underline transition-colors hover:text-[#FF5A00]"
+                    onClick={scrollToReviews}
+                    className="inline-flex items-center gap-1.5 font-semibold text-[#FF5A00] underline transition-colors hover:text-neutral-950"
                   >
-                    Chưa có đánh giá · Viết đánh giá đầu tiên
+                    <MessageSquarePlus className="h-3.5 w-3.5" />
+                    <span>Xem &amp; viết đánh giá sản phẩm</span>
                   </button>
                 )}
                 {soldCount > 0 && (
@@ -499,14 +514,10 @@ export default function ProductDetailModal({
                   </button>
                   <button
                     type="button"
-                    onClick={() => setInfoTab('reviews')}
-                    className={`px-2 py-2.5 text-center transition-colors ${
-                      infoTab === 'reviews'
-                        ? 'bg-[#FF5A00] text-white'
-                        : 'text-neutral-300 hover:text-white'
-                    }`}
+                    onClick={scrollToReviews}
+                    className="px-2 py-2.5 text-center text-[#FF5A00] transition-colors hover:bg-neutral-900 hover:text-white"
                   >
-                    Đánh giá{stats.reviewCount > 0 ? ` (${stats.reviewCount})` : ''}
+                    Đánh giá{stats.reviewCount > 0 ? ` (${stats.reviewCount})` : ''} ↓
                   </button>
                 </div>
 
@@ -638,189 +649,6 @@ export default function ProductDetailModal({
                     </div>
                   </div>
                 )}
-
-                {infoTab === 'reviews' && (
-                  <div className="space-y-4 p-3 text-xs">
-                    {reviews.length > 0 ? (
-                      <>
-                        {/* Real Rating Summary & Breakdown */}
-                        <div className="grid grid-cols-1 gap-3 border border-neutral-200 bg-neutral-50 p-3 sm:grid-cols-12">
-                          <div className="flex flex-col justify-center sm:col-span-4">
-                            <div className="font-mono text-2xl font-extrabold text-neutral-950">
-                              {stats.averageRating.toFixed(1)}
-                              <span className="text-sm font-medium text-neutral-500"> / 5</span>
-                            </div>
-                            <div className="mt-1 flex items-center gap-0.5 text-[#FF5A00]">
-                              {[1, 2, 3, 4, 5].map((starIdx) => (
-                                <Star
-                                  key={starIdx}
-                                  className={`h-3.5 w-3.5 ${
-                                    starIdx <= Math.round(stats.averageRating)
-                                      ? 'fill-[#FF5A00] text-[#FF5A00]'
-                                      : 'text-neutral-300'
-                                  }`}
-                                />
-                              ))}
-                            </div>
-                            <p className="mt-1 text-[11px] text-neutral-600">
-                              {stats.reviewCount} đánh giá thực tế
-                              {soldCount > 0 ? ` · Đã bán ${soldCount}` : ''}
-                            </p>
-                          </div>
-
-                          <div className="space-y-1 sm:col-span-8">
-                            {([5, 4, 3, 2, 1] as const).map((starVal) => {
-                              const count = stats.starCounts[starVal] || 0;
-                              const pct =
-                                stats.reviewCount > 0
-                                  ? Math.round((count / stats.reviewCount) * 100)
-                                  : 0;
-                              return (
-                                <div key={starVal} className="flex items-center gap-2 text-[11px]">
-                                  <span className="w-8 font-mono font-semibold text-neutral-700">
-                                    {starVal} ★
-                                  </span>
-                                  <div className="h-2 flex-1 overflow-hidden bg-neutral-200">
-                                    <div
-                                      className="h-full bg-[#FF5A00]"
-                                      style={{ width: `${pct}%` }}
-                                    />
-                                  </div>
-                                  <span className="w-8 text-right font-mono text-neutral-500">
-                                    {pct}%
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-
-                        {/* Customer Reviews Feed */}
-                        <div className="max-h-60 space-y-2.5 overflow-y-auto pr-1">
-                          {reviews.map((rev) => (
-                            <div
-                              key={rev.id}
-                              className="border border-neutral-200 bg-white p-2.5 leading-relaxed"
-                            >
-                              <div className="flex flex-wrap items-center justify-between gap-2">
-                                <strong className="text-neutral-950">{rev.authorName}</strong>
-                                <span className="text-[10px] text-neutral-500">
-                                  {rev.createdAt}
-                                </span>
-                              </div>
-                              <div className="mt-1 flex items-center gap-2">
-                                <span className="flex items-center gap-0.5 text-[#FF5A00]">
-                                  {[1, 2, 3, 4, 5].map((starIdx) => (
-                                    <Star
-                                      key={starIdx}
-                                      className={`h-3 w-3 ${
-                                        starIdx <= rev.rating
-                                          ? 'fill-[#FF5A00] text-[#FF5A00]'
-                                          : 'text-neutral-300'
-                                      }`}
-                                    />
-                                  ))}
-                                </span>
-                                {rev.flavorName && (
-                                  <span className="text-[11px] font-medium text-neutral-500">
-                                    Hương vị: {rev.flavorName}
-                                  </span>
-                                )}
-                              </div>
-                              <p className="mt-1.5 text-neutral-700">{rev.comment}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </>
-                    ) : (
-                      <div className="border border-dashed border-neutral-300 bg-neutral-50 p-4 text-center">
-                        <p className="font-semibold text-neutral-900">
-                          Chưa có đánh giá nào từ khách hàng
-                        </p>
-                        <p className="mt-1 text-[11px] text-neutral-600">
-                          Hãy là người đầu tiên dùng thử hoặc xem sản phẩm qua AR/VR và để lại nhận
-                          xét thực tế bên dưới.
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Interactive Review Submission Form */}
-                    <form
-                      onSubmit={handleReviewSubmit}
-                      className="space-y-2.5 border-t border-neutral-200 pt-3"
-                    >
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <strong className="uppercase tracking-wide text-neutral-950">
-                          Viết đánh giá của bạn
-                        </strong>
-                        <div className="flex items-center gap-1">
-                          {([1, 2, 3, 4, 5] as const).map((starVal) => (
-                            <button
-                              key={starVal}
-                              type="button"
-                              onClick={() => setReviewRating(starVal)}
-                              aria-label={`Chọn ${starVal} sao`}
-                              className="p-0.5 transition-transform hover:scale-110"
-                            >
-                              <Star
-                                className={`h-4 w-4 ${
-                                  starVal <= reviewRating
-                                    ? 'fill-[#FF5A00] text-[#FF5A00]'
-                                    : 'text-neutral-300'
-                                }`}
-                              />
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                        <input
-                          type="text"
-                          value={reviewAuthor}
-                          onChange={(e) => setReviewAuthor(e.target.value)}
-                          placeholder="Tên của bạn"
-                          className="h-9 border border-neutral-300 px-2.5 text-xs outline-none focus:border-[#FF5A00]"
-                        />
-                        <select
-                          value={reviewFlavorName}
-                          onChange={(e) => setReviewFlavorName(e.target.value)}
-                          aria-label="Hương vị đã chọn"
-                          className="h-9 border border-neutral-300 bg-white px-2.5 text-xs outline-none focus:border-[#FF5A00]"
-                        >
-                          {product.flavors.map((fl) => (
-                            <option key={fl.id} value={fl.name}>
-                              Vị: {fl.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <textarea
-                        rows={2}
-                        required
-                        value={reviewComment}
-                        onChange={(e) => setReviewComment(e.target.value)}
-                        placeholder="Chia sẻ cảm nhận về độ tan, hương vị, bao bì hoặc trải nghiệm xem AR/VR..."
-                        className="w-full border border-neutral-300 p-2 text-xs outline-none focus:border-[#FF5A00]"
-                      />
-
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <button
-                          type="submit"
-                          className="bg-neutral-950 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#FF5A00]"
-                        >
-                          Gửi đánh giá
-                        </button>
-                        {reviewSubmittedNotice && (
-                          <span className="font-semibold text-emerald-700">
-                            Cảm ơn bạn! Đánh giá đã được ghi nhận.
-                          </span>
-                        )}
-                      </div>
-                    </form>
-                  </div>
-                )}
               </div>
             </div>
 
@@ -865,6 +693,229 @@ export default function ProductDetailModal({
                   </>
                 )}
               </button>
+            </div>
+          </div>
+
+          {/* Dedicated Always-Visible Customer Reviews & Submission Panel (Full Width inside Modal) */}
+          <div
+            ref={reviewsSectionRef}
+            id="modal-reviews-section"
+            className="border-t-2 border-neutral-950 bg-neutral-50 p-4 sm:p-6 lg:col-span-12"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-200 pb-3">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF5A00]">
+                  Phản hồi thực tế
+                </span>
+                <h3 className="font-display text-lg font-extrabold uppercase tracking-tight text-neutral-950 sm:text-xl">
+                  Đánh giá &amp; Nhận xét cho {product.name}
+                </h3>
+              </div>
+              {stats.reviewCount > 0 && (
+                <div className="flex items-center gap-2 border border-neutral-950 bg-white px-3 py-1.5 text-xs font-bold">
+                  <Star className="h-4 w-4 fill-[#FF5A00] text-[#FF5A00]" />
+                  <span className="font-mono">{stats.averageRating.toFixed(1)} / 5</span>
+                  <span className="text-neutral-500">({stats.reviewCount} đánh giá)</span>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-12">
+              {/* Left: Rating Summary + Customer Reviews List */}
+              <div className="space-y-4 lg:col-span-7">
+                {reviews.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 gap-4 border border-neutral-200 bg-white p-4 sm:grid-cols-12">
+                      <div className="flex flex-col justify-center sm:col-span-4">
+                        <div className="font-mono text-3xl font-extrabold text-neutral-950">
+                          {stats.averageRating.toFixed(1)}
+                          <span className="text-sm font-medium text-neutral-500"> / 5</span>
+                        </div>
+                        <div className="mt-1 flex items-center gap-0.5 text-[#FF5A00]">
+                          {[1, 2, 3, 4, 5].map((starIdx) => (
+                            <Star
+                              key={starIdx}
+                              className={`h-4 w-4 ${
+                                starIdx <= Math.round(stats.averageRating)
+                                  ? 'fill-[#FF5A00] text-[#FF5A00]'
+                                  : 'text-neutral-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <p className="mt-1.5 text-xs text-neutral-600">
+                          {stats.reviewCount} đánh giá thực tế
+                          {soldCount > 0 ? ` · Đã bán ${soldCount}` : ''}
+                        </p>
+                      </div>
+
+                      <div className="space-y-1.5 sm:col-span-8">
+                        {([5, 4, 3, 2, 1] as const).map((starVal) => {
+                          const count = stats.starCounts[starVal] || 0;
+                          const pct =
+                            stats.reviewCount > 0
+                              ? Math.round((count / stats.reviewCount) * 100)
+                              : 0;
+                          return (
+                            <div key={starVal} className="flex items-center gap-2 text-xs">
+                              <span className="w-8 font-mono font-semibold text-neutral-700">
+                                {starVal} ★
+                              </span>
+                              <div className="h-2.5 flex-1 overflow-hidden bg-neutral-200">
+                                <div
+                                  className="h-full bg-[#FF5A00]"
+                                  style={{ width: `${pct}%` }}
+                                />
+                              </div>
+                              <span className="w-10 text-right font-mono text-neutral-500">
+                                {count} ({pct}%)
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="max-h-72 space-y-3 overflow-y-auto pr-1">
+                      {reviews.map((rev) => (
+                        <div
+                          key={rev.id}
+                          className="border border-neutral-200 bg-white p-3.5 text-xs leading-relaxed"
+                        >
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <strong className="text-sm text-neutral-950">{rev.authorName}</strong>
+                            <span className="text-[11px] text-neutral-500">{rev.createdAt}</span>
+                          </div>
+                          <div className="mt-1 flex items-center gap-2.5">
+                            <span className="flex items-center gap-0.5 text-[#FF5A00]">
+                              {[1, 2, 3, 4, 5].map((starIdx) => (
+                                <Star
+                                  key={starIdx}
+                                  className={`h-3.5 w-3.5 ${
+                                    starIdx <= rev.rating
+                                      ? 'fill-[#FF5A00] text-[#FF5A00]'
+                                      : 'text-neutral-300'
+                                  }`}
+                                />
+                              ))}
+                            </span>
+                            {rev.flavorName && (
+                              <span className="border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] font-medium text-neutral-700">
+                                Vị: {rev.flavorName}
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-2 text-neutral-700">{rev.comment}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex h-full min-h-[180px] flex-col items-center justify-center border border-dashed border-neutral-300 bg-white p-6 text-center">
+                    <Star className="h-7 w-7 text-neutral-300" />
+                    <p className="mt-2 text-sm font-bold text-neutral-900">
+                      Chưa có đánh giá nào cho sản phẩm này
+                    </p>
+                    <p className="mt-1 max-w-md text-xs leading-relaxed text-neutral-600">
+                      Nhằm đảm bảo minh bạch, shop không tạo sẵn đánh giá ảo. Nếu bạn đã dùng thử
+                      hoặc trải nghiệm xem sản phẩm qua AR/VR, hãy viết nhận xét ở khung bên cạnh.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Right: Write a Review Form (Always Ready) */}
+              <form
+                onSubmit={handleReviewSubmit}
+                className="flex flex-col justify-between space-y-3 border border-neutral-950 bg-white p-4 text-xs lg:col-span-5"
+              >
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-200 pb-2.5">
+                    <strong className="text-sm uppercase tracking-wide text-neutral-950">
+                      Viết đánh giá của bạn
+                    </strong>
+                    <div className="flex items-center gap-1">
+                      {([1, 2, 3, 4, 5] as const).map((starVal) => (
+                        <button
+                          key={starVal}
+                          type="button"
+                          onClick={() => setReviewRating(starVal)}
+                          aria-label={`Chọn ${starVal} sao`}
+                          className="p-0.5 transition-transform hover:scale-110"
+                        >
+                          <Star
+                            className={`h-5 w-5 ${
+                              starVal <= reviewRating
+                                ? 'fill-[#FF5A00] text-[#FF5A00]'
+                                : 'text-neutral-300'
+                            }`}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-1 block text-[11px] font-semibold text-neutral-600">
+                        Tên của bạn
+                      </label>
+                      <input
+                        type="text"
+                        value={reviewAuthor}
+                        onChange={(e) => setReviewAuthor(e.target.value)}
+                        placeholder="Ví dụ: Minh Tuấn"
+                        className="h-9 w-full border border-neutral-300 px-2.5 text-xs outline-none focus:border-[#FF5A00]"
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-[11px] font-semibold text-neutral-600">
+                        Hương vị đã chọn
+                      </label>
+                      <select
+                        value={reviewFlavorName}
+                        onChange={(e) => setReviewFlavorName(e.target.value)}
+                        aria-label="Hương vị đã chọn"
+                        className="h-9 w-full border border-neutral-300 bg-white px-2.5 text-xs outline-none focus:border-[#FF5A00]"
+                      >
+                        {product.flavors.map((fl) => (
+                          <option key={fl.id} value={fl.name}>
+                            {fl.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="mb-1 block text-[11px] font-semibold text-neutral-600">
+                      Nhận xét chi tiết *
+                    </label>
+                    <textarea
+                      rows={3}
+                      required
+                      value={reviewComment}
+                      onChange={(e) => setReviewComment(e.target.value)}
+                      placeholder="Chia sẻ cảm nhận về độ tan, hương vị, kích thước bao bì hoặc trải nghiệm xem AR/VR..."
+                      className="w-full border border-neutral-300 p-2.5 text-xs outline-none focus:border-[#FF5A00]"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  <button
+                    type="submit"
+                    className="h-10 bg-[#FF5A00] px-5 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-neutral-950"
+                  >
+                    Gửi đánh giá ngay
+                  </button>
+                  {reviewSubmittedNotice && (
+                    <span className="font-semibold text-emerald-700">
+                      Cảm ơn bạn! Đánh giá đã được lưu.
+                    </span>
+                  )}
+                </div>
+              </form>
             </div>
           </div>
         </div>
