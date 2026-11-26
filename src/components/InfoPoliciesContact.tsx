@@ -29,7 +29,7 @@ export default function InfoPoliciesContact() {
   return (
     <div className="border-t border-neutral-200 bg-neutral-50">
       {/* Section 1: Chính sách cơ bản & Đổi trả khách hàng */}
-      <section id="chinh-sach" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section id="chinh-sach" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Chính sách cơ bản */}
           <div className="border border-neutral-200 bg-white p-6 sm:p-8">
@@ -135,7 +135,7 @@ export default function InfoPoliciesContact() {
 
       {/* Section 2: Liên hệ trực tiếp */}
       <section id="lien-he" className="border-t border-neutral-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             {/* Direct Channels */}
             <div className="lg:col-span-5 space-y-5">

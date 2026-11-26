@@ -15,6 +15,17 @@ export function checkIsMobilePhone(): boolean {
   return mobileUa || narrowTouch;
 }
 
+export function checkIsAppleMobile(): boolean {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return false;
+  }
+  const ua = navigator.userAgent || '';
+  const isIosUa = /iPhone|iPad|iPod/i.test(ua);
+  const isIpadDesktopMode =
+    /Macintosh/i.test(ua) && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1;
+  return isIosUa || isIpadDesktopMode;
+}
+
 export function useIsMobilePhone(): boolean {
   const [isMobile, setIsMobile] = useState<boolean>(() => checkIsMobilePhone());
 

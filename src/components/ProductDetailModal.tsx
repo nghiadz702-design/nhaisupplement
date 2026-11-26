@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import {
-  Box,
   Camera,
   Check,
   Eye,
@@ -34,7 +33,7 @@ export default function ProductDetailModal({
 }: ProductDetailModalProps) {
   const isMobilePhone = useIsMobilePhone();
   const safeInitialVisualTab =
-    initialVisualTab === 'vr' && !checkIsMobilePhone() ? '3d' : initialVisualTab;
+    initialVisualTab === 'vr' && !checkIsMobilePhone() ? 'ar' : initialVisualTab;
 
   const [selectedFlavor, setSelectedFlavor] = useState<ProductFlavor>(initialFlavor);
   const [visualTab, setVisualTab] = useState<'image' | ViewerMode>(safeInitialVisualTab);
@@ -44,7 +43,7 @@ export default function ProductDetailModal({
 
   useEffect(() => {
     setSelectedFlavor(initialFlavor);
-    setVisualTab(initialVisualTab === 'vr' && !isMobilePhone ? '3d' : initialVisualTab);
+    setVisualTab(initialVisualTab === 'vr' && !isMobilePhone ? 'ar' : initialVisualTab);
     setInfoTab('overview');
     setQuantity(1);
   }, [product, initialFlavor, initialVisualTab, isMobilePhone]);
@@ -98,7 +97,7 @@ export default function ProductDetailModal({
 
         {/* Scrollable Two-Column PDP */}
         <div className="grid flex-1 grid-cols-1 overflow-y-auto lg:grid-cols-12">
-          {/* Left Visual Stage: Dynamic Flavor Image Switcher + 3D / AR / VR */}
+          {/* Left Visual Stage: Dynamic Flavor Image Switcher + AR / VR */}
           <div className="flex flex-col border-b border-neutral-200 bg-neutral-50 p-4 sm:p-6 lg:col-span-6 lg:border-b-0 lg:border-r">
             {/* Visual Mode Switcher Tabs */}
             <div className="mb-3 flex flex-wrap items-center gap-1.5 bg-neutral-200/70 p-1">
@@ -116,18 +115,6 @@ export default function ProductDetailModal({
               </button>
               <button
                 type="button"
-                onClick={() => setVisualTab('3d')}
-                className={`flex flex-1 items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold whitespace-nowrap transition-colors ${
-                  visualTab === '3d'
-                    ? 'bg-[#FF5A00] text-white'
-                    : 'text-neutral-700 hover:text-neutral-950'
-                }`}
-              >
-                <Box className="h-3.5 w-3.5" />
-                <span>Xem 3D</span>
-              </button>
-              <button
-                type="button"
                 onClick={() => setVisualTab('ar')}
                 className={`flex flex-1 items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold whitespace-nowrap transition-colors ${
                   visualTab === 'ar'
@@ -136,7 +123,7 @@ export default function ProductDetailModal({
                 }`}
               >
                 <Camera className="h-3.5 w-3.5" />
-                <span>AR</span>
+                <span>AR Camera</span>
               </button>
               {isMobilePhone && (
                 <button
@@ -149,7 +136,7 @@ export default function ProductDetailModal({
                   }`}
                 >
                   <Eye className="h-3.5 w-3.5" />
-                  <span>VR</span>
+                  <span>VR Stereo</span>
                 </button>
               )}
             </div>
@@ -178,7 +165,7 @@ export default function ProductDetailModal({
                   </div>
                 </div>
 
-                {/* Real Flavor Photo Strip + 3D Square Tile */}
+                {/* Real Flavor Photo Strip + AR Square Tile */}
                 <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-5">
                   {product.flavors.map((flavor) => {
                     const isActive = flavor.id === selectedFlavor.id;
@@ -210,12 +197,12 @@ export default function ProductDetailModal({
                   })}
                   <button
                     type="button"
-                    onClick={() => setVisualTab('3d')}
-                    title="Mở trình xem 3D tương tác"
+                    onClick={() => setVisualTab('ar')}
+                    title="Đặt sản phẩm thực tế qua AR Camera"
                     className="flex aspect-square flex-col items-center justify-center gap-1.5 border border-neutral-950 bg-neutral-950 text-white transition-colors hover:border-[#FF5A00] hover:bg-neutral-900"
                   >
-                    <Box className="h-6 w-6 text-[#FF5A00]" />
-                    <span className="text-xs font-extrabold tracking-wide">3D</span>
+                    <Camera className="h-6 w-6 text-[#FF5A00]" />
+                    <span className="text-xs font-extrabold tracking-wide">AR</span>
                   </button>
                 </div>
               </>
@@ -231,7 +218,7 @@ export default function ProductDetailModal({
                       className="mb-3 max-h-52 w-auto object-contain"
                     />
                     <p className="text-xs font-semibold text-neutral-700">
-                      Không thể khởi chạy chế độ 3D/AR trên thiết bị này.
+                      Không thể khởi chạy chế độ AR/VR trên thiết bị này.
                     </p>
                     <div className="mt-3 flex gap-2">
                       <button
@@ -239,7 +226,7 @@ export default function ProductDetailModal({
                         onClick={reset}
                         className="bg-neutral-950 px-3 py-1.5 text-xs font-bold uppercase text-white hover:bg-[#FF5A00]"
                       >
-                        Thử lại 3D
+                        Thử lại AR
                       </button>
                       <button
                         type="button"
@@ -256,6 +243,7 @@ export default function ProductDetailModal({
                   product={product}
                   selectedFlavor={selectedFlavor}
                   initialMode={visualTab}
+                  onSelectFlavor={setSelectedFlavor}
                   onModeChange={setVisualTab}
                   compact
                 />

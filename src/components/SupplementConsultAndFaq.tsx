@@ -46,7 +46,7 @@ export default function SupplementConsultAndFaq() {
   return (
     <>
       {/* Consultation Booking Section (#tu-van — inspired by MiuGo Pets service/consult module) */}
-      <section id="tu-van" className="border-t-2 border-neutral-950 bg-neutral-50 py-14">
+      <section id="tu-van" className="border-t-2 border-neutral-950 bg-neutral-50 py-10">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
           <div className="lg:col-span-6">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
@@ -206,7 +206,7 @@ export default function SupplementConsultAndFaq() {
       </section>
 
       {/* Expandable FAQ Accordion (#hoi-dap — adapted from MiuGo Pets FAQ details blocks) */}
-      <section id="hoi-dap" className="border-t border-neutral-200 bg-white py-14">
+      <section id="hoi-dap" className="border-t border-neutral-200 bg-white py-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">

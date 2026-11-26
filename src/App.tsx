@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ArrowLeft,
   ArrowRight,
   ArrowUp,
-  Box,
+  Camera,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   MapPin,
@@ -39,6 +41,26 @@ import { withBasePath } from './utils/assetPath';
 
 type SortOption = 'popular' | 'price-asc' | 'price-desc' | 'flavors-desc';
 type PageRoute = 'home' | 'checkout';
+type CatalogScope = 'featured' | 'all' | CategorySlug;
+
+const FEATURED_PRODUCT_IDS = new Set<string>([
+  'wh-01',
+  'cr-01',
+  'pw-02',
+  'dc-01',
+  'vt-01',
+  'bc-bcaa-01',
+]);
+
+const PRIMARY_FILTER_SLUGS: CategorySlug[] = [
+  'whey-hydrolyzed',
+  'pre-workout',
+  'creatine',
+  'vitamin',
+  'dau-ca',
+];
+
+const EXTRA_FILTER_SLUGS: CategorySlug[] = ['eaa', 'bcaa', 'mass', 'bar-cookie'];
 
 const CART_STORAGE_KEY = 'nhaisupplement_cart_v1';
 const PREFS_STORAGE_KEY = 'nhaisupplement_prefs_v1';
@@ -149,7 +171,7 @@ const BENEFIT_TICKER_ITEMS = [
   'TẶNG BÌNH LẮC 0Đ CHO ĐƠN HÀNG TỪ 500.000Đ',
   'ĐỔI ẢNH THEO TỪNG HƯƠNG VỊ THỰC TẾ 1:1',
   'MÃ NHAI10 GIẢM 10% · NHAI100K GIẢM 100.000Đ',
-  'TRÌNH XEM 3D XOAY 360° · AR CAMERA · VR STEREO',
+  'AR CAMERA ĐẶT SẢN PHẨM THỰC TẾ · VR STEREO',
   'ĐỔI TRẢ MIỄN PHÍ 7 NGÀY · KIỂM TRA SEAL TRƯỚC KHI NHẬN',
 ];
 
@@ -219,10 +241,15 @@ function detectInitialRoute(): PageRoute {
 
 export default function App() {
   const [pageRoute, setPageRoute] = useState<PageRoute>(detectInitialRoute);
-  const [selectedCategory, setSelectedCategory] = useState<'all' | CategorySlug>('all');
+  const [selectedCategory, setSelectedCategory] = useState<CatalogScope>('featured');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('popular');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [headerMenuOpen, setHeaderMenuOpen] = useState<'categories' | 'more' | null>(null);
+  const [filterMoreOpen, setFilterMoreOpen] = useState(false);
+
+  const headerNavRef = useRef<HTMLDivElement>(null);
+  const filterMoreRef = useRef<HTMLDivElement>(null);
 
   // Hero slideshow & scroll-to-top progress ring
   const [heroSlideIdx, setHeroSlideIdx] = useState(0);
@@ -237,7 +264,7 @@ export default function App() {
   } | null>(null);
   const [activePolicyModal, setActivePolicyModal] = useState<FooterPolicyItem | null>(null);
 
-  // Interactive 3D Showcase Featured Product & Flavor
+  // Interactive AR / VR Showcase Featured Product & Flavor
   const [showcaseProductId, setShowcaseProductId] = useState<string>(PRODUCTS[0].id);
   const showcaseProduct = useMemo(
     () => PRODUCTS.find((p) => p.id === showcaseProductId) ?? PRODUCTS[0],
@@ -360,11 +387,74 @@ export default function App() {
     }
   }, []);
 
+  // Close dropdown menus on outside click or Escape
+  useEffect(() => {
+    const handlePointerDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (headerNavRef.current && !headerNavRef.current.contains(target)) {
+        setHeaderMenuOpen(null);
+      }
+      if (filterMoreRef.current && !filterMoreRef.current.contains(target)) {
+        setFilterMoreOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setHeaderMenuOpen(null);
+        setFilterMoreOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const selectCatalogScope = useCallback(
+    (nextScope: CatalogScope, scrollTarget: string = '#san-pham') => {
+      setSelectedCategory(nextScope);
+      if (nextScope === 'featured') {
+        setSearchQuery('');
+      }
+      setHeaderMenuOpen(null);
+      setFilterMoreOpen(false);
+      setMobileMenuOpen(false);
+      if (pageRoute === 'checkout') {
+        navigateToHome(scrollTarget);
+        return;
+      }
+      window.setTimeout(() => {
+        if (scrollTarget === '#top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          document.querySelector(scrollTarget)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 40);
+    },
+    [navigateToHome, pageRoute],
+  );
+
   const filteredProducts = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     const list = PRODUCTS.filter((product) => {
-      if (selectedCategory !== 'all' && product.category !== selectedCategory) return false;
-      if (!q) return true;
+      if (!q) {
+        if (selectedCategory === 'featured') {
+          if (!FEATURED_PRODUCT_IDS.has(product.id)) return false;
+        } else if (selectedCategory !== 'all' && product.category !== selectedCategory) {
+          return false;
+        }
+        return true;
+      }
+
+      if (
+        selectedCategory !== 'featured' &&
+        selectedCategory !== 'all' &&
+        product.category !== selectedCategory
+      ) {
+        return false;
+      }
       const matchesBasic =
         product.name.toLowerCase().includes(q) ||
         product.brand.toLowerCase().includes(q) ||
@@ -454,7 +544,7 @@ export default function App() {
             href="#top"
             onClick={(e) => {
               e.preventDefault();
-              navigateToHome();
+              selectCatalogScope('featured', '#top');
             }}
             className="flex shrink-0 items-center gap-2.5 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#FF5A00]"
           >
@@ -468,80 +558,149 @@ export default function App() {
             </span>
           </a>
 
-          {/* Zone 2: Concise Single-Line Navigation Links */}
-          <nav className="hidden items-center gap-5 text-sm font-semibold text-neutral-700 lg:flex">
+          {/* Zone 2: Concise Gymstore-style Navigation with Loại sản phẩm & Xem thêm */}
+          <nav
+            ref={headerNavRef}
+            className="hidden items-center gap-6 text-sm font-semibold text-neutral-700 lg:flex"
+          >
+            <button
+              type="button"
+              onClick={() => selectCatalogScope('all', '#san-pham')}
+              className={`shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00] ${
+                selectedCategory === 'all' && pageRoute === 'home' ? 'text-[#FF5A00]' : ''
+              }`}
+            >
+              Tất cả sản phẩm
+            </button>
+
+            {/* Loại sản phẩm Dropdown */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() =>
+                  setHeaderMenuOpen((v) => (v === 'categories' ? null : 'categories'))
+                }
+                aria-expanded={headerMenuOpen === 'categories'}
+                className={`flex shrink-0 items-center gap-1 whitespace-nowrap transition-colors hover:text-[#FF5A00] ${
+                  selectedCategory !== 'featured' && selectedCategory !== 'all'
+                    ? 'text-[#FF5A00]'
+                    : ''
+                }`}
+              >
+                <span>Loại sản phẩm</span>
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${
+                    headerMenuOpen === 'categories' ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {headerMenuOpen === 'categories' && (
+                <div className="absolute left-0 top-full z-50 mt-3 w-72 border-2 border-neutral-950 bg-white p-2 shadow-lg">
+                  <button
+                    type="button"
+                    onClick={() => selectCatalogScope('all', '#san-pham')}
+                    className="mb-1 flex w-full items-center justify-between border-b border-neutral-200 px-3 py-2 text-left text-xs font-extrabold uppercase text-[#FF5A00] hover:bg-neutral-50"
+                  >
+                    <span>Xem tất cả sản phẩm</span>
+                    <span className="font-mono">{CATALOG_STATS.totalProducts}</span>
+                  </button>
+                  <div className="grid grid-cols-1 gap-0.5">
+                    {CATALOG_STATS.categoryBreakdown.map((cat) => (
+                      <button
+                        key={cat.slug}
+                        type="button"
+                        onClick={() => selectCatalogScope(cat.slug, '#san-pham')}
+                        className={`flex w-full items-center justify-between px-3 py-2 text-left text-xs font-semibold transition-colors ${
+                          selectedCategory === cat.slug
+                            ? 'bg-neutral-950 text-white'
+                            : 'text-neutral-800 hover:bg-neutral-100 hover:text-[#FF5A00]'
+                        }`}
+                      >
+                        <span>{cat.name}</span>
+                        <span className="font-mono text-[11px] opacity-70">{cat.productCount}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <a
-              href="#san-pham"
+              href="#trinh-xem-ar"
               onClick={(e) => {
                 if (pageRoute === 'checkout') {
                   e.preventDefault();
-                  navigateToHome('#san-pham');
+                  navigateToHome('#trinh-xem-ar');
                 }
               }}
               className="shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
             >
-              Sản phẩm
+              Xem AR · VR
             </a>
-            <a
-              href="#trinh-xem-3d"
-              onClick={(e) => {
-                if (pageRoute === 'checkout') {
-                  e.preventDefault();
-                  navigateToHome('#trinh-xem-3d');
-                }
-              }}
-              className="shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
-            >
-              Xem 3D · AR · VR
-            </a>
-            <a
-              href="#tu-van"
-              onClick={(e) => {
-                if (pageRoute === 'checkout') {
-                  e.preventDefault();
-                  navigateToHome('#tu-van');
-                }
-              }}
-              className="shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
-            >
-              Tư vấn
-            </a>
-            <a
-              href="#hoi-dap"
-              onClick={(e) => {
-                if (pageRoute === 'checkout') {
-                  e.preventDefault();
-                  navigateToHome('#hoi-dap');
-                }
-              }}
-              className="shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
-            >
-              Hỏi đáp
-            </a>
-            <a
-              href="#chinh-sach"
-              onClick={(e) => {
-                if (pageRoute === 'checkout') {
-                  e.preventDefault();
-                  navigateToHome('#chinh-sach');
-                }
-              }}
-              className="shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
-            >
-              Chính sách
-            </a>
-            <a
-              href="#lien-he"
-              onClick={(e) => {
-                if (pageRoute === 'checkout') {
-                  e.preventDefault();
-                  navigateToHome('#lien-he');
-                }
-              }}
-              className="shrink-0 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
-            >
-              Liên hệ
-            </a>
+
+            {/* Danh mục Xem thêm giống Gymstore */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setHeaderMenuOpen((v) => (v === 'more' ? null : 'more'))}
+                aria-expanded={headerMenuOpen === 'more'}
+                className="flex shrink-0 items-center gap-1 whitespace-nowrap transition-colors hover:text-[#FF5A00]"
+              >
+                <span>Xem thêm</span>
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${
+                    headerMenuOpen === 'more' ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {headerMenuOpen === 'more' && (
+                <div className="absolute left-0 top-full z-50 mt-3 w-64 border-2 border-neutral-950 bg-white p-2 shadow-lg">
+                  {[
+                    { label: 'Tư vấn lộ trình tập luyện', href: '#tu-van' },
+                    { label: 'Câu hỏi thường gặp (FAQ)', href: '#hoi-dap' },
+                    { label: 'Chính sách & Vận chuyển', href: '#chinh-sach' },
+                    { label: 'Chính sách đổi trả 7 ngày', href: '#doi-tra' },
+                    { label: 'Liên hệ & Kho Hà Nội', href: '#lien-he' },
+                  ].map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => {
+                        setHeaderMenuOpen(null);
+                        if (pageRoute === 'checkout') {
+                          e.preventDefault();
+                          navigateToHome(item.href);
+                        }
+                      }}
+                      className="block px-3 py-2 text-xs font-semibold text-neutral-800 transition-colors hover:bg-neutral-100 hover:text-[#FF5A00]"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                  <div className="mt-1 border-t border-neutral-200 pt-1">
+                    {EXTRA_FILTER_SLUGS.map((slug) => {
+                      const cat = CATALOG_STATS.categoryBreakdown.find((c) => c.slug === slug);
+                      if (!cat) return null;
+                      return (
+                        <button
+                          key={cat.slug}
+                          type="button"
+                          onClick={() => selectCatalogScope(cat.slug, '#san-pham')}
+                          className="flex w-full items-center justify-between px-3 py-1.5 text-left text-xs font-semibold text-neutral-700 hover:bg-neutral-100 hover:text-[#FF5A00]"
+                        >
+                          <span>{cat.name}</span>
+                          <span className="font-mono text-[11px] text-neutral-400">
+                            {cat.productCount}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Zone 3: Cart & Checkout Action */}
@@ -582,35 +741,66 @@ export default function App() {
 
         {/* Mobile Nav Drawer */}
         {mobileMenuOpen && (
-          <nav className="border-t border-neutral-200 bg-white px-4 py-3 lg:hidden">
+          <nav className="max-h-[75vh] overflow-y-auto border-t border-neutral-200 bg-white px-4 py-3 lg:hidden">
             <div className="flex flex-col gap-2 text-sm font-semibold">
+              <button
+                type="button"
+                onClick={() => selectCatalogScope('featured', '#top')}
+                className="py-1.5 text-left font-bold text-neutral-950"
+              >
+                Trang chủ (Nổi bật)
+              </button>
+              <button
+                type="button"
+                onClick={() => selectCatalogScope('all', '#san-pham')}
+                className="py-1.5 text-left font-bold text-[#FF5A00]"
+              >
+                Tất cả sản phẩm ({CATALOG_STATS.totalProducts})
+              </button>
+
+              <div className="border-y border-neutral-200 py-2">
+                <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-neutral-500">
+                  Loại sản phẩm
+                </span>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {CATALOG_STATS.categoryBreakdown.map((cat) => (
+                    <button
+                      key={cat.slug}
+                      type="button"
+                      onClick={() => selectCatalogScope(cat.slug, '#san-pham')}
+                      className={`border px-2.5 py-1.5 text-left text-xs font-semibold ${
+                        selectedCategory === cat.slug
+                          ? 'border-[#FF5A00] bg-[#FF5A00] text-white'
+                          : 'border-neutral-200 bg-neutral-50 text-neutral-800'
+                      }`}
+                    >
+                      {cat.name} ({cat.productCount})
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <a
-                href="#san-pham"
+                href="#trinh-xem-ar"
                 onClick={(e) => {
                   e.preventDefault();
-                  navigateToHome('#san-pham');
+                  navigateToHome('#trinh-xem-ar');
                 }}
                 className="py-1.5"
               >
-                Sản phẩm ({CATALOG_STATS.totalProducts})
+                Xem AR · VR
               </a>
-              <a
-                href="#trinh-xem-3d"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigateToHome('#trinh-xem-3d');
-                }}
-                className="py-1.5"
-              >
-                Xem 3D · AR · VR
-              </a>
+
+              <span className="pt-1 text-[11px] font-bold uppercase tracking-wider text-neutral-500">
+                Xem thêm
+              </span>
               <a
                 href="#tu-van"
                 onClick={(e) => {
                   e.preventDefault();
                   navigateToHome('#tu-van');
                 }}
-                className="py-1.5"
+                className="py-1 text-xs text-neutral-700"
               >
                 Tư vấn lộ trình
               </a>
@@ -620,7 +810,7 @@ export default function App() {
                   e.preventDefault();
                   navigateToHome('#hoi-dap');
                 }}
-                className="py-1.5"
+                className="py-1 text-xs text-neutral-700"
               >
                 Câu hỏi thường gặp
               </a>
@@ -630,7 +820,7 @@ export default function App() {
                   e.preventDefault();
                   navigateToHome('#chinh-sach');
                 }}
-                className="py-1.5"
+                className="py-1 text-xs text-neutral-700"
               >
                 Chính sách &amp; Đổi trả
               </a>
@@ -640,7 +830,7 @@ export default function App() {
                   e.preventDefault();
                   navigateToHome('#lien-he');
                 }}
-                className="py-1.5"
+                className="py-1 text-xs text-neutral-700"
               >
                 Liên hệ trực tiếp ({BRAND_INFO.phone})
               </a>
@@ -703,7 +893,8 @@ export default function App() {
 
                   <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-300 sm:text-base">
                     Hệ thống thực phẩm bổ sung chính hãng qua 9 danh mục, đổi ảnh 1:1 chuẩn theo
-                    từng vị, hỗ trợ xem 3D, AR Camera &amp; VR cùng mã ưu đãi ngay tại giỏ.
+                    từng vị, hỗ trợ xem AR Camera thực tế &amp; VR Stereo cùng mã ưu đãi ngay tại
+                    giỏ.
                   </p>
 
                   {/* Primary CTAs */}
@@ -716,11 +907,11 @@ export default function App() {
                       <ArrowRight className="h-4 w-4" />
                     </a>
                     <a
-                      href="#trinh-xem-3d"
+                      href="#trinh-xem-ar"
                       className="inline-flex h-12 items-center gap-2 whitespace-nowrap border border-neutral-600 px-5 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-[#FF5A00] hover:text-[#FF5A00]"
                     >
-                      <Box className="h-4 w-4" />
-                      <span>Thử 3D · AR · VR</span>
+                      <Camera className="h-4 w-4" />
+                      <span>Thử AR · VR</span>
                     </a>
                   </div>
                 </div>
@@ -872,10 +1063,52 @@ export default function App() {
             </div>
           </div>
 
-          {/* Catalog Section: Search, 9 Categories, Dynamic Flavor Cards */}
-          <section id="san-pham" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          {/* Catalog Section: Compact Featured View on Home + Gymstore-style Categories & Xem thêm */}
+          <section id="san-pham" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+            {/* Section Title & Quick Expand/Collapse Bar */}
+            <div className="flex flex-wrap items-end justify-between gap-3 pb-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
+                  {selectedCategory === 'featured' && !searchQuery
+                    ? 'Sản phẩm bán chạy'
+                    : selectedCategory === 'all'
+                      ? 'Danh mục cửa hàng'
+                      : CATEGORIES.find((c) => c.slug === selectedCategory)?.name ?? 'Tìm kiếm'}
+                </span>
+                <h2 className="mt-0.5 font-display text-3xl font-extrabold uppercase tracking-tight text-neutral-950">
+                  {searchQuery
+                    ? `Kết quả cho "${searchQuery}"`
+                    : selectedCategory === 'featured'
+                      ? 'Nổi Bật Tại NhaiSupplement'
+                      : selectedCategory === 'all'
+                        ? `Tất Cả Sản Phẩm (${CATALOG_STATS.totalProducts})`
+                        : CATEGORIES.find((c) => c.slug === selectedCategory)?.name}
+                </h2>
+              </div>
+
+              {selectedCategory === 'featured' && !searchQuery ? (
+                <button
+                  type="button"
+                  onClick={() => selectCatalogScope('all', '#san-pham')}
+                  className="inline-flex items-center gap-1.5 border border-neutral-950 bg-white px-4 py-2 text-xs font-bold uppercase text-neutral-950 transition-colors hover:border-[#FF5A00] hover:bg-[#FF5A00] hover:text-white"
+                >
+                  <span>Xem tất cả {CATALOG_STATS.totalProducts} sản phẩm</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => selectCatalogScope('featured', '#san-pham')}
+                  className="inline-flex items-center gap-1.5 border border-neutral-300 bg-neutral-50 px-3.5 py-2 text-xs font-bold uppercase text-neutral-800 transition-colors hover:border-neutral-950 hover:bg-neutral-950 hover:text-white"
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" />
+                  <span>Thu gọn về Trang chủ</span>
+                </button>
+              )}
+            </div>
+
             {/* Search & Sort Toolbar */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-neutral-200 pb-5">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 border-y border-neutral-200 py-4">
               <div className="relative flex-1 sm:max-w-sm">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
                 <input
@@ -900,27 +1133,51 @@ export default function App() {
               </select>
             </div>
 
-            {/* 9 Category Filter Tabs */}
-            <div className="mt-5 flex flex-wrap items-center gap-1.5">
+            {/* Gymstore-style Category Filter Strip + Xem thêm */}
+            <div className="mt-4 flex flex-wrap items-center gap-1.5">
               <button
                 type="button"
-                onClick={() => setSelectedCategory('all')}
+                onClick={() => {
+                  setSelectedCategory('featured');
+                  setSearchQuery('');
+                  setFilterMoreOpen(false);
+                }}
                 className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
-                  selectedCategory === 'all'
+                  selectedCategory === 'featured' && !searchQuery
                     ? 'border-neutral-950 bg-neutral-950 text-white'
                     : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
                 }`}
               >
-                Tất cả ({CATALOG_STATS.totalProducts})
+                Trang chủ (Nổi bật)
               </button>
 
-              {CATALOG_STATS.categoryBreakdown.map((cat) => {
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setFilterMoreOpen(false);
+                }}
+                className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
+                  selectedCategory === 'all'
+                    ? 'border-[#FF5A00] bg-[#FF5A00] text-white'
+                    : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
+                }`}
+              >
+                Tất cả sản phẩm ({CATALOG_STATS.totalProducts})
+              </button>
+
+              {PRIMARY_FILTER_SLUGS.map((slug) => {
+                const cat = CATALOG_STATS.categoryBreakdown.find((c) => c.slug === slug);
+                if (!cat) return null;
                 const active = selectedCategory === cat.slug;
                 return (
                   <button
                     key={cat.slug}
                     type="button"
-                    onClick={() => setSelectedCategory(cat.slug)}
+                    onClick={() => {
+                      setSelectedCategory(cat.slug);
+                      setFilterMoreOpen(false);
+                    }}
                     className={`h-9 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
                       active
                         ? 'border-[#FF5A00] bg-[#FF5A00] text-white'
@@ -931,6 +1188,90 @@ export default function App() {
                   </button>
                 );
               })}
+
+              {/* Danh mục Xem thêm giống Gymstore */}
+              <div ref={filterMoreRef} className="relative">
+                {(() => {
+                  const activeExtra = EXTRA_FILTER_SLUGS.find((s) => s === selectedCategory);
+                  const activeExtraMeta = activeExtra
+                    ? CATALOG_STATS.categoryBreakdown.find((c) => c.slug === activeExtra)
+                    : null;
+                  return (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setFilterMoreOpen((v) => !v)}
+                        aria-expanded={filterMoreOpen}
+                        className={`flex h-9 items-center gap-1 whitespace-nowrap border px-3 text-xs font-bold transition-colors ${
+                          activeExtraMeta
+                            ? 'border-[#FF5A00] bg-[#FF5A00] text-white'
+                            : 'border-neutral-300 bg-white text-neutral-800 hover:border-neutral-950'
+                        }`}
+                      >
+                        <span>
+                          {activeExtraMeta
+                            ? `Xem thêm: ${activeExtraMeta.name} (${activeExtraMeta.productCount})`
+                            : 'Xem thêm'}
+                        </span>
+                        <ChevronDown
+                          className={`h-3.5 w-3.5 transition-transform ${
+                            filterMoreOpen ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+
+                      {filterMoreOpen && (
+                        <div className="absolute left-0 top-full z-40 mt-1.5 w-60 border-2 border-neutral-950 bg-white p-1.5 shadow-lg">
+                          <span className="block px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+                            Danh mục bổ sung
+                          </span>
+                          {EXTRA_FILTER_SLUGS.map((slug) => {
+                            const cat = CATALOG_STATS.categoryBreakdown.find((c) => c.slug === slug);
+                            if (!cat) return null;
+                            const isActive = selectedCategory === cat.slug;
+                            return (
+                              <button
+                                key={cat.slug}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedCategory(cat.slug);
+                                  setFilterMoreOpen(false);
+                                }}
+                                className={`flex w-full items-center justify-between px-2.5 py-2 text-left text-xs font-semibold transition-colors ${
+                                  isActive
+                                    ? 'bg-[#FF5A00] text-white'
+                                    : 'text-neutral-800 hover:bg-neutral-100 hover:text-[#FF5A00]'
+                                }`}
+                              >
+                                <span>{cat.name}</span>
+                                <span className="font-mono text-[11px] opacity-75">
+                                  {cat.productCount}
+                                </span>
+                              </button>
+                            );
+                          })}
+                          <div className="mt-1 border-t border-neutral-200 pt-1">
+                            <a
+                              href="#tu-van"
+                              onClick={() => setFilterMoreOpen(false)}
+                              className="block px-2.5 py-1.5 text-xs font-semibold text-neutral-700 hover:bg-neutral-100 hover:text-[#FF5A00]"
+                            >
+                              Tư vấn lộ trình miễn phí
+                            </a>
+                            <a
+                              href="#trinh-xem-ar"
+                              onClick={() => setFilterMoreOpen(false)}
+                              className="block px-2.5 py-1.5 text-xs font-semibold text-neutral-700 hover:bg-neutral-100 hover:text-[#FF5A00]"
+                            >
+                              Phòng xem AR · VR
+                            </a>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
             </div>
 
             {/* Results Summary Bar */}
@@ -940,20 +1281,23 @@ export default function App() {
                 <strong className="font-mono text-neutral-950 tabular-nums">
                   {filteredProducts.length}
                 </strong>{' '}
-                sản phẩm
-                {selectedCategory !== 'all' &&
+                {selectedCategory === 'featured' && !searchQuery
+                  ? `sản phẩm nổi bật (trên tổng ${CATALOG_STATS.totalProducts} sản phẩm)`
+                  : 'sản phẩm'}
+                {selectedCategory !== 'featured' &&
+                  selectedCategory !== 'all' &&
                   ` · Danh mục ${CATEGORIES.find((c) => c.slug === selectedCategory)?.name}`}
               </span>
-              {(selectedCategory !== 'all' || searchQuery) && (
+              {(selectedCategory !== 'featured' || searchQuery) && (
                 <button
                   type="button"
                   onClick={() => {
-                    setSelectedCategory('all');
+                    setSelectedCategory('featured');
                     setSearchQuery('');
                   }}
                   className="font-semibold text-[#FF5A00] hover:underline"
                 >
-                  Xóa bộ lọc
+                  Về trang chủ gọn
                 </button>
               )}
             </div>
@@ -970,25 +1314,64 @@ export default function App() {
                 </p>
               </div>
             ) : (
-              <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onOpenDetail={(prod, flav, tab = 'image') =>
-                      setDetailState({ product: prod, flavor: flav, tab })
-                    }
-                    onAddToCart={(prod, flav) => handleAddToCart(prod, flav, 1)}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {filteredProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onOpenDetail={(prod, flav, tab = 'image') =>
+                        setDetailState({ product: prod, flavor: flav, tab })
+                      }
+                      onAddToCart={(prod, flav) => handleAddToCart(prod, flav, 1)}
+                    />
+                  ))}
+                </div>
+
+                {/* Bottom Expand / Collapse CTA (Gymstore style) */}
+                {!searchQuery && (
+                  <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                    {selectedCategory === 'featured' ? (
+                      <button
+                        type="button"
+                        onClick={() => selectCatalogScope('all', '#san-pham')}
+                        className="inline-flex items-center gap-2 bg-neutral-950 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-white transition-colors hover:bg-[#FF5A00]"
+                      >
+                        <span>Xem thêm tất cả {CATALOG_STATS.totalProducts} sản phẩm</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    ) : (
+                      <>
+                        {selectedCategory !== 'all' && (
+                          <button
+                            type="button"
+                            onClick={() => selectCatalogScope('all', '#san-pham')}
+                            className="inline-flex items-center gap-2 bg-[#FF5A00] px-5 py-2.5 text-xs font-bold uppercase text-white transition-colors hover:bg-neutral-950"
+                          >
+                            <span>Xem tất cả {CATALOG_STATS.totalProducts} sản phẩm</span>
+                            <ArrowRight className="h-4 w-4" />
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => selectCatalogScope('featured', '#san-pham')}
+                          className="inline-flex items-center gap-2 border border-neutral-950 bg-white px-5 py-2.5 text-xs font-bold uppercase text-neutral-950 transition-colors hover:bg-neutral-950 hover:text-white"
+                        >
+                          <ArrowLeft className="h-4 w-4" />
+                          <span>Thu gọn danh sách về Trang chủ</span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
+              </>
             )}
           </section>
 
-          {/* Interactive 3D / AR / VR Product Showcase Section */}
+          {/* Interactive Real-Photo AR & VR Product Showcase Section */}
           <section
-            id="trinh-xem-3d"
-            className="border-t-2 border-neutral-950 bg-neutral-950 py-14 text-white"
+            id="trinh-xem-ar"
+            className="border-t-2 border-neutral-950 bg-neutral-950 py-10 text-white"
           >
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -996,22 +1379,23 @@ export default function App() {
                 <div className="flex flex-col justify-between lg:col-span-5">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-[#FF5A00]">
-                      Trình xem WebGL · AR Camera · VR Stereo
+                      WebXR · AR Quick Look · VR Stereo
                     </span>
                     <h2 className="mt-1 font-display text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">
-                      Kiểm Tra Sản Phẩm 3D, AR &amp; VR Trực Tiếp
+                      Xem Sản Phẩm Thực Tế Qua AR &amp; VR
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-neutral-300">
-                      Mỗi sản phẩm đều hỗ trợ xoay 360°, góc xem nhanh bảng thành phần, mở nắp xem
-                      lõi, kèm bình lắc 700ml so tỉ lệ, AR Camera có chụp ảnh và VR Showroom 360°
-                      hỗ trợ toàn màn hình &amp; cảm biến xoay đầu.
+                      Hiển thị ảnh thật 100% cho toàn bộ 62 sản phẩm &amp; 212 hương vị: đặt bám
+                      mặt bàn qua WebXR / iPhone AR, kéo thả &amp; chụm 2 ngón chỉnh tỉ lệ, khớp
+                      ánh sáng phòng tự động, thước đo cm thực tế, lật mặt sau xem bảng dinh dưỡng
+                      và trải nghiệm VR Showroom 360° trên điện thoại.
                     </p>
 
                     {/* Pick any of the 62 products */}
                     <div className="mt-6 space-y-3 border border-neutral-800 bg-neutral-900 p-4">
                       <div>
                         <label className="block text-xs font-bold uppercase text-neutral-300">
-                          Chọn sản phẩm muốn xem 3D / AR / VR
+                          Chọn sản phẩm muốn xem AR / VR
                         </label>
                         <select
                           value={showcaseProduct.id}
@@ -1028,7 +1412,7 @@ export default function App() {
 
                       <div>
                         <span className="block text-xs font-bold uppercase text-neutral-300">
-                          Đổi hương vị trên nhãn 3D ({showcaseProduct.flavors.length} vị)
+                          Đổi hương vị thực tế ({showcaseProduct.flavors.length} vị)
                         </span>
                         <div className="mt-2 flex flex-wrap gap-1.5">
                           {showcaseProduct.flavors.map((flav) => {
@@ -1077,7 +1461,7 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Live Three.js 3D + AR + VR Viewport */}
+                {/* Live Real-Photo AR + VR Viewport */}
                 <div className="lg:col-span-7">
                   <ErrorBoundary
                     resetKeys={[showcaseProduct.id, showcaseFlavor.id]}
@@ -1090,14 +1474,14 @@ export default function App() {
                           className="mb-4 max-h-56 w-auto object-contain"
                         />
                         <p className="text-xs font-semibold text-neutral-300">
-                          Trình xem 3D/AR tạm gián đoạn trên trình duyệt này.
+                          Trình xem AR/VR tạm gián đoạn trên trình duyệt này.
                         </p>
                         <button
                           type="button"
                           onClick={reset}
                           className="mt-3 bg-[#FF5A00] px-4 py-2 text-xs font-bold uppercase text-white hover:bg-white hover:text-neutral-950"
                         >
-                          Khởi động lại 3D
+                          Khởi động lại AR/VR
                         </button>
                       </div>
                     )}
@@ -1105,7 +1489,10 @@ export default function App() {
                     <Product3DViewer
                       product={showcaseProduct}
                       selectedFlavor={showcaseFlavor}
-                      initialMode="3d"
+                      initialMode="ar"
+                      productsList={PRODUCTS}
+                      onSelectProduct={(nextProd) => handleShowcaseProductChange(nextProd.id)}
+                      onSelectFlavor={(nextFlav) => setShowcaseFlavorId(nextFlav.id)}
                     />
                   </ErrorBoundary>
                 </div>

@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')!).render(
             Đã xảy ra lỗi hiển thị
           </h1>
           <p className="mt-2 text-xs leading-relaxed text-neutral-600">
-            Trình duyệt hoặc chế độ 3D/AR vừa gặp sự cố tạm thời. Vui lòng thử khôi phục lại trang.
+            Trình duyệt hoặc chế độ AR/VR vừa gặp sự cố tạm thời. Vui lòng thử khôi phục lại trang.
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             <button

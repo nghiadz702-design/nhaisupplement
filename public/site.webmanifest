@@ -1,0 +1,28 @@
+{
+  "name": "NhaiSupplement – Thực Phẩm Bổ Sung Thể Hình",
+  "short_name": "NhaiSupplement",
+  "description": "Phân phối thực phẩm bổ sung chính hãng từ kho Hà Nội giao toàn quốc. Xem AR & VR thực tế theo từng hương vị.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    {
+      "src": "./favicon-96x96.png?v=3",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-192x192.png?v=3",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512x512.png?v=3",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

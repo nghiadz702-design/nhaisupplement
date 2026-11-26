@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Eye, ShoppingBag } from 'lucide-react';
+import { Camera, Eye, ShoppingBag } from 'lucide-react';
 import type { Product, ProductFlavor } from '../types/product';
 import { formatVND } from '../data/catalog';
 import { useIsMobilePhone } from '../utils/deviceDetection';
@@ -73,15 +73,15 @@ export default function ProductCard({
           <span className="max-w-[130px] truncate">{selectedFlavor.name}</span>
         </div>
 
-        {/* Quick 3D / AR Trigger */}
+        {/* Quick AR / VR Trigger */}
         <button
           type="button"
-          onClick={() => onOpenDetail(product, selectedFlavor, '3d')}
+          onClick={() => onOpenDetail(product, selectedFlavor, 'ar')}
           className="absolute bottom-3 right-3 flex items-center gap-1 border border-neutral-900 bg-white/95 px-2.5 py-1.5 text-[11px] font-bold text-neutral-950 transition-colors hover:bg-[#FF5A00] hover:border-[#FF5A00] hover:text-white"
-          title={isMobilePhone ? 'Xem 3D / AR / VR sản phẩm' : 'Xem 3D / AR sản phẩm'}
+          title={isMobilePhone ? 'Xem sản phẩm qua AR / VR' : 'Xem sản phẩm qua AR Camera'}
         >
-          <Box className="h-3.5 w-3.5" />
-          <span>{isMobilePhone ? '3D · AR · VR' : '3D · AR'}</span>
+          <Camera className="h-3.5 w-3.5" />
+          <span>{isMobilePhone ? 'AR · VR' : 'Xem AR'}</span>
         </button>
       </div>
 
