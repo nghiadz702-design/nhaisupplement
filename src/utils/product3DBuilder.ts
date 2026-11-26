@@ -22,6 +22,7 @@ export interface BuiltPhotoShowcase {
   applyRealAssets: (assets: RealProductVisualAssets) => void;
   setLightTint: (brightness: number, rTint?: number, gTint?: number, bTint?: number) => void;
   setRulerVisible: (visible: boolean) => void;
+  setFacingBack: (isBack: boolean) => void;
   getRealMeterScale: () => number;
   disposables: Array<{ dispose: () => void }>;
 }
@@ -494,10 +495,11 @@ export function buildRealPhotoShowcaseGroup(
     metalness: 0.08,
     side: THREE.FrontSide,
   });
-  let backGeo = new THREE.PlaneGeometry(initialW * 0.68, targetH * 0.74);
+  let backGeo = new THREE.PlaneGeometry(initialW * 0.62, targetH * 0.68);
   const backMesh = new THREE.Mesh(backGeo, backMat);
-  backMesh.position.set(0, targetH * 0.5, -0.014);
+  backMesh.position.set(0, targetH * 0.48, -0.014);
   backMesh.rotation.y = Math.PI;
+  backMesh.visible = false;
 
   // Grounded soft ambient occlusion shadow right beneath the product footprint
   const aoCanvas = document.createElement('canvas');
@@ -586,11 +588,11 @@ export function buildRealPhotoShowcaseGroup(
     photoMesh.geometry = planeGeo;
     photoMesh.position.y = adjustedH / 2;
 
-    const nextBackGeo = new THREE.PlaneGeometry(Math.min(w * 0.7, 1.45), adjustedH * 0.72);
+    const nextBackGeo = new THREE.PlaneGeometry(Math.min(w * 0.64, 1.38), adjustedH * 0.7);
     backGeo.dispose();
     backGeo = nextBackGeo;
     backMesh.geometry = backGeo;
-    backMesh.position.y = adjustedH * 0.5;
+    backMesh.position.y = adjustedH * 0.48;
 
     aoMesh.scale.set(w / initialW, 1, 1);
 
@@ -619,6 +621,11 @@ export function buildRealPhotoShowcaseGroup(
     rulerGroup.visible = visible;
   };
 
+  const setFacingBack = (isBack: boolean) => {
+    photoMesh.visible = !isBack;
+    backMesh.visible = isBack;
+  };
+
   const getRealMeterScale = () => dims.heightMeters / Math.max(0.2, currentShowcaseHeight);
 
   return {
@@ -626,6 +633,7 @@ export function buildRealPhotoShowcaseGroup(
     applyRealAssets,
     setLightTint,
     setRulerVisible,
+    setFacingBack,
     getRealMeterScale,
     disposables,
   };
@@ -681,57 +689,59 @@ function createVrPlaqueTexture(
   anisotropy: number,
 ): THREE.CanvasTexture {
   const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 420;
+  canvas.width = 640;
+  canvas.height = 264;
   const ctx = canvas.getContext('2d')!;
 
   ctx.fillStyle = '#09090B';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.strokeStyle = '#FF5A00';
-  ctx.lineWidth = 6;
-  ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+  ctx.lineWidth = 5;
+  ctx.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
 
   ctx.fillStyle = '#FF5A00';
-  ctx.font = 'bold 20px monospace';
-  ctx.fillText(`${product.brand.toUpperCase()} · ${product.categoryName.toUpperCase()}`, 28, 52);
+  ctx.font = 'bold 18px monospace';
+  ctx.fillText(`${product.brand.toUpperCase()} · ${product.weightLabel.toUpperCase()}`, 26, 44);
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = 'bold 28px sans-serif';
-  const nameLine = product.name.length > 26 ? `${product.name.slice(0, 25)}…` : product.name;
-  ctx.fillText(nameLine, 28, 96);
+  const nameLine = product.name.length > 34 ? `${product.name.slice(0, 32)}…` : product.name;
+  ctx.fillText(nameLine, 26, 84);
 
   ctx.fillStyle = flavor.colorHex;
-  ctx.fillRect(28, 118, 18, 18);
+  ctx.fillRect(26, 102, 16, 16);
   ctx.fillStyle = '#E4E4E7';
-  ctx.font = 'bold 21px sans-serif';
-  ctx.fillText(`Vị: ${flavor.name}`, 56, 134);
+  ctx.font = 'bold 20px sans-serif';
+  ctx.fillText(`Vị: ${flavor.name}`, 52, 117);
 
   const activePrice = flavor.priceOverride ?? product.price;
   ctx.fillStyle = '#FF5A00';
-  ctx.font = 'bold 42px monospace';
-  ctx.fillText(formatVND(activePrice), 28, 198);
+  ctx.font = 'bold 38px monospace';
+  ctx.textAlign = 'right';
+  ctx.fillText(formatVND(activePrice), canvas.width - 26, 118);
+  ctx.textAlign = 'left';
 
   ctx.fillStyle = '#27272A';
-  ctx.fillRect(28, 224, canvas.width - 56, 2);
+  ctx.fillRect(26, 138, canvas.width - 52, 2);
 
-  const infoLines: Array<[string, string]> = [
-    ['Khẩu phần:', product.nutritionInfo.servingSize],
-    ['Số lần dùng:', `${product.nutritionInfo.servingsPerContainer} lần`],
-    ['Protein:', product.nutritionInfo.protein],
-    ['Kích thước:', getRealSizeLabel(product)],
-  ];
+  ctx.fillStyle = '#A1A1AA';
+  ctx.font = '18px sans-serif';
+  ctx.fillText('Khẩu phần', 26, 174);
+  ctx.fillText('Protein / Điểm nổi bật', 240, 174);
+  ctx.fillText('Kích thước thật', 465, 174);
 
-  let ly = 266;
-  infoLines.forEach(([k, v]) => {
-    ctx.fillStyle = '#A1A1AA';
-    ctx.font = '20px sans-serif';
-    ctx.fillText(k, 28, ly);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 21px monospace';
-    ctx.fillText(v, 190, ly);
-    ly += 38;
-  });
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = 'bold 21px monospace';
+  ctx.fillText(product.nutritionInfo.servingSize.slice(0, 18), 26, 210);
+  ctx.fillStyle = '#FF5A00';
+  ctx.fillText(
+    `${product.nutritionInfo.protein} · ${product.nutritionInfo.highlightValue}`,
+    240,
+    210,
+  );
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(getRealSizeLabel(product), 465, 210);
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
@@ -824,16 +834,16 @@ export function buildVrShowroomGroup(
   pillarInst.instanceMatrix.needsUpdate = true;
   pillarInst.computeBoundingSphere();
 
-  // Floating VR Spec Plaque beside the product
+  // Centered angled VR Spec Plaque on the front rim of the pedestal
   let plaqueTex = createVrPlaqueTexture(initialProduct, initialFlavor, anisotropy);
-  const plaqueGeo = new THREE.PlaneGeometry(1.18, 0.96);
+  const plaqueGeo = new THREE.PlaneGeometry(1.36, 0.56);
   const plaqueMat = new THREE.MeshBasicMaterial({
     map: plaqueTex,
     side: THREE.DoubleSide,
   });
   const plaqueMesh = new THREE.Mesh(plaqueGeo, plaqueMat);
-  plaqueMesh.position.set(-1.58, 0.98, 0.15);
-  plaqueMesh.rotation.y = 0.34;
+  plaqueMesh.position.set(0, 0.14, 1.46);
+  plaqueMesh.rotation.set(-0.56, 0, 0);
 
   group.add(floorMesh, ring1, ring2, pedMesh, rimMesh, ledMesh, pillarInst, plaqueMesh);
   disposables.push(

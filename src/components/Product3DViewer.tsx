@@ -87,6 +87,7 @@ const _lookDir = new THREE.Vector3();
 const _camGoalPos = new THREE.Vector3();
 const _camGoalTarget = new THREE.Vector3();
 const _arWorldOffset = new THREE.Vector3();
+const _xrCamWorldPos = new THREE.Vector3();
 const _hitMatrix = new THREE.Matrix4();
 
 function getViewerCameraVectors(
@@ -297,22 +298,33 @@ export default function Product3DViewer({
     }
 
     let baseAlpha: number | null = null;
-    let baseBeta: number | null = null;
+    let basePitchDeg: number | null = null;
 
     const handleOrientation = (event: DeviceOrientationEvent) => {
       if (event.alpha === null || event.beta === null) return;
-      if (baseAlpha === null || baseBeta === null) {
+      const screenAngle =
+        typeof window.screen?.orientation?.angle === 'number'
+          ? window.screen.orientation.angle
+          : 0;
+      const rawPitch =
+        screenAngle === 90
+          ? -(event.gamma ?? 0)
+          : screenAngle === 270
+            ? (event.gamma ?? 0)
+            : event.beta;
+
+      if (baseAlpha === null || basePitchDeg === null) {
         baseAlpha = event.alpha;
-        baseBeta = event.beta;
+        basePitchDeg = rawPitch;
         return;
       }
       let dAlpha = event.alpha - baseAlpha;
       if (dAlpha > 180) dAlpha -= 360;
       if (dAlpha < -180) dAlpha += 360;
-      const dBeta = THREE.MathUtils.clamp(event.beta - baseBeta, -45, 45);
+      const dPitch = THREE.MathUtils.clamp(rawPitch - basePitchDeg, -45, 45);
       gyroDeltaRef.current = {
         yaw: THREE.MathUtils.degToRad(dAlpha),
-        pitch: THREE.MathUtils.degToRad(dBeta),
+        pitch: THREE.MathUtils.degToRad(dPitch),
       };
     };
 
@@ -1105,19 +1117,28 @@ export default function Product3DViewer({
       currentPhotoShowcase.setLightTint(combinedBrightness, tint.r, tint.g, tint.b);
 
       if (realPhotoReady) {
-        const xrCamPos = renderer.xr.isPresenting
-          ? renderer.xr.getCamera().position
-          : camera.position;
+        if (renderer.xr.isPresenting) {
+          renderer.xr.getCamera().getWorldPosition(_xrCamWorldPos);
+        } else {
+          _xrCamWorldPos.copy(camera.position);
+        }
         const baseYaw = Math.atan2(
-          xrCamPos.x - stageGroup.position.x,
-          xrCamPos.z - stageGroup.position.z,
+          _xrCamWorldPos.x - stageGroup.position.x,
+          _xrCamWorldPos.z - stageGroup.position.z,
         );
         const flipAngle = showBackFactsRef.current ? Math.PI : 0;
-        const targetYaw = baseYaw + flipAngle;
+        const swayAngle =
+          autoRotateRef.current && !renderer.xr.isPresenting
+            ? Math.sin(clock.elapsedTime * 1.15) * 0.36
+            : 0;
+        const targetYaw = baseYaw + flipAngle + swayAngle;
         let diff = targetYaw - currentPhotoShowcase.root.rotation.y;
         while (diff > Math.PI) diff -= Math.PI * 2;
         while (diff < -Math.PI) diff += Math.PI * 2;
         currentPhotoShowcase.root.rotation.y += diff * (1 - Math.exp(-12 * delta));
+
+        const relAngle = currentPhotoShowcase.root.rotation.y - baseYaw;
+        currentPhotoShowcase.setFacingBack(Math.cos(relAngle) < 0);
       }
 
       if (!renderer.xr.isPresenting) {
