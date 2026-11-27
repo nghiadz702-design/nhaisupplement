@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  AlertTriangle,
   ArrowLeft,
   ArrowRight,
   Check,
@@ -220,9 +221,28 @@ export default function CheckoutPage({
             khi xuất kho giao toàn quốc.
           </p>
 
-          <div className="mt-8 border-2 border-[#FF5A00] bg-neutral-950 px-6 py-5 text-white">
+          <div
+            role="note"
+            aria-label="Cảnh báo đơn hàng demo"
+            className="mt-6 flex items-start gap-3 border border-amber-300 bg-amber-50 p-4 text-left text-xs leading-relaxed text-amber-950"
+          >
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
+            <div>
+              <p className="font-bold uppercase tracking-wide text-amber-950">
+                Cảnh báo: Đây là đơn hàng mô phỏng (Chế độ Demo)
+              </p>
+              <p className="mt-1 text-amber-900">
+                Mã đơn bên dưới chỉ lưu cục bộ trên trình duyệt để trình diễn quy trình đặt hàng,
+                chưa tự động thu tiền hay điều phối xuất kho thực tế. Nếu muốn mua hàng thật, vui
+                lòng nhắn Zalo <strong>{BRAND_INFO.phone}</strong> hoặc gửi email tới{' '}
+                <strong>{BRAND_INFO.email}</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 border-2 border-[#FF5A00] bg-neutral-950 px-6 py-5 text-white">
             <span className="block text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-400">
-              Mã đơn của bạn
+              Mã đơn Demo của bạn
             </span>
             <span className="mt-2 block font-mono text-3xl font-extrabold tracking-wider text-[#FF5A00] tabular-nums">
               {confirmed.orderCode}
@@ -298,8 +318,12 @@ export default function CheckoutPage({
             <div className="mt-6 border-2 border-[#FF5A00] bg-white p-5 text-left">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-neutral-950">
                 <QrCode className="h-4 w-4 text-[#FF5A00]" />
-                <span>Quét mã VietQR để hoàn tất thanh toán</span>
+                <span>Mã VietQR tham khảo (Chế độ Demo)</span>
               </div>
+              <p className="mt-1.5 text-[11px] font-medium text-amber-900">
+                Lưu ý Demo: Không chuyển khoản khi chỉ đang thử nghiệm giao diện. Hãy liên hệ trực
+                tiếp Zalo {BRAND_INFO.phone} trước khi giao dịch thật.
+              </p>
               <div className="mt-4 grid items-center gap-5 sm:grid-cols-[200px_1fr]">
                 <div className="mx-auto w-[200px] border border-neutral-200 bg-white p-2">
                   <img
@@ -399,6 +423,20 @@ export default function CheckoutPage({
     return (
       <section className="bg-white py-20">
         <div className="mx-auto max-w-xl px-4 text-center sm:px-6">
+          <div
+            role="note"
+            aria-label="Cảnh báo chế độ demo"
+            className="mb-6 flex items-start gap-2.5 border border-amber-300 bg-amber-50 p-4 text-left text-xs leading-relaxed text-amber-950"
+          >
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
+            <p>
+              <strong className="font-bold uppercase tracking-wide text-amber-950">
+                Cảnh báo Demo:
+              </strong>{' '}
+              Trang giỏ hàng và thanh toán hiện đang ở chế độ trải nghiệm thử nghiệm, chưa xử lý
+              thanh toán hay giao nhận thực tế.
+            </p>
+          </div>
           <h1 className="font-display text-4xl font-extrabold uppercase tracking-tight text-neutral-950 sm:text-5xl">
             Giỏ hàng đang trống
           </h1>
@@ -444,7 +482,28 @@ export default function CheckoutPage({
           </p>
         </div>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+        {/* Prominent Demo Mode Warning Banner */}
+        <div
+          role="note"
+          aria-label="Cảnh báo trang thanh toán demo"
+          className="mt-6 flex items-start gap-3 border border-amber-300 bg-amber-50 p-4 text-xs leading-relaxed text-amber-950 sm:p-5"
+        >
+          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-700" />
+          <div>
+            <p className="text-sm font-bold uppercase tracking-wide text-amber-950">
+              Cảnh báo: Trang giỏ hàng &amp; thanh toán đang ở chế độ Demo
+            </p>
+            <p className="mt-1 text-amber-900">
+              Website đang phục vụ mục đích trải nghiệm giao diện, chọn hương vị và xem sản phẩm 3D/AR.
+              Đơn hàng tạo tại đây chỉ mô phỏng và lưu tạm trên trình duyệt, chưa kết nối cổng thanh
+              toán tự động hay xuất kho thật — vui lòng không chuyển khoản thật nếu chưa xác nhận trực
+              tiếp qua Zalo <strong>{BRAND_INFO.phone}</strong> hoặc email{' '}
+              <strong>{BRAND_INFO.email}</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           {/* Left Column: Customer Delivery Form */}
           <form onSubmit={handleSubmit} noValidate className="space-y-5 border border-neutral-200 bg-white p-6">
             <div>
@@ -632,8 +691,12 @@ export default function CheckoutPage({
                 <div className="border-2 border-[#FF5A00] bg-neutral-50 p-4">
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-neutral-950">
                     <QrCode className="h-4 w-4 text-[#FF5A00]" />
-                    <span>Quét mã VietQR để chuyển khoản</span>
+                    <span>Mã VietQR tham khảo (Chế độ Demo)</span>
                   </div>
+                  <p className="mt-1 text-[11px] font-medium text-amber-900">
+                    Cảnh báo Demo: Chỉ là thông tin hiển thị mẫu, vui lòng không quét chuyển tiền thật khi
+                    chưa liên hệ xác nhận qua Zalo {BRAND_INFO.phone}.
+                  </p>
                   <div className="mt-3 grid items-center gap-4 sm:grid-cols-[190px_1fr]">
                     <div className="mx-auto w-[190px] border border-neutral-200 bg-white p-2">
                       <img
@@ -700,15 +763,15 @@ export default function CheckoutPage({
               {submitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Đang gửi đơn…</span>
+                  <span>Đang tạo đơn Demo…</span>
                 </>
               ) : (
-                <span>Gửi đơn đặt hàng · {formatVND(grandTotal)}</span>
+                <span>Gửi đơn đặt hàng (Demo) · {formatVND(grandTotal)}</span>
               )}
             </button>
 
-            <p className="text-center text-xs text-neutral-500">
-              Khách hàng kiểm tra nguyên seal và hạn sử dụng sản phẩm thoải mái trước khi nhận hàng.
+            <p className="text-center text-xs font-medium text-amber-900">
+              Chế độ Demo: Đơn hàng chỉ mô phỏng trên trình duyệt, chưa thu tiền hay xuất kho thật.
             </p>
           </form>
 

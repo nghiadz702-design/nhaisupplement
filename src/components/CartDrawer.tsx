@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  AlertTriangle,
   ArrowRight,
   Gift,
   Minus,
@@ -83,6 +84,22 @@ export default function CartDrawer({
           >
             <X className="h-4 w-4" />
           </button>
+        </div>
+
+        {/* Demo Mode Warning */}
+        <div
+          role="note"
+          aria-label="Cảnh báo chế độ demo"
+          className="flex items-start gap-2.5 border-b border-amber-300 bg-amber-50 px-5 py-3 text-xs leading-relaxed text-amber-950"
+        >
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
+          <p>
+            <strong className="font-bold uppercase tracking-wide text-amber-950">
+              Cảnh báo Demo:
+            </strong>{' '}
+            Giỏ hàng và thanh toán trên website đang chạy thử nghiệm giao diện, chưa phát sinh giao
+            dịch hay xuất kho thực tế.
+          </p>
         </div>
 
         {/* Body */}
@@ -383,9 +400,12 @@ export default function CartDrawer({
               onClick={onGoToCheckout}
               className="flex h-12 w-full items-center justify-center gap-2 bg-[#FF5A00] text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-neutral-950"
             >
-              <span>Đến trang thanh toán</span>
+              <span>Đến trang thanh toán (Demo)</span>
               <ArrowRight className="h-4 w-4" />
             </button>
+            <p className="text-center text-[11px] font-medium text-amber-900">
+              Lưu ý: Trang thanh toán chỉ mô phỏng quy trình đặt hàng, chưa thu tiền thật.
+            </p>
           </div>
         )}
       </div>
